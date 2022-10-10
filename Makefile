@@ -14,7 +14,11 @@ CFLAGS = -Wall -Wextra -Werror #-fsanitize=address
 INCFLAG = -I./includes
 
 SRCS = ./main.c ./srcs/parser.c ./srcs/utils/ErrorMessage.c ./srcs/utils/ft_strchr.c  \
-./srcs/utils/ft_strcmp.c ./srcs/utils/ft_split.c ./srcs/utils/ft_strjoin.c ./srcs/utils/ft_strlen.c ./srcs/utils/getnextline.c \
+./srcs/utils/ft_strncmp.c ./srcs/utils/ft_split.c ./srcs/utils/ft_strjoin.c ./srcs/utils/ft_strlen.c \
+./srcs/utils/getnextline.c ./srcs/utils/freeArray.c ./srcs/utils/ft_isspace.c ./srcs/utils/ft_substr.c \
+./srcs/utils/ft_strdup.c ./srcs/constructor.c ./srcs/lstUtils/ft_lstadd_back.c ./srcs/lstUtils/ft_lstadd_front.c \
+./srcs/lstUtils/ft_lstdelete.c ./srcs/lstUtils/ft_lstlast.c ./srcs/lstUtils/ft_lstnew.c ./srcs/lstUtils/ft_lstsize.c \
+./srcs/lstUtils/ft_lstprint.c ./srcs/utils/ft_atoi.c ./srcs/utils/ft_strisdigit.c
 
 all : $(NAME)
 
