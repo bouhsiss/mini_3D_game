@@ -10,7 +10,7 @@ NAME = cub3D
 
 CC = gcc
 MLX_FLAGS = -lmlx -framework OpenGL -framework AppKit 
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 INCFLAG = -I./includes
 
 SRCS = ./main.c ./srcs/parser.c ./srcs/utils/ErrorMessage.c ./srcs/utils/ft_strchr.c  \
@@ -24,7 +24,7 @@ all : $(NAME)
 
 $(NAME) :
 	$(CC) $(CFLAGS) $(MLX_FLAGS) $(SRCS) $(INCFLAG) -o $(NAME)
-	rm -rf $(NAME).dSYM
+	# rm -rf $(NAME).dSYM
 	@echo "$(CYAN)\n====== $(NAME) compiling finished ======"
 	@echo "==========================================${NC}\n"
 

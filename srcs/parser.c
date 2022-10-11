@@ -22,15 +22,72 @@ int parseTexture(char *line, char **Data)
 	return(1);
 }
 
+int	skip_space(char *str)
+{
+	int i;
+
+	i = 0;
+	while(str && ft_isspace(str[i]))
+		i++;
+	return(i);
+}
+
+int	check_previous(char *previous,int len)
+{
+	int i = 0;
+	if ( previous[ft_strlen(previous) - 2] == '1' && previous[skip_space(previous)] == '1')
+		return(0);
+	else
+	{
+		// previous = previous + len;
+		while (previous[i])
+		{
+			if(previous[i] == '0' && i > len - 2)
+				return(1);
+			i++;
+		}
+	}
+	return(1);
+}
+
+int	check_line_is_valid(t_data **data)
+{
+	t_lst *previous;
+	t_lst *tmp;
+	char *tmp_str1;
+	char *tmp_str2;
+	int	i;
+
+	i = 0;
+	previous = (*data)->MapDisplay->map;
+	tmp = (*data)->MapDisplay->map;
+	while (tmp)
+	{
+		tmp_str1 =(char *)tmp->content;
+		tmp_str2 = (char *)previous->content;
+		while (tmp_str1[i])
+		{
+			if((tmp_str1[i] == '0' && (  ft_strlen(tmp_str2) - 2 < i || tmp_str2[i] == ' '))\
+				|| check_previous(tmp_str2,ft_strlen(tmp_str1)))
+				return -1;
+			i++;
+		}
+		i = 0;
+		previous = tmp;
+		tmp = tmp->next;
+	}
+	return 0;
+}
 
 static int parseMap(char *line, t_data **Data, int fd)
 {
 	int i;
 
-
-	while(line)
-	{	
-		i = 0;
+	i = 0;
+	i = skip_space(line);
+	while(line && line[i])
+	{
+		i = skip_space(line);
 		if(ft_strlen(line) > (*Data)->MapDisplay->NbrOfColumns)
 			(*Data)->MapDisplay->NbrOfColumns = ft_strlen(line);
 		ft_lstadd_back(&(*Data)->MapDisplay->map, ft_lstnew(line));
@@ -39,6 +96,8 @@ static int parseMap(char *line, t_data **Data, int fd)
 		line = get_next_line(fd);
 	}
 	free(line);
+	if(check_line_is_valid(Data) == -1)
+		ErrorMessage("Invalid map");
 	// isMapValid(&(*Data)->MapDisplay->map);
 	//need to implement is map valid function
 	return(0);
