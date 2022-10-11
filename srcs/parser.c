@@ -28,7 +28,7 @@ static int parseMap(char *line, t_data **Data, int fd)
 	int i;
 
 
-	while(line && line[i] == '1')
+	while(line)
 	{	
 		i = 0;
 		if(ft_strlen(line) > (*Data)->MapDisplay->NbrOfColumns)
@@ -37,11 +37,9 @@ static int parseMap(char *line, t_data **Data, int fd)
 		(*Data)->MapDisplay->NbrOfRows++;
 		free(line);
 		line = get_next_line(fd);
-		while(line && ft_isspace(line[i]))
-			i++;
 	}
 	free(line);
-	isMapValid(&(*Data)->MapDisplay->map);
+	// isMapValid(&(*Data)->MapDisplay->map);
 	//need to implement is map valid function
 	return(0);
 }
