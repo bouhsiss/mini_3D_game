@@ -8,7 +8,7 @@ void ft_lstprint(t_lst **list)
 	tmp = (*list);
 	while(tmp)
 	{
-		printf("%s\n", tmp->content);
+		printf("%s", tmp->content);
 		tmp = tmp->next;
 	}
 }

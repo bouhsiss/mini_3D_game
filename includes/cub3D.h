@@ -11,12 +11,13 @@
 
 #define PARSE_MAP 0
 #define NEXT_LINE 1
-
+#define ONE_OR_SPACE(c) ((c == '1' || ft_isspace(c)) ? true : false)
 
 typedef struct s_lst
 {
 	void *content;
 	struct s_lst *next;
+	struct s_lst *previous;
 }t_lst;
 
 typedef struct s_win {
@@ -74,5 +75,6 @@ int	ft_lstsize(t_lst *lst);
 void ft_lstprint(t_lst **list);
 int	ft_atoi(const char *str);
 int ft_strisdigit(char *str);
+void isMapValid(t_lst **maphead);
 
 #endif

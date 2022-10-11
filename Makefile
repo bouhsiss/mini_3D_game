@@ -10,7 +10,7 @@ NAME = cub3D
 
 CC = gcc
 MLX_FLAGS = -lmlx -framework OpenGL -framework AppKit 
-CFLAGS = -Wall -Wextra -Werror #-fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address
 INCFLAG = -I./includes
 
 SRCS = ./main.c ./srcs/parser.c ./srcs/utils/ErrorMessage.c ./srcs/utils/ft_strchr.c  \
@@ -18,7 +18,7 @@ SRCS = ./main.c ./srcs/parser.c ./srcs/utils/ErrorMessage.c ./srcs/utils/ft_strc
 ./srcs/utils/getnextline.c ./srcs/utils/freeArray.c ./srcs/utils/ft_isspace.c ./srcs/utils/ft_substr.c \
 ./srcs/utils/ft_strdup.c ./srcs/constructor.c ./srcs/lstUtils/ft_lstadd_back.c ./srcs/lstUtils/ft_lstadd_front.c \
 ./srcs/lstUtils/ft_lstdelete.c ./srcs/lstUtils/ft_lstlast.c ./srcs/lstUtils/ft_lstnew.c ./srcs/lstUtils/ft_lstsize.c \
-./srcs/lstUtils/ft_lstprint.c ./srcs/utils/ft_atoi.c ./srcs/utils/ft_strisdigit.c
+./srcs/lstUtils/ft_lstprint.c ./srcs/utils/ft_atoi.c ./srcs/utils/ft_strisdigit.c ./srcs/isMapValid.c
 
 all : $(NAME)
 

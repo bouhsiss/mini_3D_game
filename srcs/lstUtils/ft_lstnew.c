@@ -9,5 +9,6 @@ t_lst	*ft_lstnew(void *content)
 		return (NULL);
 	new->content = ft_strdup(content);
 	new->next = NULL;
+	new->previous = NULL;
 	return (new);
 }

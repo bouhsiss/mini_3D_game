@@ -16,7 +16,6 @@ static int open_file(char *MapPath) {
 int parseTexture(char *line, char **Data)
 {
 	int i = 0;
-	(void)Data;
 	while(ft_isspace(line[i]))
 		i++;
 	(*Data) = ft_substr(line, i, ft_strlen(line) - i + 1);
@@ -26,16 +25,23 @@ int parseTexture(char *line, char **Data)
 
 static int parseMap(char *line, t_data **Data, int fd)
 {
-	while(line && line[0] == '1' && line[ft_strlen(line)-2] == '1')
-	{
+	int i;
+
+
+	while(line && line[i] == '1')
+	{	
+		i = 0;
 		if(ft_strlen(line) > (*Data)->MapDisplay->NbrOfColumns)
 			(*Data)->MapDisplay->NbrOfColumns = ft_strlen(line);
 		ft_lstadd_back(&(*Data)->MapDisplay->map, ft_lstnew(line));
 		(*Data)->MapDisplay->NbrOfRows++;
 		free(line);
 		line = get_next_line(fd);
+		while(line && ft_isspace(line[i]))
+			i++;
 	}
 	free(line);
+	isMapValid(&(*Data)->MapDisplay->map);
 	//need to implement is map valid function
 	return(0);
 }
@@ -44,11 +50,9 @@ int parseColors(char *line, t_colors **colors)
 {
 	char **RGB;
 	int i;
-	int j;
 	int product;
 	
 	i = 0;
-	j = -1;
 	while(ft_isspace(line[i]))
 		i++;
 	line[ft_strlen(line)-1] = 0;

@@ -5,5 +5,8 @@ void	ft_lstadd_front(t_lst **lst, t_lst *new)
 	if (!new)
 		return ;
 	new->next = *lst;
+	new->previous = NULL;
+	if((*lst) != NULL)
+		(*lst)->previous = new;
 	*lst = new;
 }
