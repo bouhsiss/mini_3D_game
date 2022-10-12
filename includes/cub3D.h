@@ -1,13 +1,14 @@
 #ifndef CUB3D_H
 #define CUB3D_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <errno.h>
-#include <fcntl.h>
-#include <string.h>
-#include <stdbool.h>
-#include <unistd.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <errno.h>
+# include <fcntl.h>
+# include <string.h>
+# include <stdbool.h>
+# include <unistd.h>
+# include <mlx.h>
 
 #define PARSE_MAP 0
 #define NEXT_LINE 1
@@ -51,6 +52,7 @@ typedef struct s_map{
 typedef struct s_data{
 	t_map *MapDisplay;
 	t_win *win;
+	void *mlx_ptr;
 }t_data;
 
 void ErrorMessage(char *message);
@@ -76,5 +78,9 @@ void ft_lstprint(t_lst **list);
 int	ft_atoi(const char *str);
 int ft_strisdigit(char *str);
 void isMapValid(t_lst **maphead);
+int	check_map_is_valid(t_data **data);
+int	skip_space(char *str);
+void DrawMap(t_data **Data);
+int closeWin(t_data *Data);
 
 #endif
