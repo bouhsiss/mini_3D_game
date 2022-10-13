@@ -37,6 +37,8 @@ static int parseMap(char *line, t_data **Data, int fd)
 		free(line);
 		line = get_next_line(fd);
 		i = skip_space(line);
+		if(line[i] == '0')
+			ErrorMessage("Invalid map.");
 	}
 	free(line);
 	check_map_is_valid(Data);
