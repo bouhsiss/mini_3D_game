@@ -10,7 +10,7 @@ NAME = cub3D
 
 CC = gcc
 MLX_FLAGS = -lmlx -framework OpenGL -framework AppKit 
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 INCFLAG = -I./includes
 
 SRCS = ./main.c ./srcs/parser.c ./srcs/utils/ErrorMessage.c ./srcs/utils/ft_strchr.c  \
@@ -18,13 +18,14 @@ SRCS = ./main.c ./srcs/parser.c ./srcs/utils/ErrorMessage.c ./srcs/utils/ft_strc
 ./srcs/utils/getnextline.c ./srcs/utils/freeArray.c ./srcs/utils/ft_isspace.c ./srcs/utils/ft_substr.c \
 ./srcs/utils/ft_strdup.c ./srcs/constructor.c ./srcs/lstUtils/ft_lstadd_back.c ./srcs/lstUtils/ft_lstadd_front.c \
 ./srcs/lstUtils/ft_lstdelete.c ./srcs/lstUtils/ft_lstlast.c ./srcs/lstUtils/ft_lstnew.c ./srcs/lstUtils/ft_lstsize.c \
-./srcs/lstUtils/ft_lstprint.c ./srcs/utils/ft_atoi.c ./srcs/utils/ft_strisdigit.c ./srcs/isMapValid.c
+./srcs/lstUtils/ft_lstprint.c ./srcs/utils/ft_atoi.c ./srcs/utils/ft_strisdigit.c ./srcs/isMapValid.c \
+./srcs/DrawMap.c ./srcs/win_utils/closeWin.c
 
 all : $(NAME)
 
 $(NAME) :
 	$(CC) $(CFLAGS) $(MLX_FLAGS) $(SRCS) $(INCFLAG) -o $(NAME)
-	rm -rf $(NAME).dSYM
+	# rm -rf $(NAME).dSYM
 	@echo "$(CYAN)\n====== $(NAME) compiling finished ======"
 	@echo "==========================================${NC}\n"
 
@@ -41,6 +42,7 @@ clean :
 fclean : clean
 	@echo "${YELLOW}====================================="
 	rm -f $(NAME)
+	rm -rf $(NAME).dSYM
 	@echo "\n====== binary files removed =======\n"
 
 re : fclean all

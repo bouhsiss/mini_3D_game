@@ -1,60 +1,60 @@
 #include "cub3D.h"
 
-void isSpaceValid(t_lst *line, char **curr,int i)
+int	skip_space(char *str)
 {
-	char *prev;
-	char *next;
+	int i;
 
-	if(line->previous)
-	{
-		prev = line->previous->content;
-		if(ONE_OR_SPACE(prev[i]) && ONE_OR_SPACE(*curr[i-1]) && ONE_OR_SPACE(*curr[i+1]))
-			(*curr)[i] = '1';
-		else
-			ErrorMessage("Invalid map");
-	}
-	if(line->next)
-	{
-		next = line->next->content;
-		if(ONE_OR_SPACE(next[i]) && ONE_OR_SPACE(*curr[i-1]) && ONE_OR_SPACE(*curr[i+1]))
-			(*curr)[i] = '1';
-		else
-			ErrorMessage("Invalid map");
-	}
-}
-
-t_lst *WallCheck(t_lst *Wall)
-{
-	int i = 1;
-	char *line = Wall->content;
-	while(line[i+1])
-	{
-		if(line[i] != '1')
-		{
-			if(ft_isspace(line[i]))
-				isSpaceValid(Wall, (char **)&(Wall)->content, i);
-			else
-				ErrorMessage("Invalid map.");
-		}
+	i = 0;
+	while(str && ft_isspace(str[i]))
 		i++;
-	}
-	return(Wall->next);
+	return(i);
 }
 
-
-void isMapValid(t_lst **maphead)
+int	check_previous(char *previous,int len)
 {
-	t_lst *map;
-
-	map = (*maphead);
-	map = WallCheck(map);
-	while(map->next)
+	int i = 0;
+	if ( previous[ft_strlen(previous) - 2] == '1' && previous[skip_space(previous)] == '1')
+		return(0);
+	else
 	{
-		printf("other walls %s\n", map->content);
-		map = map->next;
+		// previous = previous + len;
+		while (previous[i])
+		{
+			if(previous[i] == '0' && i > len - 2)
+				return(1);
+			i++;
+		}
 	}
-	//check for first wall
-	//check for first and last character
-	//check for what's inside the walls
-	//check for last wall
+	return(1);
+}
+
+int	check_map_is_valid(t_data **data)
+{
+	t_lst *prev_node;
+	t_lst *curr_node;
+	char *curr_line;
+	char *prev_line;
+	int	i;
+
+	i = 0;
+	prev_node = (*data)->MapDisplay->map;
+	curr_node = (*data)->MapDisplay->map;
+	while (curr_node)
+	{
+		curr_line = (char *)curr_node->content;
+		prev_line = (char *)prev_node->content;
+		while (curr_line[i])
+		{
+			if((curr_line[i] == '0' && (  ft_strlen(prev_line) - 2 < i || prev_line[i] == ' ')))
+				ErrorMessage("Invalid map.");
+			/*
+				once a space is found -> check whether is surrounded by ones
+			*/
+			i++;
+		}
+		i = 0;
+		prev_node = curr_node;
+		curr_node = curr_node->next;
+	}
+	return 0;
 }

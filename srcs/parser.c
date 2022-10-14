@@ -22,27 +22,24 @@ int parseTexture(char *line, char **Data)
 	return(1);
 }
 
-
 static int parseMap(char *line, t_data **Data, int fd)
 {
 	int i;
 
-
+	i = 0;
+	i = skip_space(line);
 	while(line && line[i] == '1')
-	{	
-		i = 0;
+	{
 		if(ft_strlen(line) > (*Data)->MapDisplay->NbrOfColumns)
 			(*Data)->MapDisplay->NbrOfColumns = ft_strlen(line);
 		ft_lstadd_back(&(*Data)->MapDisplay->map, ft_lstnew(line));
 		(*Data)->MapDisplay->NbrOfRows++;
 		free(line);
 		line = get_next_line(fd);
-		while(line && ft_isspace(line[i]))
-			i++;
+		i = skip_space(line);
 	}
 	free(line);
-	isMapValid(&(*Data)->MapDisplay->map);
-	//need to implement is map valid function
+	check_map_is_valid(Data);
 	return(0);
 }
 

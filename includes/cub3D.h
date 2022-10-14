@@ -1,17 +1,19 @@
 #ifndef CUB3D_H
 #define CUB3D_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <errno.h>
-#include <fcntl.h>
-#include <string.h>
-#include <stdbool.h>
-#include <unistd.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <errno.h>
+# include <fcntl.h>
+# include <string.h>
+# include <stdbool.h>
+# include <unistd.h>
+# include <mlx.h>
+# include <math.h>
 
-#define PARSE_MAP 0
-#define NEXT_LINE 1
-#define ONE_OR_SPACE(c) ((c == '1' || ft_isspace(c)) ? true : false)
+#define RESOLUTION 40
+#define RADIUS 15
+
 
 typedef struct s_lst
 {
@@ -29,7 +31,7 @@ typedef struct s_win {
 typedef struct s_colors{
 	int R;
 	int G;
-	int B;;
+	int B;
 } t_colors;
 
 typedef struct s_textures{
@@ -48,9 +50,27 @@ typedef struct s_map{
 	t_colors *CeilingColor;
 }t_map;
 
+typedef struct s_img {
+	void *img;
+	char *addr;
+	int bits_per_pixel;
+	int line_length;
+	int endian;
+}t_img;
+
+typedef struct s_player{
+	int x;
+	int y;
+	int radius;
+
+}t_player;
+
 typedef struct s_data{
 	t_map *MapDisplay;
 	t_win *win;
+	t_player *player;
+	t_img *img;
+	void *mlx_ptr;
 }t_data;
 
 void ErrorMessage(char *message);
@@ -76,5 +96,9 @@ void ft_lstprint(t_lst **list);
 int	ft_atoi(const char *str);
 int ft_strisdigit(char *str);
 void isMapValid(t_lst **maphead);
+int	check_map_is_valid(t_data **data);
+int	skip_space(char *str);
+void DrawMap(t_data **Data);
+int closeWin(t_data *Data);
 
 #endif

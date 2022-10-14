@@ -7,6 +7,7 @@ int main(int ac, char **av){
 	{
 		constructor(&Data);
 		Parser(av[1], &Data);
+		DrawMap(&Data);
 		ft_lstdelete(&Data->MapDisplay->map);
 		// system("Leaks cub3D");
 	}

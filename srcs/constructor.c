@@ -8,6 +8,8 @@ void constructor(t_data **Data)
 	(*Data)->win = (t_win *)malloc(sizeof(t_win));
 	(*Data)->MapDisplay->CeilingColor = (t_colors *)malloc(sizeof(t_colors));
 	(*Data)->MapDisplay->FloorColor = (t_colors *)malloc(sizeof(t_colors));
+	(*Data)->img = (t_img *)malloc(sizeof(t_img));
+	(*Data)->player= (t_player *)malloc(sizeof(t_player));
 	/* == heap allocation == */
 
 	(*Data)->MapDisplay->NbrOfColumns = 0;
