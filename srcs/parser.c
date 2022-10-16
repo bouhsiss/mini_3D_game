@@ -49,7 +49,7 @@ int parseColors(char *line, t_colors **colors)
 {
 	char **RGB;
 	int i;
-	int product;
+
 	
 	i = 0;
 	while(ft_isspace(line[i]))
@@ -60,8 +60,8 @@ int parseColors(char *line, t_colors **colors)
 	(*colors)->G = ft_atoi(RGB[1]);
 	(*colors)->B = ft_atoi(RGB[2]);
 	freeArray(RGB);
-	product = (*colors)->R * (*colors)->G * (*colors)->B;
-	if((*colors)->R > 255 || (*colors)->G > 255 || (*colors)->B > 255 || product < 0)
+	if((*colors)->R > 255 || (*colors)->G > 255 || (*colors)->B > 255 
+		|| (*colors)->R < 0 || (*colors)->G < 0 || (*colors)->B < 0)
 		ErrorMessage("Invalid colors");
 	return(1);
 }
@@ -89,7 +89,7 @@ static int parseLine(char *line, t_data **Data, int fd)
 		else if(line[i] == '1')
 			return(parseMap(line, Data, fd));
 		else
-			ErrorMessage("Invalid map.");
+			ErrorMessage("Invalid map 4");
 	}
 	return(1);
 }

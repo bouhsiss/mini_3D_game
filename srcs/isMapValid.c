@@ -10,22 +10,11 @@ int	skip_space(char *str)
 	return(i);
 }
 
-int	check_previous(char *previous,int len)
+int	is_valid_char(char c)
 {
-	int i = 0;
-	if ( previous[ft_strlen(previous) - 2] == '1' && previous[skip_space(previous)] == '1')
-		return(0);
-	else
-	{
-		// previous = previous + len;
-		while (previous[i])
-		{
-			if(previous[i] == '0' && i > len - 2)
-				return(1);
-			i++;
-		}
-	}
-	return(1);
+	if ( c == 'N' || c == 'S' || c == 'E' || c == 'W' || c == '0')
+		return(1);
+	return(0);
 }
 
 int check_first_and_last_line(char *line)
@@ -35,20 +24,23 @@ int check_first_and_last_line(char *line)
 	i = -1;
 	while (line[++i])
 	{
-		if(line[i] == '0')
+		if(is_valid_char(line[i]))
 			return(1);
 	}
 	return(0);
 }
 
+
 int check_two_line(char *curr_line,char *prev_line , int i)
 {
-	if( (curr_line[i] == ' ' && curr_line[i -1] == '0') || ((curr_line[i] == '0'  
-		&& ( curr_line[i - 1] == ' ' || ft_strlen(prev_line) - 2 < i || prev_line[i] == ' '))))
-		return(1);
-	else if(( (prev_line[i] == ' ' && prev_line[i -1] == '0') || ((prev_line[i] == '0'  
-		&& ( prev_line[i - 1] == ' ' || ft_strlen(curr_line) - 2 < i || curr_line[i] == ' ')))))
-		return(1);
+	if( (ft_isspace(curr_line[i]) && is_valid_char(curr_line[i -1])) || ((is_valid_char(curr_line[i])  
+		&& ( ft_isspace(curr_line[i - 1])|| ft_strlen(prev_line) - 2 < i || ft_isspace(prev_line[i])))))
+		ErrorMessage("am here ===== 1");
+	else if( ft_strlen(prev_line) - 2 > i && ((ft_isspace(prev_line[i]) && is_valid_char(prev_line[i -1])) || ((is_valid_char(prev_line[i])  
+		&& ( ft_isspace(prev_line[i - 1]) || ft_strlen(curr_line) - 2 < i || ft_isspace(curr_line[i]))))))
+			ErrorMessage("am here ===== 2");
+	else if( !is_valid_char(curr_line[i]) && curr_line[i] != '1' && !ft_isspace(curr_line[i]))
+		ErrorMessage("am here ===== 3");
 	return(0);
 }
 
@@ -59,9 +51,9 @@ int	check_map_is_valid(t_data **data)
 	char *curr_line;
 	char *prev_line;
 	int	i;
-	int position;
+	int flag;
 
-	position = 0;
+	flag = 0;
 	i = 0;
 	prev_node = (*data)->MapDisplay->map;
 	curr_node = (*data)->MapDisplay->map;
@@ -71,12 +63,13 @@ int	check_map_is_valid(t_data **data)
 	{
 		curr_line = (char *)curr_node->content;
 		prev_line = (char *)prev_node->content;
-		i = ft_strlen(curr_line) - 1;
-		while (i > 0)
+			printf("%s",curr_line);
+		i = ft_strlen(curr_line) -1;
+		while (i)
 		{
 			if(curr_line[i] == 'N' || curr_line[i] == 'S' || curr_line[i] == 'E' || curr_line[i] == 'W')
-				position++;
-			if (check_two_line(curr_line, prev_line, i) || position > 1)
+				flag++;
+			if (check_two_line(curr_line, prev_line, i) || flag > 1)
 				ErrorMessage("Invalid map.");
 			i--;
 		}
