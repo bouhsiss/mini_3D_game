@@ -11,13 +11,22 @@
 # include <mlx.h>
 # include <math.h>
 
-#define RESOLUTION 40
-#define RADIUS 5
-#define NORTH 0
-#define EAST 90
-#define SOUTH 180
-#define WEST 270
-#define LINE_LENGTH 60
+# define PI 3.14159265
+# define DEGREE 3.14159265/180
+# define RESOLUTION 20
+# define RADIUS 5
+# define NORTH 0*DEGREE
+# define EAST 90*DEGREE
+# define SOUTH 180*DEGREE
+# define WEST 270*DEGREE
+# define LINE_LENGTH 60
+# define FOV 60*DEGREE
+# define S_KEY 1
+# define A_KEY 2
+# define W_KEY 13
+# define D_KEY 0
+# define RIGHT_ARROW 123
+# define LEFT_ARROW 124
 typedef struct s_lst
 {
 	void *content;
@@ -62,10 +71,14 @@ typedef struct s_img {
 }t_img;
 
 typedef struct s_player{
-	int x;
-	int y;
-	int radius;
-
+	double x;
+	double y;
+	int height;
+	int turnDirection;
+	int walkDirection;
+	double initialAngle;
+	float moveSpeed;
+	double rotationSpeed;
 }t_player;
 
 typedef struct s_data{
@@ -103,5 +116,9 @@ int	check_map_is_valid(t_data **data);
 int	skip_space(char *str);
 void DrawMap(t_data **Data);
 int closeWin(t_data *Data);
+int movePlayer(int keycode, t_data **data);
+void drawMiniMap(t_data **Data, t_lst **map);
+int keyrelease(int keycode, t_data **data);
+
 
 #endif

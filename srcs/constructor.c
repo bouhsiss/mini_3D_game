@@ -15,7 +15,18 @@ void constructor(t_data **Data)
 	(*Data)->MapDisplay->NbrOfColumns = 0;
 	(*Data)->MapDisplay->NbrOfRows = 0;
 	(*Data)->MapDisplay->map = NULL;
-	(*Data)->player->x = 300; // i * RESOLUTION + (RESOLUTION/2)
-	(*Data)->player->y = 140; // j * RESOLUTION + (RESOLUTION/2)
+	// (*Data)->player->x = 300; // i * RESOLUTION + (RESOLUTION/2)
+	// (*Data)->player->y = 140; // j * RESOLUTION + (RESOLUTION/2)
+	(*Data)->player->turnDirection = 0;
+	(*Data)->player->walkDirection = 0;
+	(*Data)->player->initialAngle = NORTH + (FOV/2);
+	(*Data)->player->moveSpeed = 5;
+	(*Data)->player->rotationSpeed = 10*DEGREE;
 	//code to construct/initialize my struct
 }
+
+//implement hooks and to turn the player :
+// update the rotation angle by incrementing it by (turndirection * rotationspeed)'
+
+//implement hooks to move the player :
+//update the x and y by incrementing it by (cos and sin of rotaion angle *(walkdirection * move speed))

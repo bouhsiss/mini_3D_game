@@ -19,7 +19,7 @@ SRCS = ./main.c ./srcs/parser.c ./srcs/utils/ErrorMessage.c ./srcs/utils/ft_strc
 ./srcs/utils/ft_strdup.c ./srcs/constructor.c ./srcs/lstUtils/ft_lstadd_back.c ./srcs/lstUtils/ft_lstadd_front.c \
 ./srcs/lstUtils/ft_lstdelete.c ./srcs/lstUtils/ft_lstlast.c ./srcs/lstUtils/ft_lstnew.c ./srcs/lstUtils/ft_lstsize.c \
 ./srcs/lstUtils/ft_lstprint.c ./srcs/utils/ft_atoi.c ./srcs/utils/ft_strisdigit.c ./srcs/isMapValid.c \
-./srcs/DrawMap.c ./srcs/win_utils/closeWin.c
+./srcs/DrawMap.c ./srcs/win_utils/closeWin.c ./srcs/movePlayer.c
 
 all : $(NAME)
 

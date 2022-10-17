@@ -46,7 +46,7 @@ void putSquareInImage(t_data **data, int x, int y, unsigned long color)
 	}
 }
 
-void createWallImage(t_data **data)
+void drawWall(t_data **data)
 {
 	int x;
 	int y;
@@ -103,8 +103,8 @@ void drawPlayer(t_data **data)
 	double angle;
 	int color;
 
-	int x;
-	int y;
+	double x;
+	double y;
 	int radius = RADIUS;
 	color = createRGB(218, 0, 55);
 	angle = 0;
@@ -115,9 +115,10 @@ void drawPlayer(t_data **data)
 		DDA(data,(*data)->player->x + x, (*data)->player->y + y);
 		angle += 0.01f;
 	}
-	DDA(data, (*data)->player->x + (radius)*cos(NORTH) + LINE_LENGTH, (*data)->player->y + (radius)*sin(NORTH) + LINE_LENGTH);
-	DDA(data, (*data)->player->x + (radius)*cos(NORTH) + LINE_LENGTH, (*data)->player->y + (radius)*sin(NORTH) + LINE_LENGTH);
+	DDA(data, (*data)->player->x + ((LINE_LENGTH)*cos((*data)->player->initialAngle)), (*data)->player->y + ((LINE_LENGTH)*sin((*data)->player->initialAngle)));
 }
+
+
 
 void drawMiniMap(t_data **Data, t_lst **map)
 {
@@ -129,6 +130,7 @@ void drawMiniMap(t_data **Data, t_lst **map)
 	t_lst *tmp = (*map);
 
 	y = 0;
+	drawWall(Data);
 	while (tmp)
 	{
 		i = -1;
@@ -144,6 +146,7 @@ void drawMiniMap(t_data **Data, t_lst **map)
 		j++;
 		tmp = tmp->next;
 	}
+	
 	drawPlayer(Data);
 	mlx_put_image_to_window((*Data)->mlx_ptr, (*Data)->win->mlx_win, (*Data)->img->img, 0, 0);
 }
@@ -160,5 +163,11 @@ void DrawMap(t_data **Data)
 	(*Data)->img->addr = mlx_get_data_addr((*Data)->img->img, &((*Data)->img->bits_per_pixel), &((*Data)->img->line_length),\
 	 &((*Data)->img->endian));
 	drawMiniMap(Data,  &(*Data)->MapDisplay->map);
+	mlx_hook((*Data)->win->mlx_win, 02,  1L << 0, movePlayer, Data);
+	mlx_hook((*Data)->win->mlx_win, 03, 1L << 0, keyrelease, Data);
 	mlx_loop((*Data)->mlx_ptr);
 }
+
+//gotta implement an mlx loop hook function to synchronize player movement
+// and implement a function to update x and y and check whether the next cell has a wall or not 
+// based on the walk direction .....
