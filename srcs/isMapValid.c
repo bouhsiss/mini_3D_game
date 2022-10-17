@@ -35,12 +35,12 @@ int check_two_line(char *curr_line,char *prev_line , int i)
 {
 	if( (ft_isspace(curr_line[i]) && is_valid_char(curr_line[i -1])) || ((is_valid_char(curr_line[i])  
 		&& ( ft_isspace(curr_line[i - 1])|| ft_strlen(prev_line) - 2 < i || ft_isspace(prev_line[i])))))
-		ErrorMessage("am here ===== 1");
+		ErrorMessage("Invalid map.");
 	else if( ft_strlen(prev_line) - 2 > i && ((ft_isspace(prev_line[i]) && is_valid_char(prev_line[i -1])) || ((is_valid_char(prev_line[i])  
 		&& ( ft_isspace(prev_line[i - 1]) || ft_strlen(curr_line) - 2 < i || ft_isspace(curr_line[i]))))))
-			ErrorMessage("am here ===== 2");
+			ErrorMessage("Invalid map");
 	else if( !is_valid_char(curr_line[i]) && curr_line[i] != '1' && !ft_isspace(curr_line[i]))
-		ErrorMessage("am here ===== 3");
+		ErrorMessage("Invalid map");
 	return(0);
 }
 
@@ -63,7 +63,6 @@ int	check_map_is_valid(t_data **data)
 	{
 		curr_line = (char *)curr_node->content;
 		prev_line = (char *)prev_node->content;
-			printf("%s",curr_line);
 		i = ft_strlen(curr_line) -1;
 		while (i)
 		{
