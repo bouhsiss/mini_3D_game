@@ -42,6 +42,7 @@ clean :
 fclean : clean
 	@echo "${YELLOW}====================================="
 	rm -f $(NAME)
+	rm -rf $(NAME).dSYM
 	@echo "\n====== binary files removed =======\n"
 
 re : fclean all
