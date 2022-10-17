@@ -28,8 +28,9 @@ static int parseMap(char *line, t_data **Data, int fd)
 
 	i = 0;
 	i = skip_space(line);
-	while(line && line[i] == '1')
+	while(line && line[i] && line[i] == '1')
 	{
+		i = 0;
 		if(ft_strlen(line) > (*Data)->MapDisplay->NbrOfColumns)
 			(*Data)->MapDisplay->NbrOfColumns = ft_strlen(line);
 		ft_lstadd_back(&(*Data)->MapDisplay->map, ft_lstnew(line));
@@ -37,6 +38,8 @@ static int parseMap(char *line, t_data **Data, int fd)
 		free(line);
 		line = get_next_line(fd);
 		i = skip_space(line);
+		if(line && line[i] && line[i] != '1')
+			ErrorMessage("Invalid map");
 	}
 	free(line);
 	check_map_is_valid(Data);
@@ -47,19 +50,21 @@ int parseColors(char *line, t_colors **colors)
 {
 	char **RGB;
 	int i;
-	int product;
+
 	
 	i = 0;
 	while(ft_isspace(line[i]))
 		i++;
 	line[ft_strlen(line)-1] = 0;
 	RGB = ft_split(&line[i], ',');
+	if(RGB[3])
+		ErrorMessage("Invalid colors");
 	(*colors)->R = ft_atoi(RGB[0]);
 	(*colors)->G = ft_atoi(RGB[1]);
 	(*colors)->B = ft_atoi(RGB[2]);
 	freeArray(RGB);
-	product = (*colors)->R * (*colors)->G * (*colors)->B;
-	if((*colors)->R > 255 || (*colors)->G > 255 || (*colors)->B > 255 || product < 0)
+	if((*colors)->R > 255 || (*colors)->G > 255 || (*colors)->B > 255 
+		|| (*colors)->R < 0 || (*colors)->G < 0 || (*colors)->B < 0)
 		ErrorMessage("Invalid colors");
 	return(1);
 }
@@ -87,7 +92,7 @@ static int parseLine(char *line, t_data **Data, int fd)
 		else if(line[i] == '1')
 			return(parseMap(line, Data, fd));
 		else
-			ErrorMessage("Invalid map.");
+			ErrorMessage("Invalid map 4");
 	}
 	return(1);
 }
