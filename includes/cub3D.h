@@ -12,9 +12,12 @@
 # include <math.h>
 
 #define RESOLUTION 40
-#define RADIUS 15
-
-
+#define RADIUS 5
+#define NORTH 0
+#define EAST 90
+#define SOUTH 180
+#define WEST 270
+#define LINE_LENGTH 60
 typedef struct s_lst
 {
 	void *content;
