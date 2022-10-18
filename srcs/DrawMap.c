@@ -6,13 +6,6 @@ createRGB(115, 113, 113); //floor
 createRGB(218, 0, 55); // player
 */
 
-/*
-createRGB(23, 23, 23); // wall
-createRGB(115, 113, 113); //floor
-createRGB(218, 0, 55); // player
-7171
-*/
-
 
 unsigned long createRGB(int r, int g, int b)
 {
@@ -120,7 +113,7 @@ void drawPlayer(t_data **data)
 
 
 
-void drawMiniMap(t_data **Data, t_lst **map)
+void drawMiniMap(t_data **data, t_lst **map)
 {
 	int x;
 	int y;
@@ -130,7 +123,7 @@ void drawMiniMap(t_data **Data, t_lst **map)
 	t_lst *tmp = (*map);
 
 	y = 0;
-	drawWall(Data);
+	drawWall(data);
 	while (tmp)
 	{
 		i = -1;
@@ -139,7 +132,7 @@ void drawMiniMap(t_data **Data, t_lst **map)
 		while(line[++i])
 		{
 			if(line[i] == 'N' || line[i] == 'E' || line[i] == 'W' || line[i] == 'S' || line[i] == '0')
-				putSquareInImage(Data, x , y, createRGB(115, 113, 113));
+				putSquareInImage(data, x , y, createRGB(115, 113, 113));
 			x += RESOLUTION;
 		}
 		y += RESOLUTION;
@@ -147,27 +140,25 @@ void drawMiniMap(t_data **Data, t_lst **map)
 		tmp = tmp->next;
 	}
 	
-	drawPlayer(Data);
-	mlx_put_image_to_window((*Data)->mlx_ptr, (*Data)->win->mlx_win, (*Data)->img->img, 0, 0);
+	drawPlayer(data);
+	mlx_put_image_to_window((*data)->mlx_ptr, (*data)->win->mlx_win, (*data)->img->img, 0, 0);
 }
 
 
 
-void DrawMap(t_data **Data)
+void DrawMap(t_data **data)
 {
-	(*Data)->mlx_ptr = mlx_init();
-	(*Data)->win->mlx_win = mlx_new_window((*Data)->mlx_ptr, (*Data)->MapDisplay->NbrOfColumns * RESOLUTION, (*Data)->MapDisplay->NbrOfRows * RESOLUTION, "SmolWolf3D");
-	mlx_hook((*Data)->win->mlx_win, 17, 1L << 5, closeWin, (*Data));
-	(*Data)->img->img = mlx_new_image((*Data)->mlx_ptr, RESOLUTION * (*Data)->MapDisplay->NbrOfColumns, \
-	RESOLUTION * (*Data)->MapDisplay->NbrOfRows);
-	(*Data)->img->addr = mlx_get_data_addr((*Data)->img->img, &((*Data)->img->bits_per_pixel), &((*Data)->img->line_length),\
-	 &((*Data)->img->endian));
-	drawMiniMap(Data,  &(*Data)->MapDisplay->map);
-	mlx_hook((*Data)->win->mlx_win, 02,  1L << 0, movePlayer, Data);
-	mlx_hook((*Data)->win->mlx_win, 03, 1L << 0, keyrelease, Data);
-	mlx_loop((*Data)->mlx_ptr);
+	(*data)->mlx_ptr = mlx_init();
+	(*data)->win->mlx_win = mlx_new_window((*data)->mlx_ptr, (*data)->MapDisplay->NbrOfColumns * RESOLUTION, (*data)->MapDisplay->NbrOfRows * RESOLUTION, "SmolWolf3D");
+	(*data)->img->img = mlx_new_image((*data)->mlx_ptr, RESOLUTION * (*data)->MapDisplay->NbrOfColumns, \
+	RESOLUTION * (*data)->MapDisplay->NbrOfRows);
+	(*data)->img->addr = mlx_get_data_addr((*data)->img->img, &((*data)->img->bits_per_pixel), &((*data)->img->line_length),\
+	 &((*data)->img->endian));
+	drawMiniMap(data,  &(*data)->MapDisplay->map);
+	mlx_loop_hook((*data)->mlx_ptr, handler, data);
+	mlx_loop((*data)->mlx_ptr);
 }
 
-//gotta implement an mlx loop hook function to synchronize player movement
+// gotta implement an mlx loop hook function to synchronize player movement
 // and implement a function to update x and y and check whether the next cell has a wall or not 
 // based on the walk direction .....

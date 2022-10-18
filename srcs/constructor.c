@@ -20,8 +20,9 @@ void constructor(t_data **Data)
 	(*Data)->player->turnDirection = 0;
 	(*Data)->player->walkDirection = 0;
 	(*Data)->player->initialAngle = NORTH + (FOV/2);
-	(*Data)->player->moveSpeed = 5;
-	(*Data)->player->rotationSpeed = 10*DEGREE;
+	(*Data)->player->sideAngle = 0;
+	(*Data)->player->moveSpeed = 3;
+	(*Data)->player->rotationSpeed = 3*DEGREE;
 	//code to construct/initialize my struct
 }
 
@@ -30,3 +31,6 @@ void constructor(t_data **Data)
 
 //implement hooks to move the player :
 //update the x and y by incrementing it by (cos and sin of rotaion angle *(walkdirection * move speed))
+
+
+// i = (x - (Resolution/ 2) ) / resolution

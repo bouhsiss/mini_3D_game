@@ -76,6 +76,7 @@ typedef struct s_player{
 	int height;
 	int turnDirection;
 	int walkDirection;
+	double sideAngle;
 	double initialAngle;
 	float moveSpeed;
 	double rotationSpeed;
@@ -119,6 +120,8 @@ int closeWin(t_data *Data);
 int movePlayer(int keycode, t_data **data);
 void drawMiniMap(t_data **Data, t_lst **map);
 int keyrelease(int keycode, t_data **data);
+int handler(t_data **data);
+void checkWallCollision(t_data **data);
 
 
 #endif
