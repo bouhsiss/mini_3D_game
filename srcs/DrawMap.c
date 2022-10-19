@@ -1,36 +1,49 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   DrawMap.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hbouhsis <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/19 11:00:45 by hbouhsis          #+#    #+#             */
+/*   Updated: 2022/10/19 11:00:48 by hbouhsis         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3D.h"
- 
+
 /*
-createRGB(23, 23, 23); // wall
-createRGB(115, 113, 113); //floor
-createRGB(218, 0, 55); // player
+create_rgb(23, 23, 23); // wall
+create_rgb(115, 113, 113); //floor
+create_rgb(218, 0, 55); // player
 */
 
-
-unsigned long createRGB(int r, int g, int b)
+unsigned long	create_rgb(int r, int g, int b)
 {
-	return(((r & 0xFF) << 16) + ((g & 0xFF) << 8) + ((b & 0xFF)));
+	return (((r & 0xFF) << 16) + ((g & 0xFF) << 8) + ((b & 0xFF)));
 }
 
-void my_mlx_pixel_put(t_img *img, int x, int y, int color)
+void	my_mlx_pixel_put(t_img *img, int x, int y, int color)
 {
-	char *dst;
+	char	*dst;
 
 	dst = img->addr + (y * img->line_length + x * (img->bits_per_pixel / 8));
-	*(unsigned int*)dst = color;
+	*(unsigned int *)dst = color;
 }
 
-
-void putSquareInImage(t_data **data, int x, int y, unsigned long color)
+void	put_square_in_image(t_data **data, int x, int y, unsigned long color)
 {
-	int i = 0;
-	int j;
-	int tmp_x = x;
-	while(++i < RESOLUTION )
+	int	i;
+	int	j;
+	int	tmp_x;
+
+	i = 0;
+	tmp_x = x;
+	while (++i < RESOLUTION)
 	{
 		x = tmp_x;
 		j = 0;
-		while(++j < RESOLUTION )
+		while (++j < RESOLUTION)
 		{
 			my_mlx_pixel_put((*data)->img, x, y, color);
 			x++;
@@ -39,108 +52,87 @@ void putSquareInImage(t_data **data, int x, int y, unsigned long color)
 	}
 }
 
-void drawWall(t_data **data)
+void	draw_wall(t_data **data)
 {
-	int x;
-	int y;
+	int	x;
+	int	y;
 
 	y = -1;
-	while(++y < RESOLUTION * (*data)->MapDisplay->NbrOfRows)
+	while (++y < RESOLUTION * (*data)->MapDisplay->NbrOfRows)
 	{
 		x = -1;
-		while(++x < RESOLUTION * (*data)->MapDisplay->NbrOfColumns)
-			my_mlx_pixel_put((*data)->img, x, y, createRGB(23, 23, 23));
+		while (++x < RESOLUTION * (*data)->MapDisplay->NbrOfColumns)
+			my_mlx_pixel_put((*data)->img, x, y, create_rgb(23, 23, 23));
 	}
 }
 
-void drawLine(t_data **data,int beginX, int beginY, int endX, int endY)
+void	drawline(t_data **data, int dx, int dy)
 {
-	double deltaX = endX - beginX;
-	double deltaY = endY - beginY;
-	int pixels = sqrt((deltaX * deltaX) + (deltaY * deltaY));
-	deltaX /= pixels;
-	deltaY /= pixels;
-	double pixelX = beginX;
-	double pixelY = beginY;
-	while(pixels)
+	int		steps;
+	float	x;
+	float	y;
+	int		i;
+
+	i = 0;
+	x = (*data)->player->x;
+	y = (*data)->player->y;
+	if (abs(dx) > abs(dy))
+		steps = abs(dx);
+	else
+		steps = abs(dy);
+	while (i <= steps)
 	{
-		my_mlx_pixel_put((*data)->img->img, pixelX, pixelY, createRGB(218, 0, 55));
-		pixelX += deltaX;
-		pixelY += deltaY;
-		--pixels;
+		my_mlx_pixel_put((*data)->img, x, y, create_rgb(218, 0, 55));
+		x += dx / (float)steps;
+		y += dy / (float)steps;
+		i++;
 	}
 }
 
- 
-void DDA(t_data **data, int X1, int Y1)
+void	draw_player(t_data **data)
 {
-    int dx = X1 - (*data)->player->x;
-    int dy = Y1 - (*data)->player->y;
- 
-    int steps = abs(dx) > abs(dy) ? abs(dx) : abs(dy);
- 
-    float Xinc = dx / (float)steps;
-    float Yinc = dy / (float)steps;
- 
-    float X = (*data)->player->x;
-    float Y = (*data)->player->y;
-    for (int i = 0; i <= steps; i++) {
-        my_mlx_pixel_put((*data)->img, X, Y,createRGB(218, 0, 55));
-        X += Xinc;
-        Y += Yinc;
-    }
-}
+	double	angle;
+	int		color;
+	double	x;
+	double	y;
 
-void drawPlayer(t_data **data)
-{
-	double angle;
-	int color;
-
-	double x;
-	double y;
-	int radius = RADIUS;
-	color = createRGB(218, 0, 55);
+	color = create_rgb(218, 0, 55);
 	angle = 0;
-	while(angle <= 360)
+	while (angle <= 360)
 	{
-		x = radius * cos(angle);
-		y = radius * sin(angle);
-		DDA(data,(*data)->player->x + x, (*data)->player->y + y);
+		x = RADIUS * cos(angle);
+		y = RADIUS * sin(angle);
+		drawline(data, x, y);
 		angle += 0.01f;
 	}
-	DDA(data, (*data)->player->x + ((LINE_LENGTH)*cos((*data)->player->initialAngle)), (*data)->player->y + ((LINE_LENGTH)*sin((*data)->player->initialAngle)));
+	drawline(data, ((LINE_LENGTH) * cos((*data)->player->initialAngle)), \
+	((LINE_LENGTH) * sin((*data)->player->initialAngle)));
 }
 
-
-
-void drawMiniMap(t_data **data, t_lst **map)
+void	draw_mini_map(t_data **data, t_lst **map, char *line)
 {
-	int x;
-	int y;
-	int j = 0;
-	int i;
-	char *line;
-	t_lst *tmp = (*map);
+	int		x;
+	int		y;
+	t_lst	*tmp;
 
 	y = 0;
-	drawWall(data);
+	tmp = (*map);
+	draw_wall(data);
 	while (tmp)
 	{
-		i = -1;
 		x = 0;
 		line = tmp->content;
-		while(line[++i])
+		while (line[x/RESOLUTION])
 		{
-			if(line[i] == 'N' || line[i] == 'E' || line[i] == 'W' || line[i] == 'S' || line[i] == '0')
-				putSquareInImage(data, x , y, createRGB(115, 113, 113));
+			if (line[x/RESOLUTION] == 'N' || line[x/RESOLUTION] == 'E' || \
+			line[x/RESOLUTION] == 'W' || line[x/RESOLUTION] == 'S' || line[x/RESOLUTION] == '0')
+				put_square_in_image(data, x, y, create_rgb(115, 113, 113));
 			x += RESOLUTION;
 		}
 		y += RESOLUTION;
-		j++;
 		tmp = tmp->next;
 	}
-	
-	drawPlayer(data);
+	draw_player(data);
 	mlx_put_image_to_window((*data)->mlx_ptr, (*data)->win->mlx_win, (*data)->img->img, 0, 0);
 }
 
@@ -154,11 +146,7 @@ void DrawMap(t_data **data)
 	RESOLUTION * (*data)->MapDisplay->NbrOfRows);
 	(*data)->img->addr = mlx_get_data_addr((*data)->img->img, &((*data)->img->bits_per_pixel), &((*data)->img->line_length),\
 	 &((*data)->img->endian));
-	drawMiniMap(data,  &(*data)->MapDisplay->map);
+	draw_mini_map(data,  &(*data)->MapDisplay->map, (*data)->MapDisplay->map->content);
 	mlx_loop_hook((*data)->mlx_ptr, handler, data);
 	mlx_loop((*data)->mlx_ptr);
 }
-
-// gotta implement an mlx loop hook function to synchronize player movement
-// and implement a function to update x and y and check whether the next cell has a wall or not 
-// based on the walk direction .....

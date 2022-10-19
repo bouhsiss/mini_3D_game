@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   hooks_handler.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hbouhsis <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/19 11:00:59 by hbouhsis          #+#    #+#             */
+/*   Updated: 2022/10/19 11:01:02 by hbouhsis         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3D.h"
 
 void checkWallCollision(t_data **data)
@@ -33,6 +45,6 @@ int handler(t_data **data)
 	mlx_hook((*data)->win->mlx_win, 03, 1L << 1, keyrelease, data);
 	(*data)->player->initialAngle += (*data)->player->turnDirection * (*data)->player->rotationSpeed;
 	checkWallCollision(data);
-	drawMiniMap(data, &(*data)->MapDisplay->map);
+	draw_mini_map(data, &(*data)->MapDisplay->map, (*data)->MapDisplay->map->content);
 	return(0);
 }  

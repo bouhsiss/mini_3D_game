@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hbouhsis <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/19 11:01:26 by hbouhsis          #+#    #+#             */
+/*   Updated: 2022/10/19 11:02:02 by hbouhsis         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3D.h"
 
 static int open_file(char *MapPath) {
@@ -25,8 +37,6 @@ int parseTexture(char *line, char **Data)
 static int parseMap(char *line, t_data **Data, int fd)
 {
 	int i;
-
-	i = 0;
 	i = skip_space(line);
 	while(line && line[i] && line[i] == '1')
 	{

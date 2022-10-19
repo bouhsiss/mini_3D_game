@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   constructor.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hbouhsis <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/19 11:01:08 by hbouhsis          #+#    #+#             */
+/*   Updated: 2022/10/19 11:01:12 by hbouhsis         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3D.h"
 
 void constructor(t_data **Data)
@@ -15,15 +27,12 @@ void constructor(t_data **Data)
 	(*Data)->MapDisplay->NbrOfColumns = 0;
 	(*Data)->MapDisplay->NbrOfRows = 0;
 	(*Data)->MapDisplay->map = NULL;
-	// (*Data)->player->x = 300; // i * RESOLUTION + (RESOLUTION/2)
-	// (*Data)->player->y = 140; // j * RESOLUTION + (RESOLUTION/2)
 	(*Data)->player->turnDirection = 0;
 	(*Data)->player->walkDirection = 0;
 	(*Data)->player->initialAngle = NORTH + (FOV/2);
 	(*Data)->player->sideAngle = 0;
 	(*Data)->player->moveSpeed = 3;
 	(*Data)->player->rotationSpeed = 3*DEGREE;
-	//code to construct/initialize my struct
 }
 
 //implement hooks and to turn the player :
@@ -32,5 +41,5 @@ void constructor(t_data **Data)
 //implement hooks to move the player :
 //update the x and y by incrementing it by (cos and sin of rotaion angle *(walkdirection * move speed))
 
-
+// x = j * Resolution + (resolution/2)
 // i = (x - (Resolution/ 2) ) / resolution

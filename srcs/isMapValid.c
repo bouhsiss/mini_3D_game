@@ -47,6 +47,13 @@ int check_two_line(char *curr_line,char *prev_line , int i)
 	return(0);
 }
 
+int savePlayerPos(int i, int j, t_data **data)
+{
+	(*data)->player->x = i * RESOLUTION + (RESOLUTION/2);
+	(*data)->player->y = j * RESOLUTION + (RESOLUTION/2);
+	return(1);
+}
+
 int	check_map_is_valid(t_data **data)
 {
 	t_lst *prev_node;
@@ -58,7 +65,6 @@ int	check_map_is_valid(t_data **data)
 	int flag;
 
 	flag = 0;
-	i = 0;
 	j = 0;
 	prev_node = (*data)->MapDisplay->map;
 	curr_node = (*data)->MapDisplay->map;
@@ -72,11 +78,7 @@ int	check_map_is_valid(t_data **data)
 		while (i)
 		{
 			if(curr_line[i] == 'N' || curr_line[i] == 'S' || curr_line[i] == 'E' || curr_line[i] == 'W')
-			{
-				(*data)->player->x = i * RESOLUTION + (RESOLUTION/2);
-				(*data)->player->y = j * RESOLUTION + (RESOLUTION/2);
-				flag++;
-			}
+				flag += savePlayerPos(i, j, data);
 			if (check_two_line(curr_line, prev_line, i) || flag > 1)
 				ErrorMessage("Invalid map.2");
 			i--;
