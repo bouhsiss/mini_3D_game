@@ -61,36 +61,33 @@ int savePlayerPos(int i, int j, t_data **data, char c)
 
 int	check_map_is_valid(t_data **data)
 {
-	t_lst *prev_node;
-	t_lst *curr_node;
 	char *curr_line;
 	char *prev_line;
 	int	i;
-	int j;
+	int curr;
+	int prev;
 	int flag;
 
 	flag = 0;
-	j = 0;
-	prev_node = (*data)->MapDisplay->map;
-	curr_node = (*data)->MapDisplay->map;
-	if(check_first_and_last_line((char *) prev_node->content))
+	curr = 0;
+	prev = 0;
+	if(check_first_and_last_line((*data)->MapDisplay->map[prev]))
 		ErrorMessage("Invalid map.1");
-	while (curr_node)
+	while ((*data)->MapDisplay->map[curr])
 	{
-		curr_line = (char *)curr_node->content;
-		prev_line = (char *)prev_node->content;
+		curr_line = (*data)->MapDisplay->map[curr];
+		prev_line = (*data)->MapDisplay->map[prev];
 		i = ft_strlen(curr_line) -1;
 		while (i)
 		{
 			if(curr_line[i] == 'N' || curr_line[i] == 'S' || curr_line[i] == 'E' || curr_line[i] == 'W')
-				flag += savePlayerPos(i, j, data, curr_line[i]);
+				flag += savePlayerPos(i, curr, data, curr_line[i]);
 			if (check_two_line(curr_line, prev_line, i) || flag > 1)
 				ErrorMessage("Invalid map.2");
 			i--;
 		}
-		prev_node = curr_node;
-		curr_node = curr_node->next;
-		j++;
+		prev = curr;
+		curr++;
 	}
 	if(check_first_and_last_line(curr_line) || flag == 0)
 		ErrorMessage("Invalid map.3");

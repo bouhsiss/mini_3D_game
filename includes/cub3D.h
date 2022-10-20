@@ -54,7 +54,7 @@ typedef struct s_textures{
 } t_textures;
 
 typedef struct s_map{
-	t_lst* map;
+	char **map;
 	int NbrOfRows;
 	int NbrOfColumns;
 	t_textures *textures;
@@ -118,7 +118,7 @@ int	skip_space(char *str);
 void draw_map(t_data **Data);
 int closeWin(t_data *Data);
 int	move_player(int keycode, t_data **data);
-void draw_mini_map(t_data **Data, t_lst **map, char *line);
+void draw_mini_map(t_data **Data);
 int keyrelease(int keycode, t_data **data);
 int handler(t_data **data);
 void checkWallCollision(t_data **data);

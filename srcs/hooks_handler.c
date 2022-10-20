@@ -26,23 +26,14 @@ void	check_wall_collision(t_data **data, t_player **player)
 {
 	int		i;
 	int		j;
-	t_lst	*map;
-	char	*content;
 
-	map = (*data)->MapDisplay->map;
 	i = ((*player)->x + (cos((*player)->initialAngle + (*player)->sideAngle * \
 		DEGREE) * ((*player)->walkDirection * (((*player)->moveSpeed))))) \
 		/ RESOLUTION;
 	j = ((*player)->y + (sin((*player)->initialAngle + (*player)->sideAngle * \
 		DEGREE) * ((*player)->walkDirection * (((*player)->moveSpeed))))) \
 		/ RESOLUTION;
-	while (j)
-	{
-		map = map->next;
-		j--;
-	}
-	content = map->content;
-	if (content[i] != '1' && content[i] != ' ')
+	if ((*data)->MapDisplay->map[j][i] != '1' && (*data)->MapDisplay->map[j][i] != ' ')
 		update(data);
 }
 
@@ -54,7 +45,6 @@ int	handler(t_data **data)
 	(*data)->player->initialAngle += (*data)->player->turnDirection * \
 		(*data)->player->rotationSpeed;
 	check_wall_collision(data, &(*data)->player);
-	draw_mini_map(data, &(*data)->MapDisplay->map, \
-		(*data)->MapDisplay->map->content);
+	draw_mini_map(data);
 	return (0);
 }

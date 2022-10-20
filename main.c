@@ -21,7 +21,6 @@ int	main(int ac, char **av)
 		constructor(&data);
 		Parser(av[1], &data);
 		draw_map(&data);
-		ft_lstdelete(&data->MapDisplay->map);
 		// system("Leaks cub3D");
 	}
 	else

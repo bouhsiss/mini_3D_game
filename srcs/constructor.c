@@ -16,7 +16,6 @@ void	heap_allocation(t_data **data)
 {
 	(*data) = (t_data *)malloc(sizeof(t_data));
 	(*data)->MapDisplay = (t_map *)malloc(sizeof(t_map));
-	(*data)->MapDisplay->map = (char **)malloc(sizeof(char *) * 2);
 	(*data)->MapDisplay->textures = (t_textures *)malloc(sizeof(t_textures));
 	(*data)->win = (t_win *)malloc(sizeof(t_win));
 	(*data)->MapDisplay->CeilingColor = (t_colors *)malloc(sizeof(t_colors));

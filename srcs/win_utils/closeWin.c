@@ -15,6 +15,6 @@
 int closeWin(t_data *Data)
 {
 	mlx_destroy_window(Data->mlx_ptr, Data->win->mlx_win);
-	ft_lstdelete(&Data->MapDisplay->map);
+	freeArray((*Data).MapDisplay->map);
 	exit(0);
 }

@@ -81,27 +81,26 @@ void	draw_player(t_data **data)
 	((RESOLUTION) * sin((*data)->player->initialAngle)));
 }
 
-void	draw_mini_map(t_data **data, t_lst **map, char *line)
+void	draw_mini_map(t_data **data)
 {
 	int		x;
 	int		y;
-	t_lst	*tmp;
+	int		j;
 
 	y = 0;
-	tmp = (*map);
+	j = 0;
 	draw_wall(data);
-	while (tmp)
+	while ((*data)->MapDisplay->map[j])
 	{
 		x = 0;
-		line = tmp->content;
-		while (line[x / RESOLUTION])
+		while ((*data)->MapDisplay->map[j][x / RESOLUTION])
 		{
-			if (is_valid_char(line[x / RESOLUTION]))
+			if (is_valid_char((*data)->MapDisplay->map[j][x / RESOLUTION]))
 				put_square_in_image(data, x, y, create_rgb(115, 113, 113));
 			x += RESOLUTION;
 		}
 		y += RESOLUTION;
-		tmp = tmp->next;
+		j++;
 	}
 	draw_player(data);
 	mlx_put_image_to_window((*data)->mlx_ptr, (*data)->win->mlx_win, \
@@ -120,8 +119,7 @@ void	draw_map(t_data **data)
 	(*data)->img->addr = mlx_get_data_addr((*data)->img->img, \
 		&((*data)->img->bits_per_pixel), &((*data)->img->line_length), \
 		&((*data)->img->endian));
-	draw_mini_map(data, &(*data)->MapDisplay->map, \
-		(*data)->MapDisplay->map->content);
+	draw_mini_map(data);
 	mlx_loop_hook((*data)->mlx_ptr, handler, data);
 	mlx_loop((*data)->mlx_ptr);
 }

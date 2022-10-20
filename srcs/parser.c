@@ -37,25 +37,36 @@ int	parse_texture(char *line, char **Data)
 	return (1);
 }
 
+int arr_len(char **arr)
+{
+	int i = 0;
+
+	while(arr[i])
+		i++;
+	return(i);
+}
+
 static int	parse_map(char *line, t_data **Data, int fd)
 {
 	int	i;
+	char *one_line_map;
 
+	one_line_map = line;
 	i = skip_space(line);
 	while (line && line[i] && line[i] == '1')
 	{
 		i = 0;
 		if (ft_strlen(line) > (*Data)->MapDisplay->NbrOfColumns)
 			(*Data)->MapDisplay->NbrOfColumns = ft_strlen(line);
-		ft_lstadd_back(&(*Data)->MapDisplay->map, ft_lstnew(line));
-		(*Data)->MapDisplay->NbrOfRows++;
-		free(line);
+		one_line_map = ft_strjoin(one_line_map, line);
 		line = get_next_line(fd);
 		i = skip_space(line);
 		if(line && line[i] && line[i] != '1')
 			ErrorMessage("Invalid map");
 	}
 	free(line);
+	(*Data)->MapDisplay->map = ft_split(one_line_map, '\n');
+	(*Data)->MapDisplay->NbrOfRows = arr_len((*Data)->MapDisplay->map);
 	check_map_is_valid(Data);
 	return (0);
 }
