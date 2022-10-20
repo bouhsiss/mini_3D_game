@@ -14,24 +14,19 @@
 
 void checkWallCollision(t_data **data)
 {
-	int nextPosX;
-	int nextPosY;
 	int i;
 	int j;
 	t_lst *map = (*data)->MapDisplay->map;
 	char *content;
-	int walkdir = (*data)->player->walkDirection;
-	nextPosX = (*data)->player->x + (cos((*data)->player->initialAngle  + (*data)->player->sideAngle*DEGREE) * (walkdir * (((*data)->player->moveSpeed) + RADIUS)));
-	nextPosY = (*data)->player->y + (sin((*data)->player->initialAngle  + (*data)->player->sideAngle*DEGREE) * (walkdir * (((*data)->player->moveSpeed) + RADIUS)));
-	i = nextPosX / RESOLUTION;
-	j = nextPosY / RESOLUTION;
+	i = ((*data)->player->x + (cos((*data)->player->initialAngle  + (*data)->player->sideAngle*DEGREE) * ((*data)->player->walkDirection * (((*data)->player->moveSpeed))))) / RESOLUTION;
+	j = ((*data)->player->y + (sin((*data)->player->initialAngle  + (*data)->player->sideAngle*DEGREE) * ((*data)->player->walkDirection * (((*data)->player->moveSpeed))))) / RESOLUTION;
 	while(j)
 	{
 		map = map->next;
 		j--;
 	}
 	content = map->content;
-	if(content[i] != '1')
+	if(content[i] != '1' && content[i] != ' ')
 	{
 		(*data)->player->x += (cos((*data)->player->initialAngle  + (*data)->player->sideAngle*DEGREE) * ((*data)->player->walkDirection * ((*data)->player->moveSpeed))) ;
 		(*data)->player->y +=  (sin((*data)->player->initialAngle  + (*data)->player->sideAngle*DEGREE) * ((*data)->player->walkDirection * ((*data)->player->moveSpeed)));

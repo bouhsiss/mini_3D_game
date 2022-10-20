@@ -115,13 +115,17 @@ int ft_strisdigit(char *str);
 void isMapValid(t_lst **maphead);
 int	check_map_is_valid(t_data **data);
 int	skip_space(char *str);
-void DrawMap(t_data **Data);
+void draw_map(t_data **Data);
 int closeWin(t_data *Data);
 int movePlayer(int keycode, t_data **data);
 void draw_mini_map(t_data **Data, t_lst **map, char *line);
 int keyrelease(int keycode, t_data **data);
 int handler(t_data **data);
 void checkWallCollision(t_data **data);
+int	is_valid_char(char c);
+unsigned long	create_rgb(int r, int g, int b);
+void	my_mlx_pixel_put(t_img *img, int x, int y, int color);
+void	put_square_in_image(t_data **data, int x, int y, unsigned long color);
 
 
 #endif
