@@ -117,7 +117,7 @@ int	check_map_is_valid(t_data **data);
 int	skip_space(char *str);
 void draw_map(t_data **Data);
 int closeWin(t_data *Data);
-int movePlayer(int keycode, t_data **data);
+int	move_player(int keycode, t_data **data);
 void draw_mini_map(t_data **Data, t_lst **map, char *line);
 int keyrelease(int keycode, t_data **data);
 int handler(t_data **data);

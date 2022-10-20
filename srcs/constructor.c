@@ -12,27 +12,30 @@
 
 #include "cub3D.h"
 
-void constructor(t_data **Data)
+void	heap_allocation(t_data **data)
 {
-	(*Data) = (t_data *)malloc(sizeof(t_data));
-	(*Data)->MapDisplay = (t_map *)malloc(sizeof(t_map));
-	(*Data)->MapDisplay->textures = (t_textures *)malloc(sizeof(t_textures));
-	(*Data)->win = (t_win *)malloc(sizeof(t_win));
-	(*Data)->MapDisplay->CeilingColor = (t_colors *)malloc(sizeof(t_colors));
-	(*Data)->MapDisplay->FloorColor = (t_colors *)malloc(sizeof(t_colors));
-	(*Data)->img = (t_img *)malloc(sizeof(t_img));
-	(*Data)->player = (t_player *)malloc(sizeof(t_player));
-	/* == heap allocation == */
+	(*data) = (t_data *)malloc(sizeof(t_data));
+	(*data)->MapDisplay = (t_map *)malloc(sizeof(t_map));
+	(*data)->MapDisplay->map = (char **)malloc(sizeof(char *) * 2);
+	(*data)->MapDisplay->textures = (t_textures *)malloc(sizeof(t_textures));
+	(*data)->win = (t_win *)malloc(sizeof(t_win));
+	(*data)->MapDisplay->CeilingColor = (t_colors *)malloc(sizeof(t_colors));
+	(*data)->MapDisplay->FloorColor = (t_colors *)malloc(sizeof(t_colors));
+	(*data)->img = (t_img *)malloc(sizeof(t_img));
+	(*data)->player = (t_player *)malloc(sizeof(t_player));
+}
 
-	(*Data)->MapDisplay->NbrOfColumns = 0;
-	(*Data)->MapDisplay->NbrOfRows = 0;
-	(*Data)->MapDisplay->map = NULL;
-	(*Data)->player->turnDirection = 0;
-	(*Data)->player->walkDirection = 0;
-	(*Data)->player->initialAngle = NORTH + (FOV/2);
-	(*Data)->player->sideAngle = 0;
-	(*Data)->player->moveSpeed = 3;
-	(*Data)->player->rotationSpeed = 3*DEGREE;
+void	constructor(t_data **data)
+{
+	heap_allocation(data);
+	(*data)->MapDisplay->NbrOfColumns = 0;
+	(*data)->MapDisplay->NbrOfRows = 0;
+	(*data)->MapDisplay->map = NULL;
+	(*data)->player->turnDirection = 0;
+	(*data)->player->walkDirection = 0;
+	(*data)->player->sideAngle = 0;
+	(*data)->player->moveSpeed = 3;
+	(*data)->player->rotationSpeed = 3 * DEGREE;
 }
 
 //implement hooks and to turn the player :
