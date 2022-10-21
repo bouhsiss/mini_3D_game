@@ -90,7 +90,7 @@ typedef struct s_data{
 	void *mlx_ptr;
 }t_data;
 
-void ErrorMessage(char *message);
+void error_message(char *message);
 char	*ft_strchr(const char *s, int c);
 void Parser(char *MapPath, t_data **Data);
 void constructor(t_data **Data);
@@ -98,7 +98,7 @@ char	*get_next_line(int fd);
 char	*ft_strjoin(char const *s1, char const *s2);
 int ft_strlen(char *str);
 char	**ft_split(char const *s, char c);
-void freeArray(char **arr);
+void free_array(char **arr);
 bool ft_isspace(char c);
 char	*ft_substr(char *s, int start, int len);
 int	ft_strncmp(const char *s1, const char *s2, size_t n);
@@ -116,7 +116,7 @@ void isMapValid(t_lst **maphead);
 int	check_map_is_valid(t_data **data);
 int	skip_space(char *str);
 void draw_map(t_data **Data);
-int closeWin(t_data *Data);
+int close_win(t_data *Data);
 int	move_player(int keycode, t_data **data);
 void draw_mini_map(t_data **Data);
 int keyrelease(int keycode, t_data **data);
@@ -127,6 +127,8 @@ unsigned long	create_rgb(int r, int g, int b);
 void	my_mlx_pixel_put(t_img *img, int x, int y, int color);
 void	put_square_in_image(t_data **data, int x, int y, unsigned long color);
 void	*ft_memcpy(void *dst, const void *src, size_t n);
+int	open_file(char *MapPath);
+void	parser(char *MapPath, t_data **Data);
 
 
 #endif

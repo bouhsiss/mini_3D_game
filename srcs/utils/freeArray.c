@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   freeArray.c                                        :+:      :+:    :+:   */
+/*   free_array.c                                        :+:      :+:    :+:  */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hbouhsis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,12 +12,12 @@
 
 #include "cub3D.h"
 
-void freeArray(char **arr)
+void	free_array(char **arr)
 {
-	int i;
+	int	i;
 
 	i = -1;
-	while(arr[++i])
+	while (arr[++i])
 		free(arr[i]);
 	free(arr);
 }

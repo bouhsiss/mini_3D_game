@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ErrorMessage.c                                     :+:      :+:    :+:   */
+/*   error_message.c                                     :+:      :+:    :+:  */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hbouhsis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,10 +12,10 @@
 
 #include "cub3D.h"
 
-void ErrorMessage(char *message)
+void	error_message(char *message)
 {
 	printf("Error : \n");
-	printf("%s",message);
+	printf("%s", message);
 	printf("\n");
 	exit(EXIT_FAILURE);
 }

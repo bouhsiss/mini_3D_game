@@ -15,7 +15,7 @@
 int	keyrelease(int keycode, t_data **data)
 {
 	if (keycode == 53)
-		closeWin((*data));
+		close_win((*data));
 	if (keycode == S_KEY)
 		(*data)->player->walkDirection = 0;
 	if (keycode == W_KEY)
@@ -40,7 +40,7 @@ int	keyrelease(int keycode, t_data **data)
 int	move_player(int keycode, t_data **data)
 {
 	if (keycode == 53)
-		closeWin((*data));
+		close_win((*data));
 	if (keycode == S_KEY)
 		(*data)->player->walkDirection = -1;
 	if (keycode == W_KEY)

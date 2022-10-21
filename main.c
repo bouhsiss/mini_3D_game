@@ -19,10 +19,10 @@ int	main(int ac, char **av)
 	if (ac == 2)
 	{
 		constructor(&data);
-		Parser(av[1], &data);
+		parser(av[1], &data);
 		draw_map(&data);
-		freeArray(data->MapDisplay->map);
+		free_array(data->MapDisplay->map);
 	}
 	else
-		ErrorMessage("Usage : ./cub3D < .cub map file >");
+		error_message("Usage : ./cub3D < .cub map file >");
 }

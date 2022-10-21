@@ -28,7 +28,7 @@ void	constructor(t_data **data)
 {
 	heap_allocation(data);
 	(*data)->MapDisplay->NbrOfColumns = 0;
-	(*data)->MapDisplay->NbrOfRows = 0;
+	(*data)->MapDisplay->NbrOfRows = 1;
 	(*data)->MapDisplay->map = NULL;
 	(*data)->player->turnDirection = 0;
 	(*data)->player->walkDirection = 0;

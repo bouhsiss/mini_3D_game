@@ -12,12 +12,11 @@
 
 #include "cub3D.h"
 
-
 char	*ft_substr(char *s, int start, int len)
 {
-	char			*substr;
-	int 		size;
-	int 		i;
+	char	*substr;
+	int		size;
+	int		i;
 
 	size = len;
 	if (!(s))

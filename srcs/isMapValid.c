@@ -35,12 +35,12 @@ int check_two_line(char *curr_line,char *prev_line , int i)
 {
 	if( (ft_isspace(curr_line[i]) && is_valid_char(curr_line[i -1])) || ((is_valid_char(curr_line[i])  
 		&& ( ft_isspace(curr_line[i - 1])|| ft_strlen(prev_line) - 2 < i || ft_isspace(prev_line[i])))))
-		ErrorMessage("Invalid map.4");
+		error_message("Invalid map.4");
 	else if( ft_strlen(prev_line) - 2 > i && ((ft_isspace(prev_line[i]) && is_valid_char(prev_line[i -1])) || ((is_valid_char(prev_line[i])  
 		&& ( ft_isspace(prev_line[i - 1]) || ft_strlen(curr_line) - 2 < i || ft_isspace(curr_line[i]))))))
-			ErrorMessage("Invalid map 5");
+			error_message("Invalid map 5");
 	else if( !is_valid_char(curr_line[i]) && curr_line[i] != '1' && !ft_isspace(curr_line[i]))
-		ErrorMessage("Invalid map 6");
+		error_message("Invalid map 6");
 	return(0);
 }
 
@@ -72,7 +72,7 @@ int	check_map_is_valid(t_data **data)
 	curr = 0;
 	prev = 0;
 	if(check_first_and_last_line((*data)->MapDisplay->map[prev]))
-		ErrorMessage("Invalid map.1");
+		error_message("Invalid map.1");
 	while ((*data)->MapDisplay->map[curr])
 	{
 		curr_line = (*data)->MapDisplay->map[curr];
@@ -83,13 +83,13 @@ int	check_map_is_valid(t_data **data)
 			if(curr_line[i] == 'N' || curr_line[i] == 'S' || curr_line[i] == 'E' || curr_line[i] == 'W')
 				flag += savePlayerPos(i, curr, data, curr_line[i]);
 			if (check_two_line(curr_line, prev_line, i) || flag > 1)
-				ErrorMessage("Invalid map.2");
+				error_message("Invalid map.2");
 			i--;
 		}
 		prev = curr;
 		curr++;
 	}
 	if(check_first_and_last_line(curr_line) || flag == 0)
-		ErrorMessage("Invalid map.3");
+		error_message("Invalid map.3");
 	return 0;
 }

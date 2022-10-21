@@ -1,24 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_front.c                                  :+:      :+:    :+:   */
+/*   close_win.c                                         :+:      :+:    :+:  */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hbouhsis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/19 11:02:19 by hbouhsis          #+#    #+#             */
-/*   Updated: 2022/10/19 11:02:22 by hbouhsis         ###   ########.fr       */
+/*   Created: 2022/10/19 11:01:44 by hbouhsis          #+#    #+#             */
+/*   Updated: 2022/10/19 11:01:47 by hbouhsis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-void	ft_lstadd_front(t_lst **lst, t_lst *new)
+int	close_win(t_data *Data)
 {
-	if (!new)
-		return ;
-	new->next = *lst;
-	new->previous = NULL;
-	if((*lst) != NULL)
-		(*lst)->previous = new;
-	*lst = new;
+	mlx_destroy_window(Data->mlx_ptr, Data->win->mlx_win);
+	free_array((*Data).MapDisplay->map);
+	exit(0);
 }
