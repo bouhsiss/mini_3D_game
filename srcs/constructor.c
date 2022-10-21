@@ -36,12 +36,3 @@ void	constructor(t_data **data)
 	(*data)->player->moveSpeed = 3;
 	(*data)->player->rotationSpeed = 3 * DEGREE;
 }
-
-//implement hooks and to turn the player :
-// update the rotation angle by incrementing it by (turndirection * rotationspeed)'
-
-//implement hooks to move the player :
-//update the x and y by incrementing it by (cos and sin of rotaion angle *(walkdirection * move speed))
-
-// x = j * Resolution + (resolution/2)
-// i = (x - (Resolution/ 2) ) / resolution

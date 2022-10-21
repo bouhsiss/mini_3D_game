@@ -21,7 +21,7 @@ int	main(int ac, char **av)
 		constructor(&data);
 		Parser(av[1], &data);
 		draw_map(&data);
-		// system("Leaks cub3D");
+		freeArray(data->MapDisplay->map);
 	}
 	else
 		ErrorMessage("Usage : ./cub3D < .cub map file >");

@@ -126,6 +126,7 @@ int	is_valid_char(char c);
 unsigned long	create_rgb(int r, int g, int b);
 void	my_mlx_pixel_put(t_img *img, int x, int y, int color);
 void	put_square_in_image(t_data **data, int x, int y, unsigned long color);
+void	*ft_memcpy(void *dst, const void *src, size_t n);
 
 
 #endif

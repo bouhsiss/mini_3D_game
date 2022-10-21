@@ -49,7 +49,8 @@ int arr_len(char **arr)
 static int	parse_map(char *line, t_data **Data, int fd)
 {
 	int	i;
-	char *one_line_map;
+	char *one_line_map = NULL;
+	
 
 	one_line_map = line;
 	i = skip_space(line);
@@ -63,9 +64,11 @@ static int	parse_map(char *line, t_data **Data, int fd)
 		i = skip_space(line);
 		if(line && line[i] && line[i] != '1')
 			ErrorMessage("Invalid map");
+		free(line);
 	}
 	free(line);
 	(*Data)->MapDisplay->map = ft_split(one_line_map, '\n');
+	free(one_line_map);
 	(*Data)->MapDisplay->NbrOfRows = arr_len((*Data)->MapDisplay->map);
 	check_map_is_valid(Data);
 	return (0);

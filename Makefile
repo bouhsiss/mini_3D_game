@@ -10,7 +10,7 @@ NAME = cub3D
 
 CC = gcc
 MLX_FLAGS = -lmlx -framework OpenGL -framework AppKit 
-CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g #-fsanitize=address
 INCFLAG = -I./includes
 
 SRCS = ./main.c ./srcs/parser.c ./srcs/utils/ErrorMessage.c ./srcs/utils/ft_strchr.c  \
@@ -19,7 +19,8 @@ SRCS = ./main.c ./srcs/parser.c ./srcs/utils/ErrorMessage.c ./srcs/utils/ft_strc
 ./srcs/utils/ft_strdup.c ./srcs/constructor.c ./srcs/lstUtils/ft_lstadd_back.c ./srcs/lstUtils/ft_lstadd_front.c \
 ./srcs/lstUtils/ft_lstdelete.c ./srcs/lstUtils/ft_lstlast.c ./srcs/lstUtils/ft_lstnew.c ./srcs/lstUtils/ft_lstsize.c \
 ./srcs/lstUtils/ft_lstprint.c ./srcs/utils/ft_atoi.c ./srcs/utils/ft_strisdigit.c ./srcs/isMapValid.c\
-./srcs/draw_map.c ./srcs/win_utils/closeWin.c ./srcs/movePlayer.c ./srcs/hooks_handler.c ./srcs/utils/drawing_utils.c
+./srcs/draw_map.c ./srcs/win_utils/closeWin.c ./srcs/movePlayer.c ./srcs/hooks_handler.c ./srcs/utils/drawing_utils.c \
+./srcs/utils/ft_memcpy.c
 
 all : $(NAME)
 
