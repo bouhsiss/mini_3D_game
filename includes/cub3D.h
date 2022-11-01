@@ -13,12 +13,12 @@
 
 # define PI 3.14159265
 # define DEGREE 3.14159265/180
-# define RESOLUTION 20
-# define RADIUS 5
-# define NORTH 0*DEGREE
-# define EAST 90*DEGREE
-# define SOUTH 180*DEGREE
-# define WEST 270*DEGREE
+# define RESOLUTION 30 
+# define RADIUS 8
+# define NORTH 90*DEGREE
+# define EAST 0*DEGREE
+# define SOUTH 270*DEGREE
+# define WEST 180*DEGREE
 # define LINE_LENGTH 60
 # define FOV 60*DEGREE
 # define S_KEY 1
@@ -27,6 +27,8 @@
 # define D_KEY 0
 # define RIGHT_ARROW 123
 # define LEFT_ARROW 124
+# define RAY_STRIP_WIDTH 10
+
 typedef struct s_lst
 {
 	void *content;
@@ -71,15 +73,15 @@ typedef struct s_img {
 }t_img;
 
 typedef struct s_player{
-	double x;
-	double y;
+	float x;
+	float y;
 	int height;
 	int turnDirection;
 	int walkDirection;
-	double sideAngle;
-	double initialAngle;
+	float sideAngle;
+	float initialAngle;
 	float moveSpeed;
-	double rotationSpeed;
+	float rotationSpeed;
 }t_player;
 
 typedef struct s_data{
@@ -121,7 +123,6 @@ int	move_player(int keycode, t_data **data);
 void draw_mini_map(t_data **Data);
 int keyrelease(int keycode, t_data **data);
 int handler(t_data **data);
-void checkWallCollision(t_data **data);
 int	is_valid_char(char c);
 unsigned long	create_rgb(int r, int g, int b);
 void	my_mlx_pixel_put(t_img *img, int x, int y, int color);
@@ -129,6 +130,10 @@ void	put_square_in_image(t_data **data, int x, int y, unsigned long color);
 void	*ft_memcpy(void *dst, const void *src, size_t n);
 int	open_file(char *MapPath);
 void	parser(char *MapPath, t_data **Data);
-
+void	drawline(t_data **data, int dx, int dy, unsigned long color);
+void draw_fov(t_data **data, float line_length);
+void	draw_player(t_data **data);
+float find_horizontal_intersection(t_data **data);
+bool	check_is_wall(t_data **data, int next_x, int next_y);
 
 #endif

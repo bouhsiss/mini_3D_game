@@ -38,7 +38,7 @@ void	draw_wall(t_data **data)
 	}
 }
 
-void	drawline(t_data **data, int dx, int dy)
+void	drawline(t_data **data, int dx, int dy, unsigned long color)
 {
 	int		steps;
 	float	x;
@@ -49,12 +49,12 @@ void	drawline(t_data **data, int dx, int dy)
 	x = (*data)->player->x;
 	y = (*data)->player->y;
 	if (abs(dx) > abs(dy))
-		steps = abs(dx);
+		steps = abs(dx) * 10;
 	else
-		steps = abs(dy);
+		steps = abs(dy) * 10;
 	while (i <= steps)
 	{
-		my_mlx_pixel_put((*data)->img, x, y, create_rgb(218, 0, 55));
+		my_mlx_pixel_put((*data)->img, x, y, color);
 		x += dx / (float)steps;
 		y += dy / (float)steps;
 		i++;
@@ -63,22 +63,20 @@ void	drawline(t_data **data, int dx, int dy)
 
 void	draw_player(t_data **data)
 {
-	double	angle;
+	float	angle;
 	int		color;
-	double	x;
-	double	y;
+	float	x;
+	float	y;
 
-	color = create_rgb(218, 0, 55);
+	color = create_rgb(255, 122, 78);
 	angle = 0;
 	while (angle <= 360)
 	{
-		x = RADIUS * cos(angle);
-		y = RADIUS * sin(angle);
-		drawline(data, x, y);
+		x = (RADIUS * cos(angle));
+		y = (RADIUS * sin(angle));
+		drawline(data, x, y, color);
 		angle += 0.01f;
 	}
-	drawline(data, ((RESOLUTION) * cos((*data)->player->initialAngle)), \
-	((RESOLUTION) * sin((*data)->player->initialAngle)));
 }
 
 void	draw_mini_map(t_data **data)
@@ -102,9 +100,6 @@ void	draw_mini_map(t_data **data)
 		y += RESOLUTION;
 		j++;
 	}
-	draw_player(data);
-	mlx_put_image_to_window((*data)->mlx_ptr, (*data)->win->mlx_win, \
-	(*data)->img->img, 0, 0);
 }
 
 void	draw_map(t_data **data)
@@ -119,7 +114,9 @@ void	draw_map(t_data **data)
 	(*data)->img->addr = mlx_get_data_addr((*data)->img->img, \
 		&((*data)->img->bits_per_pixel), &((*data)->img->line_length), \
 		&((*data)->img->endian));
-	draw_mini_map(data);
+	// draw_mini_map(data);
+	draw_fov(data, RESOLUTION);
+	// draw_player(data);
 	mlx_loop_hook((*data)->mlx_ptr, handler, data);
 	mlx_loop((*data)->mlx_ptr);
 }
