@@ -52,7 +52,7 @@ void	drawline(t_data **data, float dx, float dy, unsigned long color)
 		steps = fabs(dx);
 	else
 		steps = fabs(dy);
-	while (i < steps)
+	while (i <= steps)
 	{
 		my_mlx_pixel_put((*data)->img, x, y, color);
 		x += dx / steps;
@@ -70,12 +70,12 @@ void	draw_player(t_data **data)
 
 	color = create_rgb(255, 122, 78);
 	angle = 0;
-	while (angle <= 360)
+	while (angle <= 2*PI)
 	{
 		x = (RADIUS * cos(angle));
 		y = (RADIUS * sin(angle));
 		drawline(data, x, y, color);
-		angle += 0.005f;
+		angle += 0.0001f;
 	}
 }
 

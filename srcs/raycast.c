@@ -115,16 +115,6 @@ float	cast_a_one_single_lonely_ray(t_data **data, float ray_angle)
 	}
 }
 
-float	sanitize(float angle)
-{
-	angle = fmod(angle, (2 * PI));
-	if (angle < 0)
-	{
-		angle = angle + (2 * PI);
-	}
-	return (angle);
-}
-
 void	cast_rays(t_data **data)
 {
 	int		num_rays;
@@ -133,13 +123,13 @@ void	cast_rays(t_data **data)
 
 	i = 0;
 	num_rays = (((*data)->MapDisplay->NbrOfColumns * TILE_SIZE));
-	ray_angle = sanitize((*data)->player->initialAngle) - (FOV / 2);
+	ray_angle = fmod(2*PI  + fmod((*data)->player->initialAngle, 2*PI), 2*PI) - (FOV / 2);
 	(*data)->rays = malloc(sizeof(int) * (num_rays + 1));
 	while (i < num_rays)
 	{
+		ray_angle = fmod(2*PI  + fmod(ray_angle, 2*PI), 2*PI);
 		(*data)->rays[i] = cast_a_one_single_lonely_ray(data, ray_angle);
 		ray_angle += FOV / num_rays;
-		ray_angle = sanitize(ray_angle);
 		i++;
 	}
 	(*data)->rays[i] = 0;

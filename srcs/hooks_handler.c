@@ -12,14 +12,16 @@
 
 #include "cub3D.h"
 
-void	update(t_data **data)
+void	update(t_data **data, float next_x, float next_y)
 {
-	(*data)->player->x += (cos((*data)->player->initialAngle + \
-		(*data)->player->sideAngle * DEGREE) * ((*data)->player->walkDirection \
-		* ((*data)->player->moveSpeed)));
-	(*data)->player->y += (sin((*data)->player->initialAngle + \
-		(*data)->player->sideAngle * DEGREE) * ((*data)->player->walkDirection \
-		* ((*data)->player->moveSpeed)));
+// 	(*data)->player->x = (cos((*data)->player->initialAngle + \
+// 		(*data)->player->sideAngle * DEGREE) * ((*data)->player->walkDirection \
+// 		* ((*data)->player->moveSpeed)));
+// 	(*data)->player->y = (sin((*data)->player->initialAngle + \
+// 		(*data)->player->sideAngle * DEGREE) * ((*data)->player->walkDirection \
+// 		* ((*data)->player->moveSpeed)));
+	(*data)->player->x = next_x;
+	(*data)->player->y = next_y;
 }
 
 bool	check_is_wall(t_data **data, float next_x, float next_y)
@@ -41,8 +43,8 @@ bool	check_is_wall(t_data **data, float next_x, float next_y)
 
 void	update_player_pos(t_data **data, t_player **player)
 {
-	int	next_x;
-	int	next_y;
+	float	next_x;
+	float	next_y;
 
 	next_x = ((*player)->x + (cos((*player)->initialAngle + \
 		(*player)->sideAngle * DEGREE) * ((*player)->walkDirection * \
@@ -50,8 +52,12 @@ void	update_player_pos(t_data **data, t_player **player)
 	next_y = ((*player)->y + (sin((*player)->initialAngle + \
 		(*player)->sideAngle * DEGREE) * ((*player)->walkDirection * \
 		(((*player)->moveSpeed)))));
-	if (check_is_wall(data, next_x, next_y) == false)
-		update(data);
+	// if (check_is_wall(data, next_x, next_y) == false)
+	// 	update(data);
+	if(check_is_wall(data, next_x, (*player)->y) == false)
+		update(data, next_x, (*player)->y);
+	if(check_is_wall(data, (*player)->x, next_y) == false)
+		update(data, (*player)->x, next_y);
 }
 
 int	handler(t_data **data)
