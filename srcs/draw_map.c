@@ -43,15 +43,15 @@ void	drawline(t_data **data, int dx, int dy, unsigned long color)
 	int		steps;
 	float	x;
 	float	y;
-	int		i;
+	float	i;
 
 	i = 0;
 	x = (*data)->player->x;
 	y = (*data)->player->y;
 	if (abs(dx) > abs(dy))
-		steps = abs(dx) * 10;
+		steps = abs(dx)*10;
 	else
-		steps = abs(dy) * 10;
+		steps = abs(dy)*10;
 	while (i <= steps)
 	{
 		my_mlx_pixel_put((*data)->img, x, y, color);
@@ -105,18 +105,18 @@ void	draw_mini_map(t_data **data)
 void	draw_map(t_data **data)
 {
 	(*data)->mlx_ptr = mlx_init();
+	// (*data)->win->mlx_win = mlx_new_window((*data)->mlx_ptr, \
+	// 	(*data)->MapDisplay->NbrOfColumns * RESOLUTION, \
+	// 	(*data)->MapDisplay->NbrOfRows * RESOLUTION, "SmolWolf3D");
 	(*data)->win->mlx_win = mlx_new_window((*data)->mlx_ptr, \
-		(*data)->MapDisplay->NbrOfColumns * RESOLUTION, \
-		(*data)->MapDisplay->NbrOfRows * RESOLUTION, "SmolWolf3D");
-	(*data)->img->img = mlx_new_image((*data)->mlx_ptr, \
-		RESOLUTION * (*data)->MapDisplay->NbrOfColumns, \
-		RESOLUTION * (*data)->MapDisplay->NbrOfRows);
+		WINDOW_WIDTH, WINDOW_HEIGHT, "SmolWolf3D");
+	// (*data)->img->img = mlx_new_image((*data)->mlx_ptr, \
+	// 	RESOLUTION * (*data)->MapDisplay->NbrOfColumns, \
+	// 	RESOLUTION * (*data)->MapDisplay->NbrOfRows);
+	(*data)->img->img = mlx_new_image((*data)->mlx_ptr,WINDOW_WIDTH, WINDOW_HEIGHT);
 	(*data)->img->addr = mlx_get_data_addr((*data)->img->img, \
 		&((*data)->img->bits_per_pixel), &((*data)->img->line_length), \
 		&((*data)->img->endian));
-	// draw_mini_map(data);
-	draw_fov(data, RESOLUTION);
-	// draw_player(data);
 	mlx_loop_hook((*data)->mlx_ptr, handler, data);
 	mlx_loop((*data)->mlx_ptr);
 }

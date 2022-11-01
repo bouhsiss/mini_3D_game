@@ -22,25 +22,6 @@ void	update(t_data **data)
 		* ((*data)->player->moveSpeed)));
 }
 
-// bool	check_wall_collision(t_data **data, t_player **player)
-// {
-// 	int		i;
-// 	int		j;
-// 	char	**map;
-
-// 	map = (*data)->MapDisplay->map;
-// 	i = ((*player)->x + (cos((*player)->initialAngle + (*player)->sideAngle * \
-// 		DEGREE) * ((*player)->walkDirection * (((*player)->moveSpeed))))) \
-// 		/ RESOLUTION;
-// 	j = ((*player)->y + (sin((*player)->initialAngle + (*player)->sideAngle * \
-// 		DEGREE) * ((*player)->walkDirection * (((*player)->moveSpeed))))) \
-// 		/ RESOLUTION;
-// 	if (map[j][i] != '1' && map[j][i] != ' ')
-// 		return(false);
-// 	else
-// 		return(true);
-// }
-
 bool	check_is_wall(t_data **data, int next_x, int next_y)
 {
 	int		i;
@@ -48,26 +29,28 @@ bool	check_is_wall(t_data **data, int next_x, int next_y)
 	char	**map;
 
 	map = (*data)->MapDisplay->map;
-	i = next_x / RESOLUTION;
-	j = next_y / RESOLUTION;
+	i = abs(next_x / RESOLUTION);
+	j = abs(next_y / RESOLUTION);
 	if (map[j][i] != '1' && map[j][i] != ' ')
 	{
-		return(false);
+		return (false);
 	}
 	else
-		return(true);
+		return (true);
 }
 
-void update_player_pos(t_data **data, t_player **player)
+void	update_player_pos(t_data **data, t_player **player)
 {
-	int next_x;
-	int next_y;
+	int	next_x;
+	int	next_y;
 
-	next_x = ((*player)->x + (cos((*player)->initialAngle + (*player)->sideAngle * \
-		DEGREE) * ((*player)->walkDirection * (((*player)->moveSpeed)))));
-	next_y = ((*player)->y + (sin((*player)->initialAngle + (*player)->sideAngle * \
-		DEGREE) * ((*player)->walkDirection * (((*player)->moveSpeed)))));
-	if(check_is_wall(data, next_x, next_y) == false)
+	next_x = ((*player)->x + (cos((*player)->initialAngle + \
+		(*player)->sideAngle * DEGREE) * ((*player)->walkDirection * \
+		(((*player)->moveSpeed)))));
+	next_y = ((*player)->y + (sin((*player)->initialAngle + \
+		(*player)->sideAngle * DEGREE) * ((*player)->walkDirection * \
+		(((*player)->moveSpeed)))));
+	if (check_is_wall(data, next_x, next_y) == false)
 		update(data);
 }
 
@@ -80,8 +63,9 @@ int	handler(t_data **data)
 		(*data)->player->rotationSpeed;
 	update_player_pos(data, &(*data)->player);
 	draw_mini_map(data);
-	draw_fov(data, RESOLUTION);
+	cast_rays(data);
 	draw_player(data);
+	render_walls(data);
 	mlx_put_image_to_window((*data)->mlx_ptr, (*data)->win->mlx_win, \
 	(*data)->img->img, 0, 0);
 	return (0);

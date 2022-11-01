@@ -11,10 +11,10 @@
 # include <mlx.h>
 # include <math.h>
 
-# define PI 3.14159265
+# define PI 3.141592
 # define DEGREE 3.14159265/180
-# define RESOLUTION 30 
-# define RADIUS 8
+# define RESOLUTION 20 
+# define RADIUS 5
 # define NORTH 90*DEGREE
 # define EAST 0*DEGREE
 # define SOUTH 270*DEGREE
@@ -27,7 +27,9 @@
 # define D_KEY 0
 # define RIGHT_ARROW 123
 # define LEFT_ARROW 124
-# define RAY_STRIP_WIDTH 10
+# define RAY_STRIP_WIDTH 5
+# define WINDOW_WIDTH 1920
+# define WINDOW_HEIGHT 1080
 
 typedef struct s_lst
 {
@@ -88,6 +90,7 @@ typedef struct s_data{
 	t_map *MapDisplay;
 	t_win *win;
 	t_player *player;
+	float *rays;
 	t_img *img;
 	void *mlx_ptr;
 }t_data;
@@ -131,9 +134,10 @@ void	*ft_memcpy(void *dst, const void *src, size_t n);
 int	open_file(char *MapPath);
 void	parser(char *MapPath, t_data **Data);
 void	drawline(t_data **data, int dx, int dy, unsigned long color);
-void draw_fov(t_data **data, float line_length);
+void cast_rays(t_data **data);
 void	draw_player(t_data **data);
 float find_horizontal_intersection(t_data **data);
 bool	check_is_wall(t_data **data, int next_x, int next_y);
+void  render_walls(t_data **data);
 
 #endif

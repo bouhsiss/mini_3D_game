@@ -33,6 +33,6 @@ void	constructor(t_data **data)
 	(*data)->player->turnDirection = 0;
 	(*data)->player->walkDirection = 0;
 	(*data)->player->sideAngle = 0;
-	(*data)->player->moveSpeed = 4;
+	(*data)->player->moveSpeed = 3;
 	(*data)->player->rotationSpeed = 3 * DEGREE;
 }
