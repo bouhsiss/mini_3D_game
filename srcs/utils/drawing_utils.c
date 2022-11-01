@@ -25,6 +25,27 @@ void	my_mlx_pixel_put(t_img *img, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
+void put_rectangle_in_image(t_data **data, int x, int y, int length)
+{
+	int i;
+	int j;
+	int tmp_x;
+
+	i = 0;
+	tmp_x = x;
+	while(++i < length)
+	{
+		x = tmp_x;
+		j = 0;
+		while(++j <=  RAY_STRIP_WIDTH)
+		{
+			my_mlx_pixel_put((*data)->img, x, y, create_rgb(255,0,0));
+			x++;
+		}
+		y++;
+	}
+}
+
 void	put_square_in_image(t_data **data, int x, int y, unsigned long color)
 {
 	int	i;
@@ -33,11 +54,11 @@ void	put_square_in_image(t_data **data, int x, int y, unsigned long color)
 
 	i = 0;
 	tmp_x = x;
-	while (++i < RESOLUTION)
+	while (++i < TILE_SIZE)
 	{
 		x = tmp_x;
 		j = 0;
-		while (++j < RESOLUTION)
+		while (++j < TILE_SIZE)
 		{
 			my_mlx_pixel_put((*data)->img, x, y, color);
 			x++;

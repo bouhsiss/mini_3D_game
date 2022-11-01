@@ -19,7 +19,7 @@ SRCS = ./main.c ./srcs/parser.c ./srcs/utils/ErrorMessage.c ./srcs/utils/ft_strc
 ./srcs/utils/ft_strdup.c ./srcs/constructor.c ./srcs/utils/ft_atoi.c ./srcs/utils/ft_strisdigit.c ./srcs/isMapValid.c\
 ./srcs/draw_map.c ./srcs/movePlayer.c ./srcs/hooks_handler.c ./srcs/utils/drawing_utils.c \
 ./srcs/utils/ft_memcpy.c ./srcs/utils/open_file.c ./srcs/utils/closeWin.c \
-./srcs/raycast.c
+./srcs/raycast.c ./srcs/render_Walls.c
 
 all : $(NAME)
 

@@ -30,17 +30,17 @@ void	draw_wall(t_data **data)
 	int	y;
 
 	y = -1;
-	while (++y < RESOLUTION * (*data)->MapDisplay->NbrOfRows)
+	while (++y < TILE_SIZE * (*data)->MapDisplay->NbrOfRows)
 	{
 		x = -1;
-		while (++x < RESOLUTION * (*data)->MapDisplay->NbrOfColumns)
+		while (++x < TILE_SIZE * (*data)->MapDisplay->NbrOfColumns)
 			my_mlx_pixel_put((*data)->img, x, y, create_rgb(23, 23, 23));
 	}
 }
 
-void	drawline(t_data **data, int dx, int dy, unsigned long color)
+void	drawline(t_data **data, float dx, float dy, unsigned long color)
 {
-	int		steps;
+	float		steps;
 	float	x;
 	float	y;
 	float	i;
@@ -48,15 +48,15 @@ void	drawline(t_data **data, int dx, int dy, unsigned long color)
 	i = 0;
 	x = (*data)->player->x;
 	y = (*data)->player->y;
-	if (abs(dx) > abs(dy))
-		steps = abs(dx)*10;
+	if (fabs(dx) > fabs(dy))
+		steps = fabs(dx);
 	else
-		steps = abs(dy)*10;
-	while (i <= steps)
+		steps = fabs(dy);
+	while (i < steps)
 	{
 		my_mlx_pixel_put((*data)->img, x, y, color);
-		x += dx / (float)steps;
-		y += dy / (float)steps;
+		x += dx / steps;
+		y += dy / steps;
 		i++;
 	}
 }
@@ -75,7 +75,7 @@ void	draw_player(t_data **data)
 		x = (RADIUS * cos(angle));
 		y = (RADIUS * sin(angle));
 		drawline(data, x, y, color);
-		angle += 0.01f;
+		angle += 0.005f;
 	}
 }
 
@@ -91,13 +91,13 @@ void	draw_mini_map(t_data **data)
 	while ((*data)->MapDisplay->map[j])
 	{
 		x = 0;
-		while ((*data)->MapDisplay->map[j][x / RESOLUTION])
+		while ((*data)->MapDisplay->map[j][x / TILE_SIZE])
 		{
-			if (is_valid_char((*data)->MapDisplay->map[j][x / RESOLUTION]))
+			if (is_valid_char((*data)->MapDisplay->map[j][x / TILE_SIZE]))
 				put_square_in_image(data, x, y, create_rgb(115, 113, 113));
-			x += RESOLUTION;
+			x += TILE_SIZE;
 		}
-		y += RESOLUTION;
+		y += TILE_SIZE;
 		j++;
 	}
 }
@@ -105,15 +105,15 @@ void	draw_mini_map(t_data **data)
 void	draw_map(t_data **data)
 {
 	(*data)->mlx_ptr = mlx_init();
-	// (*data)->win->mlx_win = mlx_new_window((*data)->mlx_ptr, \
-	// 	(*data)->MapDisplay->NbrOfColumns * RESOLUTION, \
-	// 	(*data)->MapDisplay->NbrOfRows * RESOLUTION, "SmolWolf3D");
 	(*data)->win->mlx_win = mlx_new_window((*data)->mlx_ptr, \
-		WINDOW_WIDTH, WINDOW_HEIGHT, "SmolWolf3D");
-	// (*data)->img->img = mlx_new_image((*data)->mlx_ptr, \
-	// 	RESOLUTION * (*data)->MapDisplay->NbrOfColumns, \
-	// 	RESOLUTION * (*data)->MapDisplay->NbrOfRows);
-	(*data)->img->img = mlx_new_image((*data)->mlx_ptr,WINDOW_WIDTH, WINDOW_HEIGHT);
+		(*data)->MapDisplay->NbrOfColumns * TILE_SIZE, \
+		(*data)->MapDisplay->NbrOfRows * TILE_SIZE, "SmolWolf3D");
+	// (*data)->win->mlx_win = mlx_new_window((*data)->mlx_ptr, \
+	// 	WINDOW_WIDTH, WINDOW_HEIGHT, "SmolWolf3D");
+	(*data)->img->img = mlx_new_image((*data)->mlx_ptr, \
+		TILE_SIZE * (*data)->MapDisplay->NbrOfColumns, \
+		TILE_SIZE * (*data)->MapDisplay->NbrOfRows);
+	// (*data)->img->img = mlx_new_image((*data)->mlx_ptr,WINDOW_WIDTH, WINDOW_HEIGHT);
 	(*data)->img->addr = mlx_get_data_addr((*data)->img->img, \
 		&((*data)->img->bits_per_pixel), &((*data)->img->line_length), \
 		&((*data)->img->endian));

@@ -22,15 +22,15 @@ void	update(t_data **data)
 		* ((*data)->player->moveSpeed)));
 }
 
-bool	check_is_wall(t_data **data, int next_x, int next_y)
+bool	check_is_wall(t_data **data, float next_x, float next_y)
 {
 	int		i;
 	int		j;
 	char	**map;
 
 	map = (*data)->MapDisplay->map;
-	i = abs(next_x / RESOLUTION);
-	j = abs(next_y / RESOLUTION);
+	i = fabs(next_x / TILE_SIZE);
+	j = fabs(next_y / TILE_SIZE);
 	if (map[j][i] != '1' && map[j][i] != ' ')
 	{
 		return (false);
