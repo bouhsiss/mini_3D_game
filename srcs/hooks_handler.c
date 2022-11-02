@@ -31,8 +31,8 @@ bool	check_is_wall(t_data **data, float next_x, float next_y)
 	char	**map;
 
 	map = (*data)->MapDisplay->map;
-	i = fabs(next_x / TILE_SIZE);
-	j = fabs(next_y / TILE_SIZE);
+	i = next_x / TILE_SIZE;
+	j = next_y / TILE_SIZE;
 	if (map[j][i] != '1' && map[j][i] != ' ')
 	{
 		return (false);
@@ -52,8 +52,6 @@ void	update_player_pos(t_data **data, t_player **player)
 	next_y = ((*player)->y + (sin((*player)->initialAngle + \
 		(*player)->sideAngle * DEGREE) * ((*player)->walkDirection * \
 		(((*player)->moveSpeed)))));
-	// if (check_is_wall(data, next_x, next_y) == false)
-	// 	update(data);
 	if(check_is_wall(data, next_x, (*player)->y) == false)
 		update(data, next_x, (*player)->y);
 	if(check_is_wall(data, (*player)->x, next_y) == false)
