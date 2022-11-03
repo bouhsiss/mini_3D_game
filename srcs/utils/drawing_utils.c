@@ -25,28 +25,51 @@ void	my_mlx_pixel_put(t_img *img, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
-void put_rectangle_in_image(t_data **data, int x, int y, int length)
+
+void darw_rectangle(t_data **data, int x, int y, float length)
 {
 	int i;
 	int j;
 	int tmp_x;
+	unsigned long color;
 
 	i = 0;
 	tmp_x = x;
+	color = 0xbf0001;
 	while(++i < length)
 	{
 		x = tmp_x;
 		j = 0;
 		while(++j <=  RAY_STRIP_WIDTH)
 		{
-			my_mlx_pixel_put((*data)->img, x, y, create_rgb(255,0,0));
+			my_mlx_pixel_put((*data)->img, x, y, color);
 			x++;
 		}
 		y++;
 	}
 }
 
-void	put_square_in_image(t_data **data, int x, int y, unsigned long color)
+void draw_background(t_data **data, unsigned long floor_color, unsigned long ceiling_color)
+{
+	int x;
+	int y;
+
+	y =  -1;
+	while(++y < (WINDOW_HEIGHT)/2)
+	{
+		x = -1;
+		while(++x < WINDOW_WIDTH)
+			my_mlx_pixel_put((*data)->img, x, y, ceiling_color);
+	}
+	while(++y < (WINDOW_HEIGHT))
+	{
+		x = -1;
+		while(++x < WINDOW_WIDTH)
+			my_mlx_pixel_put((*data)->img, x, y, floor_color);
+	}
+}
+
+void	draw_square(t_data **data, int x, int y, unsigned long color)
 {
 	int	i;
 	int	j;
@@ -54,15 +77,38 @@ void	put_square_in_image(t_data **data, int x, int y, unsigned long color)
 
 	i = 0;
 	tmp_x = x;
-	while (++i < TILE_SIZE)
+	while (++i < MINI_MAP_TILE_SIZE)
 	{
 		x = tmp_x;
 		j = 0;
-		while (++j < TILE_SIZE)
+		while (++j < MINI_MAP_TILE_SIZE)
 		{
 			my_mlx_pixel_put((*data)->img, x, y, color);
 			x++;
 		}
 		y++;
+	}
+}
+
+void	drawline(t_data **data, float dx, float dy, unsigned long color)
+{
+	float		steps;
+	float	x;
+	float	y;
+	float	i;
+
+	i = 0;
+	x = (*data)->player->x;
+	y = (*data)->player->y;
+	if (fabs(dx) > fabs(dy))
+		steps = fabs(dx);
+	else
+		steps = fabs(dy);
+	while (i <= steps)
+	{
+		my_mlx_pixel_put((*data)->img, x, y, color);
+		x += dx / steps;
+		y += dy / steps;
+		i++;
 	}
 }

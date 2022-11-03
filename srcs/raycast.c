@@ -17,7 +17,7 @@ int	up_or_down(float angle, int *var_y)
 	if (angle >= 0 && angle <= PI)
 	{
 		*var_y = 1;
-		return (TILE_SIZE);
+		return (MINI_MAP_TILE_SIZE);
 	}
 	else
 	{
@@ -36,7 +36,7 @@ int	right_or_left(float ray_angle, int *var_x)
 	else
 	{
 		*var_x = 1;
-		return (TILE_SIZE);
+		return (MINI_MAP_TILE_SIZE);
 	}
 }
 
@@ -44,20 +44,20 @@ bool hit_wall(t_data **data, float next_x, float next_y, float ray_angle)
 {
 	int i;
 	int j;
-	int r_l;
-	int o_d;
+	int right_left;
+	int up_down;
 	char **map;
 
-	right_or_left(ray_angle, &r_l);
-	up_or_down(ray_angle, &o_d);
+	right_or_left(ray_angle, &right_left);
+	up_or_down(ray_angle, &up_down);
 	map = (*data)->MapDisplay->map;
-	i = next_x / TILE_SIZE;
-	j = next_y / TILE_SIZE;
+	i = next_x / MINI_MAP_TILE_SIZE;
+	j = next_y / MINI_MAP_TILE_SIZE;
 	if(map[j][i] == '1')
 		return(true);
-	else if( (i < ft_strlen(map[j-o_d]))&& (j-o_d) < (*data)->MapDisplay->NbrOfRows && (i-r_l) < ft_strlen(map[j]))
+	else if( (i < ft_strlen(map[j-up_down]))&& (j-up_down) < (*data)->MapDisplay->NbrOfRows && (i-right_left) < ft_strlen(map[j]))
 	{
-		if((map[j-o_d][i] == '1' && map[j][i-r_l] == '1'))
+		if((map[j-up_down][i] == '1' && map[j][i-right_left] == '1'))
 			return(true);
 	}
 	else
@@ -74,16 +74,16 @@ float	find_h_intersection(t_data **data, float ray_angle)
 	float	delta_y;
 	int		var_y;
 
-	inter_y = (*data)->player->y / TILE_SIZE;
-	inter_y = (int)inter_y * TILE_SIZE + up_or_down(ray_angle, &var_y);
+	inter_y = (*data)->player->y / MINI_MAP_TILE_SIZE;
+	inter_y = (int)inter_y * MINI_MAP_TILE_SIZE + up_or_down(ray_angle, &var_y);
 	inter_x = (*data)->player->x + (inter_y - (*data)->player->y) / \
 		tan(ray_angle);
-	delta_y = var_y * TILE_SIZE;
-	delta_x = var_y * (TILE_SIZE / tan(ray_angle));
-	while ((int)inter_y / TILE_SIZE >= 0 && (int)inter_y / \
-		TILE_SIZE < (*data)->MapDisplay->NbrOfRows && (int)inter_x / \
-		TILE_SIZE >= 0 && (int)inter_x / TILE_SIZE <= \
-		ft_strlen(((*data)->MapDisplay->map[(int)inter_y / TILE_SIZE])))
+	delta_y = var_y * MINI_MAP_TILE_SIZE;
+	delta_x = var_y * (MINI_MAP_TILE_SIZE / tan(ray_angle));
+	while ((int)inter_y / MINI_MAP_TILE_SIZE >= 0 && (int)inter_y / \
+		MINI_MAP_TILE_SIZE < (*data)->MapDisplay->NbrOfRows && (int)inter_x / \
+		MINI_MAP_TILE_SIZE >= 0 && (int)inter_x / MINI_MAP_TILE_SIZE <= \
+		ft_strlen(((*data)->MapDisplay->map[(int)inter_y / MINI_MAP_TILE_SIZE])))
 	{
 		if(hit_wall(data, inter_x, inter_y, ray_angle) == true)
 			return(hypot(fabs(inter_x - (*data)->player->x), fabs(inter_y - (*data)->player->y)));
@@ -101,16 +101,16 @@ float	find_v_intersection(t_data **data, float ray_angle)
 	float	delta_y;
 	int		var_x;
 
-	inter_x = (*data)->player->x / TILE_SIZE;
-	inter_x = (int)inter_x * TILE_SIZE + right_or_left(ray_angle, &var_x);
+	inter_x = (*data)->player->x / MINI_MAP_TILE_SIZE;
+	inter_x = (int)inter_x * MINI_MAP_TILE_SIZE + right_or_left(ray_angle, &var_x);
 	inter_y = (*data)->player->y + (inter_x - (*data)->player->x) * \
 		tan(ray_angle);
-	delta_x = var_x * TILE_SIZE;
-	delta_y = var_x * TILE_SIZE * tan(ray_angle);
-	while ((int)inter_y / TILE_SIZE >= 0 && (int)inter_y / \
-		TILE_SIZE < (*data)->MapDisplay->NbrOfRows && (int)inter_x / \
-		TILE_SIZE >= 0 && (int)inter_x / TILE_SIZE <= \
-		ft_strlen(((*data)->MapDisplay->map[(int)inter_y / TILE_SIZE])))
+	delta_x = var_x * MINI_MAP_TILE_SIZE;
+	delta_y = var_x * MINI_MAP_TILE_SIZE * tan(ray_angle);
+	while ((int)inter_y / MINI_MAP_TILE_SIZE >= 0 && (int)inter_y / \
+		MINI_MAP_TILE_SIZE < (*data)->MapDisplay->NbrOfRows && (int)inter_x / \
+		MINI_MAP_TILE_SIZE >= 0 && (int)inter_x / MINI_MAP_TILE_SIZE <= \
+		ft_strlen(((*data)->MapDisplay->map[(int)inter_y / MINI_MAP_TILE_SIZE])))
 	{
 		if(hit_wall(data, inter_x, inter_y, ray_angle) == true)
 			return(hypot(fabs(inter_x - (*data)->player->x), fabs(inter_y - (*data)->player->y)));
@@ -127,7 +127,7 @@ float	cast_a_one_single_lonely_ray(t_data **data, float ray_angle)
 
 	h_intersection = find_h_intersection(data, ray_angle);
 	v_intersection = find_v_intersection(data, ray_angle);
-	if (h_intersection < v_intersection || v_intersection < 0)
+	if (h_intersection <= v_intersection)
 	{
 		drawline(data, cos(ray_angle) * (h_intersection), sin(ray_angle) * \
 		h_intersection, 0xB7CFFF);
@@ -139,24 +139,4 @@ float	cast_a_one_single_lonely_ray(t_data **data, float ray_angle)
 		v_intersection, 0xB7CFFF);
 		return (v_intersection);
 	}
-}
-
-void	cast_rays(t_data **data)
-{
-	int		num_rays;
-	float	ray_angle;
-	int		i;
-
-	i = 0;
-	num_rays = (((*data)->MapDisplay->NbrOfColumns * TILE_SIZE));
-	ray_angle = fmod(2*PI  + fmod((*data)->player->initialAngle, 2*PI), 2*PI) - (FOV / 2);
-	(*data)->rays = malloc(sizeof(int) * (num_rays + 1));
-	while (i < num_rays)
-	{
-		ray_angle = fmod(2*PI  + fmod(ray_angle, 2*PI), 2*PI);
-		(*data)->rays[i] = cast_a_one_single_lonely_ray(data, ray_angle);
-		ray_angle += FOV / num_rays;
-		i++;
-	}
-	(*data)->rays[i] = 0;
 }

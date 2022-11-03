@@ -47,12 +47,6 @@ static int    parse_map(char *line, t_data **Data, int fd)
     free(line);
     (*Data)->MapDisplay->map = ft_split(one_line_map, ',');
     free(one_line_map);
-    // int j = 0;
-    // while((*Data)->MapDisplay->map[j])
-    // {
-    //     printf("%s\n", (*Data)->MapDisplay->map[j]);
-    //     j++;
-    // }
     check_map_is_valid(Data);
     return (0);
 }
@@ -103,7 +97,7 @@ static int	parse_line(char *line, t_data **Data, t_map **Map, int fd)
 		else if (line[i] == '1')
 			return (parse_map(line, Data, fd));
 		else
-			error_message("Invalid map 4");
+			error_message("Invalid map");
 	}
 	return (1);
 }

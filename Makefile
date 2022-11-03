@@ -17,10 +17,9 @@ SRCS = ./main.c ./srcs/parser.c ./srcs/utils/ErrorMessage.c ./srcs/utils/ft_strc
 ./srcs/utils/ft_strncmp.c ./srcs/utils/ft_split.c ./srcs/utils/ft_strjoin.c ./srcs/utils/ft_strlen.c \
 ./srcs/utils/getnextline.c ./srcs/utils/freeArray.c ./srcs/utils/ft_isspace.c ./srcs/utils/ft_substr.c \
 ./srcs/utils/ft_strdup.c ./srcs/constructor.c ./srcs/utils/ft_atoi.c ./srcs/utils/ft_strisdigit.c ./srcs/isMapValid.c\
-./srcs/draw_map.c ./srcs/movePlayer.c ./srcs/hooks_handler.c ./srcs/utils/drawing_utils.c \
-./srcs/utils/ft_memcpy.c ./srcs/utils/open_file.c ./srcs/utils/closeWin.c \
-./srcs/raycast.c ./srcs/render_Walls.c
-
+./srcs/draw_map.c ./srcs/move_player..c ./srcs/utils/drawing_utils.c \
+./srcs/utils/ft_memcpy.c ./srcs/utils/open_file.c \
+./srcs/raycast.c ./srcs/key_hooks.c ./srcs/mlx_tools.c ./srcs/render_map.c
 all : $(NAME)
 
 $(NAME) :

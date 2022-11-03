@@ -29,10 +29,12 @@ void	constructor(t_data **data)
 	heap_allocation(data);
 	(*data)->MapDisplay->NbrOfColumns = 0;
 	(*data)->MapDisplay->NbrOfRows = 0;
+	(*data)->win->width = WINDOW_WIDTH;
+	(*data)->win->height = WINDOW_HEIGHT;
 	(*data)->MapDisplay->map = NULL;
 	(*data)->player->turnDirection = 0;
 	(*data)->player->walkDirection = 0;
 	(*data)->player->sideAngle = 0;
-	(*data)->player->moveSpeed = 3;
-	(*data)->player->rotationSpeed = 3 * DEGREE;
+	(*data)->player->moveSpeed = 1;
+	(*data)->player->rotationSpeed = 1 * DEGREE;
 }

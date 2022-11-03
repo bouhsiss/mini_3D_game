@@ -37,7 +37,7 @@ int	keyrelease(int keycode, t_data **data)
 	return (0);
 }
 
-int	move_player(int keycode, t_data **data)
+int	key_press(int keycode, t_data **data)
 {
 	if (keycode == 53)
 		close_win((*data));
