@@ -14,14 +14,14 @@
 # define PI 3.141592
 # define DEGREE 3.14159265/180
 # define MINI_MAP_TILE_SIZE 10
-# define TILE_SIZE 64
+# define TILE_SIZE 32
 # define RADIUS 2
 # define NORTH 90*DEGREE
 # define EAST 0*DEGREE
 # define SOUTH 270*DEGREE
 # define WEST 180*DEGREE
 # define LINE_LENGTH 60
-# define HORZ_FOV 90*DEGREE
+# define HORZ_FOV 60*DEGREE
 # define VERT_FOV 60*DEGREE
 # define S_KEY 1
 # define A_KEY 2
@@ -32,10 +32,10 @@
 # define RAY_STRIP_WIDTH 5
 // # define WINDOW_WIDTH 3200
 // # define WINDOW_HEIGHT 2000
-// # define WINDOW_WIDTH 1600
-// # define WINDOW_HEIGHT 900
-# define WINDOW_WIDTH 960
-# define WINDOW_HEIGHT 640
+# define WINDOW_WIDTH 1600
+# define WINDOW_HEIGHT 900
+// # define WINDOW_WIDTH 960
+// # define WINDOW_HEIGHT 600
 
 typedef struct s_lst
 {
@@ -146,7 +146,7 @@ void	draw_player(t_data **data);
 float find_horizontal_intersection(t_data **data);
 bool	check_is_wall(t_data **data, float next_x, float next_y);
 void  render_walls(t_data **data);
-void darw_rectangle(t_data **data, int x, int y, float length);
+void draw_rectangle(t_data **data, int x, int y, float length);
 void init_mlx_loop(t_data **data);
 float	cast_a_one_single_lonely_ray(t_data **data, float ray_angle);
 void	move_player(t_data **data, t_player **player);

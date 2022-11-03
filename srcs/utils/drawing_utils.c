@@ -22,11 +22,11 @@ void	my_mlx_pixel_put(t_img *img, int x, int y, int color)
 	char	*dst;
 
 	dst = img->addr + (y * img->line_length + x * (img->bits_per_pixel / 8));
-	*(unsigned int *)dst = color;
+	*(int *)dst = color;
 }
 
 
-void darw_rectangle(t_data **data, int x, int y, float length)
+void draw_rectangle(t_data **data, int x, int y, float length)
 {
 	int i;
 	int j;
@@ -36,16 +36,19 @@ void darw_rectangle(t_data **data, int x, int y, float length)
 	i = 0;
 	tmp_x = x;
 	color = 0xbf0001;
+	if(length >= WINDOW_HEIGHT)
+	{
+		length = WINDOW_HEIGHT - 1;
+		y = 0;
+	}
 	while(++i < length)
 	{
 		x = tmp_x;
 		j = 0;
 		while(++j <=  RAY_STRIP_WIDTH)
 		{
-			my_mlx_pixel_put((*data)->img, x, y, color);
-			x++;
+			my_mlx_pixel_put((*data)->img, x+j, y+i, color);
 		}
-		y++;
 	}
 }
 

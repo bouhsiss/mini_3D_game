@@ -15,9 +15,10 @@ int	handler(t_data **data)
 	mlx_hook((*data)->win->mlx_win, 03, 1L << 1, keyrelease, data);
 	(*data)->player->initialAngle += (*data)->player->turnDirection * \
 		(*data)->player->rotationSpeed;
+	(*data)->player->initialAngle = fmod(2*PI + fmod((*data)->player->initialAngle, 2*PI), 2*PI);
 	draw_background(data, 0x9b7653, 0x87ceeb);
+	// draw_mini_map(data);
 	move_player(data, &(*data)->player);
-	draw_mini_map(data);
 	render_map(data);
 	draw_player(data);
 	mlx_put_image_to_window((*data)->mlx_ptr, (*data)->win->mlx_win, \
