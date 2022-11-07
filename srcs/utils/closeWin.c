@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   close_win.c                                         :+:      :+:    :+:  */
+/*   closeWin.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbouhsis <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: omeslall <omeslall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 11:01:44 by hbouhsis          #+#    #+#             */
-/*   Updated: 2022/10/19 11:01:47 by hbouhsis         ###   ########.fr       */
+/*   Updated: 2022/11/04 18:37:39 by omeslall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,5 @@ int	close_win(t_data *Data)
 {
 	mlx_destroy_window(Data->mlx_ptr, Data->win->mlx_win);
 	free_array((*Data).MapDisplay->map);
-	// system("leaks cub3D");
 	exit(0);
 }

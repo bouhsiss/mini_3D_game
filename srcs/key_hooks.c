@@ -12,6 +12,7 @@
 
 #include "cub3D.h"
 
+
 int	keyrelease(int keycode, t_data **data)
 {
 	if (keycode == 53)

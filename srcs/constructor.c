@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   constructor.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbouhsis <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: omeslall <omeslall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 11:01:08 by hbouhsis          #+#    #+#             */
-/*   Updated: 2022/10/19 11:01:12 by hbouhsis         ###   ########.fr       */
+/*   Updated: 2022/11/06 22:49:31 by omeslall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,10 @@ void	constructor(t_data **data)
 	heap_allocation(data);
 	(*data)->MapDisplay->NbrOfColumns = 0;
 	(*data)->MapDisplay->NbrOfRows = 0;
-	(*data)->win->width = WINDOW_WIDTH;
-	(*data)->win->height = WINDOW_HEIGHT;
 	(*data)->MapDisplay->map = NULL;
 	(*data)->player->turnDirection = 0;
 	(*data)->player->walkDirection = 0;
 	(*data)->player->sideAngle = 0;
-	(*data)->player->moveSpeed = 0.5f;
-	(*data)->player->rotationSpeed = 1 * DEGREE;
+	(*data)->player->moveSpeed = 2;
+	(*data)->player->rotationSpeed = 2 * DEGREE;
 }
