@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omeslall <omeslall@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hbouhsis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 11:01:26 by hbouhsis          #+#    #+#             */
-/*   Updated: 2022/10/21 14:20:14 by omeslall         ###   ########.fr       */
+/*   Updated: 2022/10/19 11:02:02 by hbouhsis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,38 +23,32 @@ int	parse_texture(char *line, char **Data)
 	return (1);
 }
 
-static int	parse_map(char *line, t_data **Data, int fd)
+static int    parse_map(char *line, t_data **Data, int fd)
 {
-	int		i;
-	char	*one_line_map;
+    int        i;
+    char    *one_line_map;
 
-	one_line_map = ft_strdup("\0");
-	i = skip_space(line);
-	while (line && line[i] && line[i] == '1')
-	{
-		i = 0;
-		if (ft_strlen(line) > (*Data)->MapDisplay->NbrOfColumns)
-			(*Data)->MapDisplay->NbrOfColumns = ft_strlen(line);
-		one_line_map = ft_strjoin(one_line_map, line);
-		one_line_map = ft_strjoin(one_line_map, ",");
-		free(line);
-		line = get_next_line(fd);
-		(*Data)->MapDisplay->NbrOfRows++;
-		i = skip_space(line);
-		if (line && line[i] && line[i] != '1')
-			error_message("Invalid map");
-	}
-	free(line);
-	(*Data)->MapDisplay->map = ft_split(one_line_map, ',');
-	free(one_line_map);
-	// int j = 0;
-	// while((*Data)->MapDisplay->map[j])
-	// {
-	// 	printf("%s\n", (*Data)->MapDisplay->map[j]);
-	// 	j++;
-	// }
-	check_map_is_valid(Data);
-	return (0);
+    one_line_map = ft_strdup("\0");
+    i = skip_space(line);
+    while (line && line[i] && line[i] == '1')
+    {
+        i = 0;
+        if (ft_strlen(line) > (*Data)->MapDisplay->NbrOfColumns)
+            (*Data)->MapDisplay->NbrOfColumns = ft_strlen(line);
+        one_line_map = ft_strjoin(one_line_map, line);
+        one_line_map = ft_strjoin(one_line_map, ",");
+        free(line);
+        line = get_next_line(fd);
+        (*Data)->MapDisplay->NbrOfRows++;
+        i = skip_space(line);
+        if (line && line[i] && line[i] != '1')
+            error_message("Invalid map");
+    }
+    free(line);
+    (*Data)->MapDisplay->map = ft_split(one_line_map, ',');
+    free(one_line_map);
+    check_map_is_valid(Data);
+    return (0);
 }
 
 int	parse_colors(char *line, t_colors **colors)
@@ -103,7 +97,7 @@ static int	parse_line(char *line, t_data **Data, t_map **Map, int fd)
 		else if (line[i] == '1')
 			return (parse_map(line, Data, fd));
 		else
-			error_message("Invalid map 4");
+			error_message("Invalid map");
 	}
 	return (1);
 }
