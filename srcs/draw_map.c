@@ -101,15 +101,15 @@ void	draw_minimap(t_data **data)
 	while ((*data)->MapDisplay->map[j])
 	{
 		x = 0;
-		while ((*data)->MapDisplay->map[j][x /TILE_SIZE/4])
+		while ((*data)->MapDisplay->map[j][x /MINIMAP_TILE_SIZE])
 		{
-			if (is_valid_char((*data)->MapDisplay->map[j][x / TILE_SIZE/4]))
+			if (is_valid_char((*data)->MapDisplay->map[j][x / MINIMAP_TILE_SIZE]))
 				draw_square(data, x, y, 0xF5EFE6);
 			// if((*data)->MapDisplay->map[j][x / MINIMAP_TILE_SIZE] == '1')
 			// 	draw_square(data, x, y, 0xc06b31);
-			x += TILE_SIZE/4;
+			x += MINIMAP_TILE_SIZE;
 		}
-		y += TILE_SIZE/4;
+		y += MINIMAP_TILE_SIZE;
 		j++;
 	}
 }
