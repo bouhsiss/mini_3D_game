@@ -25,8 +25,8 @@ bool	check_is_wall(t_data **data, float next_x, float next_y)
 	char	**map;
 
 	map = (*data)->MapDisplay->map;
-	i = next_x / MINI_MAP_TILE_SIZE;
-	j = next_y / MINI_MAP_TILE_SIZE;
+	i = next_x / MINIMAP_TILE_SIZE;
+	j = next_y / MINIMAP_TILE_SIZE;
 	if (map[j][i] != '1' && map[j][i] != ' ')
 	{
 		return (false);
@@ -50,4 +50,5 @@ void	move_player(t_data **data, t_player **player)
 		update(data, next_x, (*player)->y);
 	if(check_is_wall(data, (*player)->x, next_y) == false)
 		update(data, (*player)->x, next_y);
+	
 }

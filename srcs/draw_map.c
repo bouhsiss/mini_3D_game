@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw_map.c                                          :+:      :+:    :+:  */
+/*   draw_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbouhsis <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: omeslall <omeslall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 11:00:45 by hbouhsis          #+#    #+#             */
-/*   Updated: 2022/10/19 11:00:48 by hbouhsis         ###   ########.fr       */
+/*   Updated: 2022/11/01 17:37:31 by omeslall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,47 @@ create_rgb(0, 0, 0); // floor
 create_rgb(255, 255, 255);
 */
 
-void	draw_wall(t_data **data)
+void	drawline(t_data **data, float dx, float dy)
 {
-	int	x;
-	int	y;
+	float		steps;
+	float	x;
+	float	y;
+	float	i;
 
-	y = -1;
-	while (++y < MINI_MAP_TILE_SIZE * (*data)->MapDisplay->NbrOfRows)
+	i = 0;
+	x = (*data)->player->x;
+	y = (*data)->player->y;
+	if (fabsf(dx) > fabsf(dy))
+		steps = fabsf(dx);
+	else
+		steps = fabsf(dy);
+	while (i <= steps)
+	{
+		my_mlx_pixel_put((*data)->img, x, y, create_rgb(218, 0, 55));
+		x += dx / steps;
+		y += dy / steps;
+		i++;
+	}
+}
+
+
+void draw_background(t_data **data, unsigned long floor_color, unsigned long ceiling_color)
+{
+	int x;
+	int y;
+
+	y =  -1;
+	while(++y < (WINDOW_HEIGHT/2))
 	{
 		x = -1;
-		while (++x < MINI_MAP_TILE_SIZE * (*data)->MapDisplay->NbrOfColumns)
-			my_mlx_pixel_put((*data)->img, x, y, 0x808080);
+		while(++x < WINDOW_WIDTH)
+			my_mlx_pixel_put((*data)->img, x, y, ceiling_color);
+	}
+	while(++y < (WINDOW_HEIGHT))
+	{
+		x = -1;
+		while(++x < WINDOW_WIDTH)
+			my_mlx_pixel_put((*data)->img, x, y, floor_color);
 	}
 }
 
@@ -46,18 +76,20 @@ void	draw_player(t_data **data)
 	float	x;
 	float	y;
 
-	color = create_rgb(255, 122, 78);
+	color = create_rgb(218, 0, 55);
 	angle = 0;
-	while (angle <= 2*PI)
+	while (angle <= 360)
 	{
-		x = (RADIUS * cos(angle));
-		y = (RADIUS * sin(angle));
-		// drawline(data, x, y, color);
-		angle += 0.0001f;
+		x = RADIUS * cos(angle);
+		y = RADIUS * sin(angle);
+		my_mlx_pixel_put((*data)->img, (*data)->player->x + x, (*data)->player->y + y, create_rgb(0, 0, 0));
+		angle += 0.01f;
 	}
+	drawline(data, cos((*data)->player->initialAngle) * 10, sin((*data)->player->initialAngle) * 10);
+
 }
 
-void	draw_mini_map(t_data **data)
+void	draw_minimap(t_data **data)
 {
 	int		x;
 	int		y;
@@ -65,19 +97,27 @@ void	draw_mini_map(t_data **data)
 
 	y = 0;
 	j = 0;
-	draw_wall(data);
+	// draw_wall(data);
 	while ((*data)->MapDisplay->map[j])
 	{
 		x = 0;
-		while ((*data)->MapDisplay->map[j][x / MINI_MAP_TILE_SIZE])
+		while ((*data)->MapDisplay->map[j][x /TILE_SIZE/4])
 		{
-			if (is_valid_char((*data)->MapDisplay->map[j][x / MINI_MAP_TILE_SIZE]))
-				draw_square(data, x, y, create_rgb(0, 0, 0));
-			else if((*data)->MapDisplay->map[j][x / MINI_MAP_TILE_SIZE] == '1')
-				draw_square(data, x, y, create_rgb(255, 255, 255));
-			x += MINI_MAP_TILE_SIZE;
+			if (is_valid_char((*data)->MapDisplay->map[j][x / TILE_SIZE/4]))
+				draw_square(data, x, y, 0xF5EFE6);
+			// if((*data)->MapDisplay->map[j][x / MINIMAP_TILE_SIZE] == '1')
+			// 	draw_square(data, x, y, 0xc06b31);
+			x += TILE_SIZE/4;
 		}
-		y += MINI_MAP_TILE_SIZE;
+		y += TILE_SIZE/4;
 		j++;
 	}
 }
+
+// pseudo code to draw walls
+
+// wall top y = (window heigth/2) - (wall strip heigth/2)
+// wall top y = walltopy < 0 ? 0 : walltop y
+
+// wallbottomy = (window height/2) + (wall strip heigth/2)
+//wall bottom y = wallbottomy > windowheight ? window height : wall bottom y
