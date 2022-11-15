@@ -3,7 +3,7 @@
 void draw_in_window(t_data **data)
 {
 	draw_background(data, 0xc7b09a, 0x5b75a6);
-	// draw_minimap(data);
+	draw_minimap(data);
 	move_player(data, &(*data)->player);
 	cast_rays(*data);
 	draw_player(data);
@@ -58,13 +58,13 @@ void	init_mlx_loop(t_data **data)
 	(*data)->MapDisplay->wall->img = create_img((*data), "./wall.xpm");
 	(*data)->MapDisplay->wall_2->img = create_img((*data), "./wall_2.xpm");
 	// (*data)->win->mlx_win = mlx_new_window((*data)->mlx_ptr, \
-	// 	(*data)->MapDisplay->NbrOfColumns * MINIMAP_TILE_SIZE, \
-	// 	(*data)->MapDisplay->NbrOfRows * MINIMAP_TILE_SIZE, "SmolWolf3D");
+	// 	(*data)->MapDisplay->NbrOfColumns * TILE_SIZE, \
+	// 	(*data)->MapDisplay->NbrOfRows * TILE_SIZE, "SmolWolf3D");
 	(*data)->win->mlx_win = mlx_new_window((*data)->mlx_ptr, \
 		WINDOW_WIDTH, WINDOW_HEIGHT, "SmolWolf3D");
 	// (*data)->img->img = mlx_new_image((*data)->mlx_ptr, \
-	// 	MINIMAP_TILE_SIZE * (*data)->MapDisplay->NbrOfColumns, \
-	// 	MINIMAP_TILE_SIZE * (*data)->MapDisplay->NbrOfRows);
+	// 	TILE_SIZE * (*data)->MapDisplay->NbrOfColumns, \
+	// 	TILE_SIZE * (*data)->MapDisplay->NbrOfRows);
 	(*data)->img->img = mlx_new_image((*data)->mlx_ptr,WINDOW_WIDTH, WINDOW_HEIGHT);
 	(*data)->img->addr = mlx_get_data_addr((*data)->img->img, \
 		&((*data)->img->bits_per_pixel), &((*data)->img->line_length), \

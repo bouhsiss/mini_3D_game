@@ -25,8 +25,8 @@ bool	check_is_wall(t_data **data, float next_x, float next_y)
 	char	**map;
 
 	map = (*data)->MapDisplay->map;
-	i = next_x / MINIMAP_TILE_SIZE;
-	j = next_y / MINIMAP_TILE_SIZE;
+	i = next_x / TILE_SIZE;
+	j = next_y / TILE_SIZE;
 	if (map[j][i] != '1' && map[j][i] != ' ')
 	{
 		return (false);

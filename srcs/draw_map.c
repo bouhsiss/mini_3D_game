@@ -32,8 +32,8 @@ void	drawline(t_data **data, float dx, float dy)
 	float	i;
 
 	i = 0;
-	x = (*data)->player->x;
-	y = (*data)->player->y;
+	x = (*data)->player->x/MINIMAP_COEFF;
+	y = (*data)->player->y/MINIMAP_COEFF;
 	if (fabsf(dx) > fabsf(dy))
 		steps = fabsf(dx);
 	else
@@ -82,11 +82,10 @@ void	draw_player(t_data **data)
 	{
 		x = RADIUS * cos(angle);
 		y = RADIUS * sin(angle);
-		my_mlx_pixel_put((*data)->img, (*data)->player->x + x, (*data)->player->y + y, create_rgb(0, 0, 0));
+		my_mlx_pixel_put((*data)->img, ((*data)->player->x/MINIMAP_COEFF) + x, ((*data)->player->y/MINIMAP_COEFF) + y, create_rgb(0, 0, 0));
 		angle += 0.01f;
 	}
 	drawline(data, cos((*data)->player->initialAngle) * 10, sin((*data)->player->initialAngle) * 10);
-
 }
 
 void	draw_minimap(t_data **data)
@@ -97,19 +96,18 @@ void	draw_minimap(t_data **data)
 
 	y = 0;
 	j = 0;
-	// draw_wall(data);
 	while ((*data)->MapDisplay->map[j])
 	{
 		x = 0;
-		while ((*data)->MapDisplay->map[j][x /MINIMAP_TILE_SIZE])
+		while ((*data)->MapDisplay->map[j][x /(TILE_SIZE/MINIMAP_COEFF)])
 		{
-			if (is_valid_char((*data)->MapDisplay->map[j][x / MINIMAP_TILE_SIZE]))
+			if (is_valid_char((*data)->MapDisplay->map[j][x / (TILE_SIZE/MINIMAP_COEFF)]))
 				draw_square(data, x, y, 0xF5EFE6);
-			// if((*data)->MapDisplay->map[j][x / MINIMAP_TILE_SIZE] == '1')
+			// if((*data)->MapDisplay->map[j][x / TILE_SIZE] == '1')
 			// 	draw_square(data, x, y, 0xc06b31);
-			x += MINIMAP_TILE_SIZE;
+			x += TILE_SIZE/MINIMAP_COEFF;
 		}
-		y += MINIMAP_TILE_SIZE;
+		y += TILE_SIZE/MINIMAP_COEFF;
 		j++;
 	}
 }

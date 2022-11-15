@@ -17,10 +17,10 @@ bool	has_wall_at(float x,float y,t_data *data)
     int grid_index_x;
     int grid_index_y;
     
-    grid_index_y = (int)(y / MINIMAP_TILE_SIZE);
+    grid_index_y = (int)(y / TILE_SIZE);
     if(grid_index_y >= data->MapDisplay->NbrOfRows || grid_index_y < 0)
         return (false);
-    grid_index_x = (int)(x / MINIMAP_TILE_SIZE);
+    grid_index_x = (int)(x / TILE_SIZE);
     if(grid_index_x > ft_strlen(data->MapDisplay->map[grid_index_y]) - 1 || grid_index_x < 0)
         return (false);
     return (!is_valid_char(data->MapDisplay->map[grid_index_y][grid_index_x]));
@@ -42,14 +42,14 @@ t_horz	*init_t_horz(void)
 
 void	calculate_horz_step(t_horz *horz, t_data *data, t_ray *ray)
 {
-	horz->yintercept = ((int)((data->player->y / MINIMAP_TILE_SIZE)) * MINIMAP_TILE_SIZE);
+	horz->yintercept = ((int)((data->player->y / TILE_SIZE)) * TILE_SIZE);
     if (ray->if_down)
-        horz->yintercept += MINIMAP_TILE_SIZE;
+        horz->yintercept += TILE_SIZE;
     horz->xintercept = (data->player->x + (horz->yintercept - data->player->y) / tan(ray->ray_angle));
-    horz->h_ystep = MINIMAP_TILE_SIZE;
+    horz->h_ystep = TILE_SIZE;
     if (ray->if_up)
         horz->h_ystep *= -1;
-    horz->h_xstep = MINIMAP_TILE_SIZE / tan(ray->ray_angle);
+    horz->h_xstep = TILE_SIZE / tan(ray->ray_angle);
     if (ray->if_L && horz->h_xstep > 0)
         horz->h_xstep *= -1;
     if (ray->if_R && horz->h_xstep < 0)
@@ -64,7 +64,7 @@ t_distance	*horz_distance(t_ray *ray,t_data *data,t_distance *distance)
 	
 	horz = init_t_horz();
 	calculate_horz_step(horz, data, ray);
-    while (horz->xintercept >= 0 && horz->xintercept <= (data->MapDisplay->NbrOfColumns * MINIMAP_TILE_SIZE) && horz->yintercept >= 0 && horz->yintercept <= (data->MapDisplay->NbrOfRows * MINIMAP_TILE_SIZE))
+    while (horz->xintercept >= 0 && horz->xintercept <= (data->MapDisplay->NbrOfColumns * TILE_SIZE) && horz->yintercept >= 0 && horz->yintercept <= (data->MapDisplay->NbrOfRows * TILE_SIZE))
     {
         if (has_wall_at(horz->xintercept, horz->yintercept, data))
         {
@@ -84,6 +84,7 @@ t_distance	*horz_distance(t_ray *ray,t_data *data,t_distance *distance)
     }
 	if(horz->found_horz_wallhit)
 		distance->horz_distance = horz->horz_distance;
+	free(horz);
 	return (distance);
 }
 
@@ -103,14 +104,14 @@ t_vert	*init_t_vert(void)
 
 void	calculate_ver_step(t_vert *vert, t_data *data, t_ray *ray)
 {
-	vert->xintercept = ((int) ((data->player->x / MINIMAP_TILE_SIZE)) * MINIMAP_TILE_SIZE);
+	vert->xintercept = ((int) ((data->player->x / TILE_SIZE)) * TILE_SIZE);
     if (ray->if_R)
-        vert->xintercept += MINIMAP_TILE_SIZE;
+        vert->xintercept += TILE_SIZE;
     vert->yintercept = (data->player->y + (vert->xintercept - data->player->x ) * tan(ray->ray_angle));
-    vert->v_xstep = MINIMAP_TILE_SIZE;
+    vert->v_xstep = TILE_SIZE;
     if (ray->if_L)
         vert->v_xstep *= -1;
-    vert->v_ystep = MINIMAP_TILE_SIZE * tan(ray->ray_angle);
+    vert->v_ystep = TILE_SIZE * tan(ray->ray_angle);
     if (ray->if_up && vert->v_ystep > 0)
         vert->v_ystep *= -1;
     if (ray->if_down && vert->v_ystep < 0)
@@ -125,7 +126,7 @@ t_distance	*vert_distance(t_ray *ray,t_data *data,t_distance *distance)
 
 	vert = init_t_vert();
 	calculate_ver_step(vert, data, ray);
-    while (vert->xintercept >= 0 && vert->xintercept <= (data->MapDisplay->NbrOfColumns * MINIMAP_TILE_SIZE) && vert->yintercept >= 0 && vert->yintercept <= (data->MapDisplay->NbrOfRows * MINIMAP_TILE_SIZE))
+    while (vert->xintercept >= 0 && vert->xintercept <= (data->MapDisplay->NbrOfColumns * TILE_SIZE) && vert->yintercept >= 0 && vert->yintercept <= (data->MapDisplay->NbrOfRows * TILE_SIZE))
     {
         if (has_wall_at(vert->xintercept, vert->yintercept, data))
         {
@@ -145,6 +146,7 @@ t_distance	*vert_distance(t_ray *ray,t_data *data,t_distance *distance)
     }
 	if(vert->found_vert_wallhit)
 		distance->vert_distance = vert->vert_distance;
+	free(vert);
 	return (distance);
 }
 
@@ -168,15 +170,17 @@ void intercept(t_data *data)
 	distance = vert_distance(data->MapDisplay->ray, data, distance);
 	if (distance->vert_distance < distance->horz_distance)
 	{
-		data->MapDisplay->ray->distance = distance->vert_distance;
+		data->MapDisplay->ray->distance = distance->vert_distance/3;
+		// printf("ray %f\n", data->MapDisplay->ray->distance);
 		data->MapDisplay->ray->is_vert = true;
 	}
     else
 	{
-		data->MapDisplay->ray->distance = distance->horz_distance;
+		data->MapDisplay->ray->distance = distance->horz_distance/3;
+		// printf("ray %f\n", data->MapDisplay->ray->distance);
 		data->MapDisplay->ray->is_horz = true;
 	}
-
+	free(distance);
 }
 
 int adjust_length(int *wall_strip_height)
@@ -209,13 +213,13 @@ void map_texture_to_wall(t_data *data, int x, int y, t_ray *ray, int offset_y, f
 	if(ray->is_vert == true)
 	{
 		offset_x = (int)(fabs(ray->distance*sin(ray_angle))) % TILE_SIZE;
-		// color = my_mlx_pixel_get(data->MapDisplay->wall_2, offset_x, offset_y);
-		color = create_rgb(0,0,100);
+		color = my_mlx_pixel_get(data->MapDisplay->wall, offset_x, offset_y);
+		// color = create_rgb(0,0,100);
 	}
 	else
 	{
-		offset_x = (int)(fabs(ray->distance*cos(ray_angle))) % 	TILE_SIZE;
-		// color = my_mlx_pixel_get(data->MapDisplay->wall, offset_x, offset_y);
+		offset_x = (int)(fabs(ray->distance*cos(ray_angle))) % TILE_SIZE;
+		color = my_mlx_pixel_get(data->MapDisplay->wall_2, offset_x, offset_y);
 	}
 	my_mlx_pixel_put(data->img, x, y, color);
 }
@@ -228,8 +232,8 @@ void render_wall(t_data *data, float ray_length, float ray_angle, int x, t_ray *
 	int i;
 
 	i = -1;
-	distance_projection_plane = (WINDOW_WIDTH/2) * tan(30*DEGREE);
-	ray_length = ray_length * cos(ray_angle - data->player->initialAngle);
+	distance_projection_plane = (WINDOW_WIDTH/2) * tan(30*DEGREE); //461
+	ray_length = (ray_length * cos(ray_angle - data->player->initialAngle));
 	wall_strip_height = ((TILE_SIZE/(ray_length)) * distance_projection_plane);
 	y = adjust_length(&wall_strip_height);
 	// int offset_x;
@@ -254,10 +258,10 @@ void    cast_rays(t_data *data)
 	{
 		init_t_ray(&data->MapDisplay->ray, ray_angle);
 		intercept(data);
-		// drawline(&data, cos(ray_angle) * ray->distance , sin(ray_angle) * ray->distance);
+		// drawline(&data, cos(ray_angle) * data->MapDisplay->ray->distance , sin(ray_angle) * data->MapDisplay->ray->distance);
 		render_wall(data, data->MapDisplay->ray->distance, ray_angle, i, data->MapDisplay->ray);
         ray_angle += (FOV / WINDOW_WIDTH);
         columnID++;
     }
-	// draw_minimap(&data);
+	draw_minimap(&data);
 }

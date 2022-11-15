@@ -46,8 +46,8 @@ int check_two_line(char *curr_line,char *prev_line , int i)
 
 int savePlayerPos(int i, int j, t_data **data, char c)
 {
-	(*data)->player->x = i * MINIMAP_TILE_SIZE + (MINIMAP_TILE_SIZE / 2);
-	(*data)->player->y = j * MINIMAP_TILE_SIZE + (MINIMAP_TILE_SIZE / 2);
+	(*data)->player->x = i * TILE_SIZE + (TILE_SIZE / 2);
+	(*data)->player->y = j * TILE_SIZE + (TILE_SIZE / 2);
 	if(c == 'N')
 		(*data)->player->initialAngle = NORTH ;
 	if(c == 'S')

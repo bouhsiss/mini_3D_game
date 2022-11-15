@@ -1,4 +1,4 @@
-#ifndef CUB3D_H
+#ifndef CUB3D_H 
 #define CUB3D_H
 
 # include <stdio.h>
@@ -12,12 +12,12 @@
 # include <math.h>
 
 # define WINDOW_WIDTH 1600
-# define WINDOW_HEIGHT 1000
+# define WINDOW_HEIGHT 900
 
 # define PI 3.14159265
 # define DEGREE 3.14159265/180
-# define MINIMAP_TILE_SIZE 12
-# define TILE_SIZE 32
+# define MINIMAP_COEFF 8
+# define TILE_SIZE 64
 # define RADIUS 3
 # define NORTH 90*DEGREE
 # define EAST 0*DEGREE
