@@ -77,8 +77,10 @@ typedef struct s_ray
 {
 
 	float	ray_angle;
-	float	wallhit_x;
-	float	wallhit_y;
+	float	v_wallhit_x;
+	float	v_wallhit_y;
+	float 	h_wallhit_x;
+	float	h_wallhit_y;
 	float	distance;
 	bool	if_down;
 	bool	if_up;

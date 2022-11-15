@@ -15,7 +15,6 @@ void update_window(t_data **data)
 {
 	(*data)->player->initialAngle += (*data)->player->turnDirection * \
 		(*data)->player->rotationSpeed;
-	(*data)->player->initialAngle = fmod(2*PI + fmod((*data)->player->initialAngle, 2*PI), 2*PI);
 	draw_in_window(data);
 }
 

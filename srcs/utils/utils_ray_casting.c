@@ -78,9 +78,11 @@ void init_t_ray(t_ray **ray, float ray_angle)
     // if (!ray)
     //     return (NULL);
 
-    (*ray)->ray_angle = normalize_angle(ray_angle);
-    (*ray)->wallhit_x  = 0;
-    (*ray)->wallhit_y  = 0;
+    (*ray)->ray_angle = fmod(2*PI  + fmod(ray_angle, 2*PI), 2*PI);
+    (*ray)->h_wallhit_x  = 0;
+    (*ray)->h_wallhit_y  = 0;
+	(*ray)->v_wallhit_x  = 0;
+    (*ray)->v_wallhit_y  = 0;
     (*ray)->distance = 0;
     if((*ray)->ray_angle > 0 && (*ray)->ray_angle < PI)
         (*ray)->if_down = 1;
