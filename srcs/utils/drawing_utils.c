@@ -46,7 +46,7 @@ void	draw_square(t_data **data, int x, int y, unsigned long color)
 		j = 0;
 		while (++j < TILE_SIZE/MINIMAP_COEFF)
 		{
-			my_mlx_pixel_put((*data)->img, x, y, color);
+			my_mlx_pixel_put((*data)->win->win_img, x, y, color);
 			x++;
 		}
 		y++;

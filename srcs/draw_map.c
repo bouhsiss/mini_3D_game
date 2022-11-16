@@ -40,7 +40,7 @@ void	drawline(t_data **data, float dx, float dy)
 		steps = fabsf(dy);
 	while (i <= steps)
 	{
-		my_mlx_pixel_put((*data)->img, x, y, create_rgb(218, 0, 55));
+		my_mlx_pixel_put((*data)->win->win_img, x, y, create_rgb(218, 0, 55));
 		x += dx / steps;
 		y += dy / steps;
 		i++;
@@ -48,23 +48,27 @@ void	drawline(t_data **data, float dx, float dy)
 }
 
 
-void draw_background(t_data **data, unsigned long floor_color, unsigned long ceiling_color)
+void draw_background(t_data **data)
 {
 	int x;
 	int y;
+	t_colors *c_color;
+	t_colors *f_color;
 
+	c_color = (*data)->MapDisplay->CeilingColor;
+	f_color = (*data)->MapDisplay->FloorColor;
 	y =  -1;
 	while(++y < (WINDOW_HEIGHT/2))
 	{
 		x = -1;
 		while(++x < WINDOW_WIDTH)
-			my_mlx_pixel_put((*data)->img, x, y, ceiling_color);
+			my_mlx_pixel_put((*data)->win->win_img, x, y, create_rgb(c_color->R, c_color->G, c_color->B));
 	}
 	while(++y < (WINDOW_HEIGHT))
 	{
 		x = -1;
 		while(++x < WINDOW_WIDTH)
-			my_mlx_pixel_put((*data)->img, x, y, floor_color);
+			my_mlx_pixel_put((*data)->win->win_img, x, y, create_rgb(f_color->R, f_color->G, f_color->B));
 	}
 }
 
@@ -82,7 +86,7 @@ void	draw_player(t_data **data)
 	{
 		x = RADIUS * cos(angle);
 		y = RADIUS * sin(angle);
-		my_mlx_pixel_put((*data)->img, ((*data)->player->x/MINIMAP_COEFF) + x, ((*data)->player->y/MINIMAP_COEFF) + y, create_rgb(0, 0, 0));
+		my_mlx_pixel_put((*data)->win->win_img, ((*data)->player->x/MINIMAP_COEFF) + x, ((*data)->player->y/MINIMAP_COEFF) + y, create_rgb(0, 0, 0));
 		angle += 0.01f;
 	}
 	drawline(data, cos((*data)->player->initialAngle) * 10, sin((*data)->player->initialAngle) * 10);
@@ -103,8 +107,6 @@ void	draw_minimap(t_data **data)
 		{
 			if (is_valid_char((*data)->MapDisplay->map[j][x / (TILE_SIZE/MINIMAP_COEFF)]))
 				draw_square(data, x, y, 0xF5EFE6);
-			// if((*data)->MapDisplay->map[j][x / TILE_SIZE] == '1')
-			// 	draw_square(data, x, y, 0xc06b31);
 			x += TILE_SIZE/MINIMAP_COEFF;
 		}
 		y += TILE_SIZE/MINIMAP_COEFF;
@@ -112,10 +114,3 @@ void	draw_minimap(t_data **data)
 	}
 }
 
-// pseudo code to draw walls
-
-// wall top y = (window heigth/2) - (wall strip heigth/2)
-// wall top y = walltopy < 0 ? 0 : walltop y
-
-// wallbottomy = (window height/2) + (wall strip heigth/2)
-//wall bottom y = wallbottomy > windowheight ? window height : wall bottom y

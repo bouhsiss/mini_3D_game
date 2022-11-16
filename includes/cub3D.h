@@ -89,10 +89,17 @@ typedef struct s_ray
 	bool	is_vert;
 	bool 	is_horz;
 } t_ray;
+typedef struct s_img {
+	void *img;
+	char *addr;
+	int bits_per_pixel;
+	int line_length;
+	int endian;
+}t_img;
 
 typedef struct s_win {
 	void *mlx_win;
-	int mouse_pointer_x;
+	t_img *win_img;
 	int columns;
 	int lines;
 } t_win;
@@ -103,27 +110,28 @@ typedef struct s_colors{
 	int B;
 } t_colors;
 
-typedef struct s_textures{
+typedef struct s_text_path{
 	char *North;
 	char *South;
 	char *West;
 	char *East;
-} t_textures;
-typedef struct s_img {
-	void *img;
-	char *addr;
-	int bits_per_pixel;
-	int line_length;
-	int endian;
-}t_img;
+} t_text_path;
+
+typedef struct s_text_img{
+	t_img *North;
+	t_img *South;
+	t_img *West;
+	t_img *East;
+}t_text_img;
 
 typedef struct s_map{
 	char **map;
 	int NbrOfRows;
 	int NbrOfColumns;
-	t_textures *textures;
+	t_text_path *text_paths;
 	t_colors *FloorColor;
 	t_colors *CeilingColor;
+	t_text_img *text_imgs;
 	t_img *wall;
 	t_img *wall_2;
 	t_ray *ray;
@@ -145,7 +153,6 @@ typedef struct s_data{
 	t_map *MapDisplay;
 	t_win *win;
 	t_player *player;
-	t_img *img;
 	void *mlx_ptr;
 }t_data;
 
@@ -186,18 +193,21 @@ unsigned int	create_rgb(int r, int g, int b);
 void			my_mlx_pixel_put(t_img *img, int x, int y,unsigned int color);
 void			draw_square(t_data **data, int x, int y, unsigned long color);
 void			*ft_memcpy(void *dst, const void *src, size_t n);
-int				open_file(char *MapPath);
+int				check_file(char *MapPath);
 void			parser(char *MapPath, t_data **Data);
 void    		cast_rays(t_data *data);
 void	drawline(t_data **data, float dx, float dy);
-void	init_mlx_loop(t_data **data);
+void	init_game_loop(t_data **data);
 void draw_in_window(t_data **data);
-void draw_background(t_data **data, unsigned long floor_color, unsigned long ceiling_color);
+void draw_background(t_data **data);
 void	move_player(t_data **data, t_player **player);
 void	draw_player(t_data **data);
 void intercept(t_data *data);
 unsigned int my_mlx_pixel_get(t_img *img, int x, int y);
 void *create_img(t_data *data,char *path);
+bool    parse_textures(char *line,t_data **data,t_map **map);
+int	parse_colors(char *line, t_colors **colors);
+void	ft_putstr_fd(char *s, int fd);
 //--------------------------------------------------------------------------------------//
 void    free_linked_list(t_lst **head);
 t_lst	*new_node(void *content);
@@ -205,4 +215,5 @@ void	add_node_back(t_lst **lst, t_lst *new);
 t_lst    *get_last_node(t_lst *lst);
 float normalize_angle(float angle);
 void init_t_ray(t_ray **ray, float ray_angle);
+void render_wall(t_data *data, float ray_length, float ray_angle, int x, t_ray *ray, float distance_projection_plane);
 #endif

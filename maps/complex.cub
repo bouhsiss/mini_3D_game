@@ -1,11 +1,11 @@
 
 
-        NO maps/texture.xpm
-                SO maps/texture.xpm
-                        WE maps/texture-2.xpm
-                        EA maps/Creeper-icon.xpm
-        F       202,161,22  
-  C       119,181,245
+        NO textures/north.xpm
+                SO textures/south.xpm
+                        WE textures/west.xpm
+                        EA textures/east.xpm
+  F       61,34,17
+        C       22,27,54  
  
 
 

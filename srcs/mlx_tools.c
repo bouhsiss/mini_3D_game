@@ -2,13 +2,13 @@
 
 void draw_in_window(t_data **data)
 {
-	draw_background(data, 0xc7b09a, 0x5b75a6);
+	draw_background(data);
 	draw_minimap(data);
 	move_player(data, &(*data)->player);
 	cast_rays(*data);
 	draw_player(data);
 	mlx_put_image_to_window((*data)->mlx_ptr, (*data)->win->mlx_win, \
-	(*data)->img->img, 0, 0);
+	(*data)->win->win_img->img, 0, 0);
 }
 
 void update_window(t_data **data)
@@ -51,23 +51,24 @@ int	handler(t_data **data)
 	return (0);
 }
 
-void	init_mlx_loop(t_data **data)
+void init_imgs(t_data *data)
+{
+	data->MapDisplay->text_imgs->North->img = create_img(data, data->MapDisplay->text_paths->North);
+	data->MapDisplay->text_imgs->South->img = create_img(data, data->MapDisplay->text_paths->South);
+	data->MapDisplay->text_imgs->West->img = create_img(data, data->MapDisplay->text_paths->West);
+	data->MapDisplay->text_imgs->East->img = create_img(data, data->MapDisplay->text_paths->East);
+}
+
+void	init_game_loop(t_data **data)
 {
 	(*data)->mlx_ptr = mlx_init();
-	(*data)->MapDisplay->wall->img = create_img((*data), "./wall.xpm");
-	(*data)->MapDisplay->wall_2->img = create_img((*data), "./wall_2.xpm");
-	// (*data)->win->mlx_win = mlx_new_window((*data)->mlx_ptr, \
-	// 	(*data)->MapDisplay->NbrOfColumns * TILE_SIZE, \
-	// 	(*data)->MapDisplay->NbrOfRows * TILE_SIZE, "SmolWolf3D");
+	init_imgs(*data);
 	(*data)->win->mlx_win = mlx_new_window((*data)->mlx_ptr, \
 		WINDOW_WIDTH, WINDOW_HEIGHT, "SmolWolf3D");
-	// (*data)->img->img = mlx_new_image((*data)->mlx_ptr, \
-	// 	TILE_SIZE * (*data)->MapDisplay->NbrOfColumns, \
-	// 	TILE_SIZE * (*data)->MapDisplay->NbrOfRows);
-	(*data)->img->img = mlx_new_image((*data)->mlx_ptr,WINDOW_WIDTH, WINDOW_HEIGHT);
-	(*data)->img->addr = mlx_get_data_addr((*data)->img->img, \
-		&((*data)->img->bits_per_pixel), &((*data)->img->line_length), \
-		&((*data)->img->endian));
+	(*data)->win->win_img->img = mlx_new_image((*data)->mlx_ptr,WINDOW_WIDTH, WINDOW_HEIGHT);
+	(*data)->win->win_img->addr = mlx_get_data_addr((*data)->win->win_img->img, \
+		&((*data)->win->win_img->bits_per_pixel), &((*data)->win->win_img->line_length), \
+		&((*data)->win->win_img->endian));
 	draw_in_window(data);
 	mlx_loop_hook((*data)->mlx_ptr, handler, data);
 	mlx_loop((*data)->mlx_ptr);

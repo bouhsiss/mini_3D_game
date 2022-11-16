@@ -181,80 +181,19 @@ void intercept(t_data *data)
 	free(distance);
 }
 
-int adjust_length(int *wall_strip_height, int *end)
-{
-	int start;
-
-	start = (WINDOW_HEIGHT/2) - (*wall_strip_height/2);
-	if(start < 0)
-		start = 0;
-	*end = (WINDOW_HEIGHT/2) + (*wall_strip_height/2);
-	if(*end > WINDOW_HEIGHT)
-		*end = WINDOW_HEIGHT;
-	*wall_strip_height = *end - start;
-	return(start);
-}
-
-void *create_img(t_data *data,char *path)
-{
-	int x;
-	int y;
-	return(mlx_xpm_file_to_image(data->mlx_ptr, path, &x, &y));
-}
-
-void map_texture_to_wall(t_data *data, int x, int y, t_ray *ray, int offset_y, float ray_angle)
-{
-	int offset_x;
-	(void)ray_angle;
-	(void)offset_y;
-	unsigned int color;
-	if(ray->is_vert == true)
-	{
-		offset_x = (int)ray->v_wallhit_y % TILE_SIZE;
-		color = my_mlx_pixel_get(data->MapDisplay->wall_2, offset_x, offset_y);
-	}
-	else
-	{
-		offset_x = (int)ray->h_wallhit_x % TILE_SIZE;
-		color = my_mlx_pixel_get(data->MapDisplay->wall, offset_x, offset_y);
-	}
-	my_mlx_pixel_put(data->img, x, y, color);
-}
-
-void render_wall(t_data *data, float ray_length, float ray_angle, int x, t_ray *ray)
-{
-	int wall_strip_height;
-	float distance_projection_plane;
-	int y;
-	int i;
-	int end;
-
-	i = 0;
-	distance_projection_plane = (WINDOW_WIDTH/2) / tan(FOV/2);
-	ray_length = ray_length * cos(ray_angle - data->player->initialAngle);
-	wall_strip_height = (TILE_SIZE/(ray_length) * distance_projection_plane);
-	y = adjust_length(&wall_strip_height, &end);
-	while(y < end)
-	{
-		map_texture_to_wall(data, x, y, ray, (i*(((float)TILE_SIZE)/wall_strip_height)), ray_angle);
-		y++;
-		i++;
-	}
-}
 
 void    cast_rays(t_data *data)
 {
     int i = -1;
     float ray_angle;
+	float distance_projection_plane = ((WINDOW_WIDTH/2) / tan(FOV/2));
     
-    ray_angle = data->player->initialAngle - (FOV/2);
     while (++i < WINDOW_WIDTH)
 	{
+		ray_angle = data->player->initialAngle + atan((i - 0.5 * WINDOW_WIDTH) / distance_projection_plane);
 		init_t_ray(&data->MapDisplay->ray, ray_angle);
 		intercept(data);
-		drawline(&data, cos(ray_angle)*(data->MapDisplay->ray->distance/MINIMAP_COEFF), sin(ray_angle)*(data->MapDisplay->ray->distance/MINIMAP_COEFF));
-		render_wall(data, data->MapDisplay->ray->distance, ray_angle, i, data->MapDisplay->ray);
-        ray_angle += FOV/WINDOW_WIDTH ;
+		render_wall(data, data->MapDisplay->ray->distance, ray_angle, i, data->MapDisplay->ray, distance_projection_plane);
     }
 	draw_minimap(&data);
 }

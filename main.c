@@ -20,7 +20,7 @@ int	main(int ac, char **av)
 	{
 		constructor(&data);
 		parser(av[1], &data);
-		init_mlx_loop(&data);
+		init_game_loop(&data);
 		free_array(data->MapDisplay->map);
 	}
 	else
