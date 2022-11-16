@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mlx_tools.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hbouhsis <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/16 21:02:50 by hbouhsis          #+#    #+#             */
+/*   Updated: 2022/11/16 21:02:52 by hbouhsis         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3D.h"
 
-void draw_in_window(t_data **data)
+void	draw_in_window(t_data **data)
 {
 	draw_background(data);
 	draw_minimap(data);
@@ -11,33 +23,11 @@ void draw_in_window(t_data **data)
 	(*data)->win->win_img->img, 0, 0);
 }
 
-void update_window(t_data **data)
+void	update_window(t_data **data)
 {
 	(*data)->player->initial_angle += (*data)->player->turn_direction * \
 		(*data)->player->rotation_speed;
 	draw_in_window(data);
-}
-
-int button_press(int button_code, int x, int y, t_data **data)
-{
-	(void)y;
-	(void)x;
-	if(button_code == 1)
-		(*data)->player->turn_direction = -1;
-	if(button_code == 2)
-		(*data)->player->turn_direction = 1;
-	return(0);
-}
-
-int button_release(int button_code, int x, int y, t_data **data)
-{
-	(void)y;
-	(void)x;
-	if(button_code == 1)
-		(*data)->player->turn_direction = 0;
-	if(button_code == 2)
-		(*data)->player->turn_direction = 0;
-	return(1);
 }
 
 int	handler(t_data **data)
@@ -51,24 +41,31 @@ int	handler(t_data **data)
 	return (0);
 }
 
-void init_imgs(t_data *data)
+void	init_imgs(t_data *data)
 {
-	data->mapdisplay->text_imgs->north->img = create_img(data, data->mapdisplay->text_paths->north);
-	data->mapdisplay->text_imgs->south->img = create_img(data, data->mapdisplay->text_paths->south);
-	data->mapdisplay->text_imgs->west->img = create_img(data, data->mapdisplay->text_paths->west);
-	data->mapdisplay->text_imgs->east->img = create_img(data, data->mapdisplay->text_paths->east);
+	data->mapdisplay->text_imgs->north->img = \
+		create_img(data, data->mapdisplay->text_paths->north);
+	data->mapdisplay->text_imgs->south->img = \
+		create_img(data, data->mapdisplay->text_paths->south);
+	data->mapdisplay->text_imgs->west->img = \
+		create_img(data, data->mapdisplay->text_paths->west);
+	data->mapdisplay->text_imgs->east->img = \
+		create_img(data, data->mapdisplay->text_paths->east);
 }
 
 void	init_game_loop(t_data **data)
 {
+	t_img	*img;
+
+	img = (*data)->win->win_img;
 	(*data)->mlx_ptr = mlx_init();
 	init_imgs(*data);
 	(*data)->win->mlx_win = mlx_new_window((*data)->mlx_ptr, \
 		WINDOW_WIDTH, WINDOW_HEIGHT, "SmolWolf3D");
-	(*data)->win->win_img->img = mlx_new_image((*data)->mlx_ptr,WINDOW_WIDTH, WINDOW_HEIGHT);
-	(*data)->win->win_img->addr = mlx_get_data_addr((*data)->win->win_img->img, \
-		&((*data)->win->win_img->bits_per_pixel), &((*data)->win->win_img->line_length), \
-		&((*data)->win->win_img->endian));
+	(*data)->win->win_img->img = mlx_new_image((*data)->mlx_ptr, \
+		WINDOW_WIDTH, WINDOW_HEIGHT);
+	(*data)->win->win_img->addr = mlx_get_data_addr(img->img, \
+	&(img->bits_per_pixel), &(img->line_length), &(img->endian));
 	draw_in_window(data);
 	mlx_loop_hook((*data)->mlx_ptr, handler, data);
 	mlx_loop((*data)->mlx_ptr);

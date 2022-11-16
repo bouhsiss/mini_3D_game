@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_file.c                                        :+:      :+:    :+:   */
+/*   check_file.c                                        :+:      :+:    :+:  */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hbouhsis <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,21 +12,23 @@
 
 #include "cub3D.h"
 
-int open_map_file(char *path)
+int	open_map_file(char *path)
 {
-	int fd;
+	int	fd;
 
-	if(open(path, O_DIRECTORY) > 0)
+	if (open(path, O_DIRECTORY) > 0)
 		error_message("map should be a file not a directory.");
 	fd = open(path, O_RDONLY);
-	if(fd == -1)
+	if (fd == -1)
 		error_message(strerror(errno));
-	return(fd);
+	return (fd);
 }
 
 int	check_file(char *MapPath)
 {
-	char *ext = ft_strchr(MapPath, '.');
+	char	*ext;
+
+	ext = ft_strchr(MapPath, '.');
 	if (!ext || ft_strncmp(ext, ".cub", 4))
 		error_message("map should have .cub extension");
 	return (open_map_file(MapPath));

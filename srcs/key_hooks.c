@@ -12,6 +12,28 @@
 
 #include "cub3D.h"
 
+int	button_press(int button_code, int x, int y, t_data **data)
+{
+	(void)y;
+	(void)x;
+	if (button_code == 1)
+		(*data)->player->turn_direction = -1;
+	if (button_code == 2)
+		(*data)->player->turn_direction = 1;
+	return (0);
+}
+
+int	button_release(int button_code, int x, int y, t_data **data)
+{
+	(void)y;
+	(void)x;
+	if (button_code == 1)
+		(*data)->player->turn_direction = 0;
+	if (button_code == 2)
+		(*data)->player->turn_direction = 0;
+	return (1);
+}
+
 
 int	keyrelease(int keycode, t_data **data)
 {

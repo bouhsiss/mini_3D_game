@@ -192,16 +192,15 @@ void intercept(t_data *data)
 void    cast_rays(t_data *data)
 {
     int i = -1;
-    float ray_angle;
 	float dtpp;
 
     dtpp = (WINDOW_WIDTH/2) / tan(FOV/2);
     while (++i < WINDOW_WIDTH)
 	{
-		ray_angle = data->player->initial_angle + atan((i - 0.5 * WINDOW_WIDTH) / dtpp);
-		init_t_ray(&data->mapdisplay->ray, ray_angle);
+		data->mapdisplay->ray->ray_angle = data->player->initial_angle + atan((i - 0.5 * WINDOW_WIDTH) / dtpp);
+		init_t_ray(&data->mapdisplay->ray, data->mapdisplay->ray->ray_angle);
 		intercept(data);
-		render_wall(data, ray_angle, i, data->mapdisplay->ray);
+		render_wall(data, i, data->mapdisplay->ray, dtpp);
     }
 	draw_minimap(&data);
 }

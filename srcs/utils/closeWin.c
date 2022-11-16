@@ -16,6 +16,5 @@ int	close_win(t_data *Data)
 {
 	mlx_destroy_window(Data->mlx_ptr, Data->win->mlx_win);
 	free_array((*Data).mapdisplay->map);
-	// system("leaks cub3D");
 	exit(0);
 }
