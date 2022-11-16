@@ -14,17 +14,7 @@
 
 bool	ft_isspace(char c)
 {
-	if (c == ' ' || c == '\n' || c == '\t' || c == '\v' || \
-		c == '\f' || c == '\r')
-		return (true);
-	else
-		return (false);
-}
-
-bool	ft_isspace_v2(char c)
-{
-	if (c == ' ' || c == '\n' || c == '\v' || \
-		c == '\f' || c == '\r')
+	if (c == ' ' || c == '\n')
 		return (true);
 	else
 		return (false);

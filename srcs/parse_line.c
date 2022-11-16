@@ -107,6 +107,8 @@ int	parse_colors(char *line, t_colors **colors)
 	int		i;
 
 	i = 0;
+	if((*colors)->flag == true)
+		error_message("colors double identification.");
 	while (ft_isspace(line[i]))
 		i++;
 	line[ft_strlen(line)-1] = 0;
@@ -121,6 +123,6 @@ int	parse_colors(char *line, t_colors **colors)
 	if ((*colors)->r > 255 || (*colors)->g > 255 || (*colors)->b > 255 \
 		|| (*colors)->r < 0 || (*colors)->g < 0 || (*colors)->b < 0)
 		error_message("Invalid colors");
-    // exit(0);
+	(*colors)->flag = true;
 	return (1);
 }

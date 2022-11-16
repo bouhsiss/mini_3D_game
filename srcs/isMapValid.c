@@ -5,7 +5,7 @@ int	skip_space(char *str)
 	int i;
 
 	i = 0;
-	while(str && ft_isspace_v2(str[i]))
+	while(str && ft_isspace(str[i]))
 		i++;
 	return(i);
 }
@@ -33,13 +33,13 @@ int check_first_and_last_line(char *line)
 
 int check_two_line(char *curr_line,char *prev_line , int i)
 {
-	if( (ft_isspace_v2(curr_line[i]) && is_valid_char(curr_line[i -1])) || ((is_valid_char(curr_line[i])  
-		&& ( ft_isspace_v2(curr_line[i - 1])|| ft_strlen(prev_line) - 1 < i || ft_isspace_v2(prev_line[i])))))
+	if( (ft_isspace(curr_line[i]) && is_valid_char(curr_line[i -1])) || ((is_valid_char(curr_line[i])  
+		&& ( ft_isspace(curr_line[i - 1])|| ft_strlen(prev_line) - 1 < i || ft_isspace(prev_line[i])))))
 		error_message("Invalid map 4");
 	else if( ft_strlen(prev_line) - 2 > i && (((is_valid_char(prev_line[i])  
-		&& ( ft_isspace_v2(prev_line[i - 1]) || ft_strlen(curr_line) - 1 < i || ft_isspace_v2(curr_line[i]))))))
+		&& ( ft_isspace(prev_line[i - 1]) || ft_strlen(curr_line) - 1 < i || ft_isspace(curr_line[i]))))))
 			error_message("Invalid map 5");
-	else if( !is_valid_char(curr_line[i]) && curr_line[i] != '1' && !ft_isspace_v2(curr_line[i]))
+	else if( !is_valid_char(curr_line[i]) && curr_line[i] != '1' && !ft_isspace(curr_line[i]))
 		error_message("Invalid map 6");
 	return(0);
 }

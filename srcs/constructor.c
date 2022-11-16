@@ -39,12 +39,14 @@ void	constructor(t_data **data)
 	(*data)->mapdisplay->text_paths->south = NULL;
 	(*data)->mapdisplay->text_paths->west = NULL;
 	(*data)->mapdisplay->text_paths->east = NULL;
+	(*data)->mapdisplay->ceiling_color->flag = false;
+	(*data)->mapdisplay->floor_color->flag = false;
 	(*data)->mapdisplay->columns_nbr = 0;
 	(*data)->mapdisplay->rows_nbr = 0;
 	(*data)->mapdisplay->map = NULL;
 	(*data)->player->turn_direction = 0;
 	(*data)->player->walk_direction = 0;
 	(*data)->player->side_angle = 0;
-	(*data)->player->move_speed = 10;
+	(*data)->player->move_speed = 15;
 	(*data)->player->rotation_speed = 4 * DEGREE;
 }

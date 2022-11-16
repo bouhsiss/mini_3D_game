@@ -52,7 +52,7 @@ static int	parse_line(char *line, t_data **Data, t_map **Map, int fd)
 	if(!ft_strncmp(&line[i], "NO ", 3)||!ft_strncmp(&line[i], "SO ", 3)\
 		||!ft_strncmp(&line[i], "WE ", 3)||!ft_strncmp(&line[i], "EA ", 3))
 		parse_textures(line,Data,Map);
-		else if (!ft_strncmp(&line[i], "C ", 2))
+	else if (!ft_strncmp(&line[i], "C ", 2))
 		parse_colors(&line[i + 1],&(*Map)->ceiling_color);
 	else if (!ft_strncmp(&line[i], "F ", 2))
 		parse_colors(&line[i + 1], &(*Map)->floor_color);

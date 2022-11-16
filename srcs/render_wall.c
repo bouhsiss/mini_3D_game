@@ -28,17 +28,17 @@ int	adjust_length(int wall_strip_height, int *end)
 t_img	*north_or_south(t_data *data, float ray_angle)
 {
 	if (ray_angle >= 0 && ray_angle <= PI)
-		return (data->mapdisplay->text_imgs->north);
-	else
 		return (data->mapdisplay->text_imgs->south);
+	else
+		return (data->mapdisplay->text_imgs->north);
 }
 
 t_img	*east_or_west(t_data *data, float ray_angle)
 {
 	if (ray_angle >= PI / 2 && ray_angle <= (3 * PI) / 2)
-		return (data->mapdisplay->text_imgs->west);
-	else
 		return (data->mapdisplay->text_imgs->east);
+	else
+		return (data->mapdisplay->text_imgs->west);
 }
 
 void	map_texture_to_wall(t_data *data, int x, int y, int offset_y)

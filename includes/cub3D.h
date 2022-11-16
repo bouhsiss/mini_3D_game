@@ -109,6 +109,7 @@ typedef struct s_colors{
 	int	r;
 	int	g;
 	int	b;
+	bool flag;
 }t_colors;
 
 typedef struct s_text_path{
@@ -202,7 +203,9 @@ int				parse_colors(char *line, t_colors **colors);
 void			ft_putstr_fd(char *s, int fd);
 float			normalize_angle(float angle);
 void			init_t_ray(t_ray **ray, float ray_angle);
-void			render_wall(t_data *data, float ray_angle, int x, t_ray *ray);
-bool			ft_isspace_v2(char c);
+void			render_wall(t_data *data, int x, t_ray *ray, int dtpp);
+bool			ft_isspace(char c);
+int				button_release(int button_code, int x, int y, t_data **data);
+int				button_press(int button_code, int x, int y, t_data **data);
 
 #endif
