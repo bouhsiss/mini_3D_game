@@ -13,8 +13,8 @@ void draw_in_window(t_data **data)
 
 void update_window(t_data **data)
 {
-	(*data)->player->initialAngle += (*data)->player->turnDirection * \
-		(*data)->player->rotationSpeed;
+	(*data)->player->initial_angle += (*data)->player->turn_direction * \
+		(*data)->player->rotation_speed;
 	draw_in_window(data);
 }
 
@@ -23,9 +23,9 @@ int button_press(int button_code, int x, int y, t_data **data)
 	(void)y;
 	(void)x;
 	if(button_code == 1)
-		(*data)->player->turnDirection = -1;
+		(*data)->player->turn_direction = -1;
 	if(button_code == 2)
-		(*data)->player->turnDirection = 1;
+		(*data)->player->turn_direction = 1;
 	return(0);
 }
 
@@ -34,9 +34,9 @@ int button_release(int button_code, int x, int y, t_data **data)
 	(void)y;
 	(void)x;
 	if(button_code == 1)
-		(*data)->player->turnDirection = 0;
+		(*data)->player->turn_direction = 0;
 	if(button_code == 2)
-		(*data)->player->turnDirection = 0;
+		(*data)->player->turn_direction = 0;
 	return(1);
 }
 
@@ -53,10 +53,10 @@ int	handler(t_data **data)
 
 void init_imgs(t_data *data)
 {
-	data->MapDisplay->text_imgs->North->img = create_img(data, data->MapDisplay->text_paths->North);
-	data->MapDisplay->text_imgs->South->img = create_img(data, data->MapDisplay->text_paths->South);
-	data->MapDisplay->text_imgs->West->img = create_img(data, data->MapDisplay->text_paths->West);
-	data->MapDisplay->text_imgs->East->img = create_img(data, data->MapDisplay->text_paths->East);
+	data->mapdisplay->text_imgs->north->img = create_img(data, data->mapdisplay->text_paths->north);
+	data->mapdisplay->text_imgs->south->img = create_img(data, data->mapdisplay->text_paths->south);
+	data->mapdisplay->text_imgs->west->img = create_img(data, data->mapdisplay->text_paths->west);
+	data->mapdisplay->text_imgs->east->img = create_img(data, data->mapdisplay->text_paths->east);
 }
 
 void	init_game_loop(t_data **data)

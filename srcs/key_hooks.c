@@ -18,22 +18,22 @@ int	keyrelease(int keycode, t_data **data)
 	if (keycode == 53)
 		close_win((*data));
 	if (keycode == S_KEY)
-		(*data)->player->walkDirection = 0;
+		(*data)->player->walk_direction = 0;
 	if (keycode == W_KEY)
-		(*data)->player->walkDirection = 0;
+		(*data)->player->walk_direction = 0;
 	if (keycode == LEFT_ARROW)
-		(*data)->player->turnDirection = 0;
+		(*data)->player->turn_direction = 0;
 	if (keycode == RIGHT_ARROW)
-		(*data)->player->turnDirection = 0;
+		(*data)->player->turn_direction = 0;
 	if (keycode == D_KEY)
 	{
-		(*data)->player->walkDirection = 0;
-		(*data)->player->sideAngle = 0;
+		(*data)->player->walk_direction = 0;
+		(*data)->player->side_angle = 0;
 	}
 	if (keycode == A_KEY)
 	{
-		(*data)->player->walkDirection = 0;
-		(*data)->player->sideAngle = 0;
+		(*data)->player->walk_direction = 0;
+		(*data)->player->side_angle = 0;
 	}
 	return (0);
 }
@@ -43,22 +43,22 @@ int	key_press(int keycode, t_data **data)
 	if (keycode == 53)
 		close_win((*data));
 	if (keycode == S_KEY)
-		(*data)->player->walkDirection = -1;
+		(*data)->player->walk_direction = -1;
 	if (keycode == W_KEY)
-		(*data)->player->walkDirection = 1;
+		(*data)->player->walk_direction = 1;
 	if (keycode == LEFT_ARROW)
-		(*data)->player->turnDirection = 1;
+		(*data)->player->turn_direction = 1;
 	if (keycode == RIGHT_ARROW)
-		(*data)->player->turnDirection = -1;
+		(*data)->player->turn_direction = -1;
 	if (keycode == D_KEY)
 	{
-		(*data)->player->walkDirection = -1;
-		(*data)->player->sideAngle = 90;
+		(*data)->player->walk_direction = -1;
+		(*data)->player->side_angle = 90;
 	}
 	if (keycode == A_KEY)
 	{
-		(*data)->player->walkDirection = 1;
-		(*data)->player->sideAngle = 90;
+		(*data)->player->walk_direction = 1;
+		(*data)->player->side_angle = 90;
 	}
 	return (0);
 }

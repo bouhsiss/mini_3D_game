@@ -5,7 +5,7 @@ int	skip_space(char *str)
 	int i;
 
 	i = 0;
-	while(str && ft_isspace(str[i]))
+	while(str && ft_isspace_v2(str[i]))
 		i++;
 	return(i);
 }
@@ -33,13 +33,13 @@ int check_first_and_last_line(char *line)
 
 int check_two_line(char *curr_line,char *prev_line , int i)
 {
-	if( (ft_isspace(curr_line[i]) && is_valid_char(curr_line[i -1])) || ((is_valid_char(curr_line[i])  
-		&& ( ft_isspace(curr_line[i - 1])|| ft_strlen(prev_line) - 2 < i || ft_isspace(prev_line[i])))))
-		error_message("Invalid map.4");
-	else if( ft_strlen(prev_line) - 2 > i && ((ft_isspace(prev_line[i]) && is_valid_char(prev_line[i -1])) || ((is_valid_char(prev_line[i])  
-		&& ( ft_isspace(prev_line[i - 1]) || ft_strlen(curr_line) - 2 < i || ft_isspace(curr_line[i]))))))
+	if( (ft_isspace_v2(curr_line[i]) && is_valid_char(curr_line[i -1])) || ((is_valid_char(curr_line[i])  
+		&& ( ft_isspace_v2(curr_line[i - 1])|| ft_strlen(prev_line) - 1 < i || ft_isspace_v2(prev_line[i])))))
+		error_message("Invalid map 4");
+	else if( ft_strlen(prev_line) - 2 > i && (((is_valid_char(prev_line[i])  
+		&& ( ft_isspace_v2(prev_line[i - 1]) || ft_strlen(curr_line) - 1 < i || ft_isspace_v2(curr_line[i]))))))
 			error_message("Invalid map 5");
-	else if( !is_valid_char(curr_line[i]) && curr_line[i] != '1' && !ft_isspace(curr_line[i]))
+	else if( !is_valid_char(curr_line[i]) && curr_line[i] != '1' && !ft_isspace_v2(curr_line[i]))
 		error_message("Invalid map 6");
 	return(0);
 }
@@ -49,13 +49,13 @@ int savePlayerPos(int i, int j, t_data **data, char c)
 	(*data)->player->x = i * TILE_SIZE + (TILE_SIZE / 2);
 	(*data)->player->y = j * TILE_SIZE + (TILE_SIZE / 2);
 	if(c == 'N')
-		(*data)->player->initialAngle = NORTH ;
+		(*data)->player->initial_angle = NORTH ;
 	if(c == 'S')
-		(*data)->player->initialAngle = SOUTH ;
+		(*data)->player->initial_angle = SOUTH ;
 	if(c == 'E')
-		(*data)->player->initialAngle = EAST ;
+		(*data)->player->initial_angle = EAST ;
 	if(c == 'W')
-		(*data)->player->initialAngle = WEST ;
+		(*data)->player->initial_angle = WEST ;
 	return(1);
 }
 
@@ -71,12 +71,12 @@ int	check_map_is_valid(t_data **data)
 	flag = 0;
 	curr = 0;
 	prev = 0;
-	if(check_first_and_last_line((*data)->MapDisplay->map[prev]))
+	if(check_first_and_last_line((*data)->mapdisplay->map[prev]))
 		error_message("Invalid map.1");
-	while ((*data)->MapDisplay->map[curr])
+	while ((*data)->mapdisplay->map[curr])
 	{
-		curr_line = (*data)->MapDisplay->map[curr];
-		prev_line = (*data)->MapDisplay->map[prev];
+		curr_line = (*data)->mapdisplay->map[curr];
+		prev_line = (*data)->mapdisplay->map[prev];
 		i = ft_strlen(curr_line) -1;
 		while (i)
 		{

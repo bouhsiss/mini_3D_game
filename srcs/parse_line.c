@@ -6,7 +6,7 @@
 /*   By: omeslall <omeslall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 18:27:57 by omeslall          #+#    #+#             */
-/*   Updated: 2022/11/16 11:46:06 by omeslall         ###   ########.fr       */
+/*   Updated: 2022/11/16 17:21:36 by omeslall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,19 +31,20 @@ int	parse_texture(char *line, char **Data)
 	return (1);
 }
 
+
 bool    parse_textures(char *line,t_data **data,t_map **map)
 {
     int i;
     
     i = skip_space(line);
-    if (!ft_strncmp(&line[i], "NO ", 3) && !(*data)->MapDisplay->text_paths->North)
-		return (parse_texture(&line[i + 2], &(*map)->text_paths->North));
-	else if (!ft_strncmp(&line[i], "SO  ", 3)&& !(*data)->MapDisplay->text_paths->South)
-		return (parse_texture(&line[i + 2], &(*map)->text_paths->South));
-	else if (!ft_strncmp(&line[i], "WE ", 3)&& !(*data)->MapDisplay->text_paths->West)
-		return (parse_texture(&line[i + 2], &(*map)->text_paths->West));
-	else if (!ft_strncmp(&line[i], "EA ", 3)&& !(*data)->MapDisplay->text_paths->East)
-		return (parse_texture(&line[i + 2], &(*map)->text_paths->East));
+    if (!ft_strncmp(&line[i], "NO ", 3) && !(*data)->mapdisplay->text_paths->north)
+		return (parse_texture(&line[i + 2], &(*map)->text_paths->north));
+	else if (!ft_strncmp(&line[i], "SO  ", 3)&& !(*data)->mapdisplay->text_paths->south)
+		return (parse_texture(&line[i + 2], &(*map)->text_paths->south));
+	else if (!ft_strncmp(&line[i], "WE ", 3)&& !(*data)->mapdisplay->text_paths->west)
+		return (parse_texture(&line[i + 2], &(*map)->text_paths->west));
+	else if (!ft_strncmp(&line[i], "EA ", 3)&& !(*data)->mapdisplay->text_paths->east)
+		return (parse_texture(&line[i + 2], &(*map)->text_paths->east));
 	error_message("Invalid map 42");
     return(true);
 }
@@ -61,9 +62,15 @@ void    check_line_color(char *line)
     }
     while ((line[i]>=48 && line[i] <= 57 ) || ft_isspace(line[i]))
     {
-        if(i && ft_isspace(line[i])){
+        if(ft_isspace(line[i]) && comma == 2)
+        {
+            i += (size_t)skip_space(&line[i]);
+            if(line[i])
+                error_message("=>Invalid colors");
+        }
+        
+        if(i && ft_isspace(line[i])&& comma != 2){
             printf("line[%zu] = %d\n",i,line[i]);
-			printf("line %s\n", line);
             error_message("==>Invalid colors");
         }
         i++;
@@ -72,8 +79,11 @@ void    check_line_color(char *line)
     {
         comma++;
         i++;
-        if((line[i] < 48 || line[i] > 57) || (comma > 3))
-            error_message("===>Invalid colors");
+    }
+    if((line[i] < 48 || line[i] > 57 || comma > 2) && line[i])
+    {
+        printf("=>line[%zu] = %d\n",i,line[i]);
+        error_message("===>Invalid colors");
     }
     check_line_color(line);
     return;
@@ -100,16 +110,17 @@ int	parse_colors(char *line, t_colors **colors)
 	while (ft_isspace(line[i]))
 		i++;
 	line[ft_strlen(line)-1] = 0;
-    // check_line_color(&line[i]);
+    check_line_color(&line[i]);
 	rgb = ft_split(&line[i], ',');
 	if (size_2d_array(rgb) != 3)
 		error_message("Invalid colors");
-	(*colors)->R = ft_atoi(rgb[0]);
-	(*colors)->G = ft_atoi(rgb[1]);
-	(*colors)->B = ft_atoi(rgb[2]);
+	(*colors)->r = ft_atoi(rgb[0]);
+	(*colors)->g = ft_atoi(rgb[1]);
+	(*colors)->b = ft_atoi(rgb[2]);
 	free_array(rgb);
-	if ((*colors)->R > 255 || (*colors)->G > 255 || (*colors)->B > 255 \
-		|| (*colors)->R < 0 || (*colors)->G < 0 || (*colors)->B < 0)
+	if ((*colors)->r > 255 || (*colors)->g > 255 || (*colors)->b > 255 \
+		|| (*colors)->r < 0 || (*colors)->g < 0 || (*colors)->b < 0)
 		error_message("Invalid colors");
+    // exit(0);
 	return (1);
 }

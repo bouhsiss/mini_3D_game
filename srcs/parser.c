@@ -22,19 +22,19 @@ static int	parse_map(char *line, t_data **Data, int fd)
 	while (line && line[i] && line[i] == '1')
 	{
 		i = 0;
-		if (ft_strlen(line) > (*Data)->MapDisplay->NbrOfColumns)
-			(*Data)->MapDisplay->NbrOfColumns = ft_strlen(line);
+		if (ft_strlen(line) > (*Data)->mapdisplay->columns_nbr)
+			(*Data)->mapdisplay->columns_nbr = ft_strlen(line);
 		one_line_map = ft_strjoin(one_line_map, line);
 		one_line_map = ft_strjoin(one_line_map, ",");
 		free(line);
 		line = get_next_line(fd);
-		(*Data)->MapDisplay->NbrOfRows++;
+		(*Data)->mapdisplay->rows_nbr++;
 		i = skip_space(line);
 		if (line && line[i] && line[i] != '1')
 			error_message("Invalid map");
 	}
 	free(line);
-	(*Data)->MapDisplay->map = ft_split(one_line_map, ',');
+	(*Data)->mapdisplay->map = ft_split(one_line_map, ',');
 	free(one_line_map);
 	check_map_is_valid(Data);
 	return (0);
@@ -52,10 +52,10 @@ static int	parse_line(char *line, t_data **Data, t_map **Map, int fd)
 	if(!ft_strncmp(&line[i], "NO ", 3)||!ft_strncmp(&line[i], "SO ", 3)\
 		||!ft_strncmp(&line[i], "WE ", 3)||!ft_strncmp(&line[i], "EA ", 3))
 		parse_textures(line,Data,Map);
-	else if (!ft_strncmp(&line[i], "C ", 2))
-		parse_colors(&line[i + 1],&(*Map)->CeilingColor);
+		else if (!ft_strncmp(&line[i], "C ", 2))
+		parse_colors(&line[i + 1],&(*Map)->ceiling_color);
 	else if (!ft_strncmp(&line[i], "F ", 2))
-		parse_colors(&line[i + 1], &(*Map)->FloorColor);
+		parse_colors(&line[i + 1], &(*Map)->floor_color);
 	else if (line[i])
 	{
 		if (line[i] == '1')
@@ -75,12 +75,12 @@ void	parser(char *MapPath, t_data **Data)
 	tmp = get_next_line(fd);
 	while (tmp)
 	{
-		if (!parse_line(tmp, Data, &(*Data)->MapDisplay, fd))
+		if (!parse_line(tmp, Data, &(*Data)->mapdisplay, fd))
 			break ;
 		free(tmp);
 		tmp = get_next_line(fd);
 	}
-	if(!tmp && (*Data)->MapDisplay->NbrOfRows == 0)
+	if(!tmp && (*Data)->mapdisplay->rows_nbr == 0)
 		error_message("Invalid map 5");
 	close(fd);
 }

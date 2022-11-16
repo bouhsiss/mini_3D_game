@@ -12,55 +12,6 @@
 
 #include "cub3D.h"
 
-void    free_linked_list(t_lst **head)
-{
-    t_lst *tmp;
-
-    while (*head)
-    {
-        tmp = *head;
-        *head = (*head)->next;
-        free(tmp->content);
-        free(tmp);
-    }
-}
-
-t_lst	*new_node(void *content)
-{
-    t_lst	*new;
-
-    new = malloc(sizeof(t_lst));
-    if (!new)
-        return (NULL);
-    new->content = content;
-    new->next = NULL;
-    new->previous = NULL;
-    return (new);
-}
-
-void	add_node_back(t_lst **lst, t_lst *new)
-{
-    t_lst	*tmp;
-
-    if (!*lst)
-    {
-        *lst = new;
-        return ;
-    }
-    tmp = *lst;
-    while (tmp->next)
-        tmp = tmp->next;
-    tmp->next = new;
-    new->previous = tmp;
-}
-
-t_lst    *get_last_node(t_lst *lst)
-{
-    while (lst->next)
-        lst = lst->next;
-    return (lst);
-}
-
 float normalize_angle(float angle)
 {   
     angle = fmod(angle, (2 * PI));
@@ -90,10 +41,10 @@ void init_t_ray(t_ray **ray, float ray_angle)
         (*ray)->if_down = 0;
     (*ray)->if_up = !(*ray)->if_down;
     if((*ray)->ray_angle < 0.5 * PI || (*ray)->ray_angle > 1.5 * PI)
-        (*ray)->if_R = 1;
+        (*ray)->if_r = 1;
     else
-        (*ray)->if_R = 0;
-    (*ray)->if_L = !(*ray)->if_R;
+        (*ray)->if_r = 0;
+    (*ray)->if_l = !(*ray)->if_r;
 	(*ray)->is_vert = false;
 	(*ray)->is_horz = false;
 }

@@ -10,7 +10,7 @@ NAME = cub3D
 
 CC = gcc
 MLX_FLAGS = -lmlx -framework OpenGL -framework AppKit 
-CFLAGS = -g -Wall -Wextra -Werror  -o3 -Ofast
+CFLAGS = -g -Wall -Wextra -Werror  #-o3 -Ofast
 INCFLAG = -I./includes
 
 SRCS = ./main.c ./srcs/parser.c ./srcs/Ray_Casting.c ./srcs/utils/ErrorMessage.c ./srcs/utils/ft_strchr.c  \

@@ -38,17 +38,17 @@ void *create_img(t_data *data,char *path)
 t_img *north_or_south(t_data *data, float ray_angle)
 {
 	if(ray_angle >= 0 && ray_angle <= PI)
-		return(data->MapDisplay->text_imgs->North);
+		return(data->mapdisplay->text_imgs->north);
 	else
-		return(data->MapDisplay->text_imgs->South);
+		return(data->mapdisplay->text_imgs->south);
 }
 
 t_img *east_or_west(t_data *data, float ray_angle)
 {
 	if(ray_angle >= PI/2 && ray_angle <= (3*PI)/2)
-		return(data->MapDisplay->text_imgs->West);
+		return(data->mapdisplay->text_imgs->west);
 	else
-		return(data->MapDisplay->text_imgs->East);
+		return(data->mapdisplay->text_imgs->east);
 }
 
 void map_texture_to_wall(t_data *data, int x, int y, t_ray *ray, int offset_y, float ray_angle)
@@ -75,14 +75,17 @@ void map_texture_to_wall(t_data *data, int x, int y, t_ray *ray, int offset_y, f
 
 
 
-void render_wall(t_data *data, float ray_length, float ray_angle, int x, t_ray *ray, float distance_projection_plane)
+void render_wall(t_data *data, float ray_angle, int x, t_ray *ray)
 {
 	int wall_strip_height;
+	float ray_length;
 	int y;
 	int end;
+	float dtpp;
 
-	ray_length = ray_length * cos(ray_angle - data->player->initialAngle);
-	wall_strip_height = (TILE_SIZE/(ray_length) * distance_projection_plane);
+	dtpp = (WINDOW_WIDTH/2)/tan(FOV/2);
+	ray_length = ray->distance * cos(ray_angle - data->player->initial_angle);
+	wall_strip_height = (TILE_SIZE/(ray_length) * dtpp);
 	y = adjust_length(wall_strip_height, &end);
 	while(y < end)
 	{

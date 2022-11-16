@@ -21,7 +21,7 @@ int	main(int ac, char **av)
 		constructor(&data);
 		parser(av[1], &data);
 		init_game_loop(&data);
-		free_array(data->MapDisplay->map);
+		free_array(data->mapdisplay->map);
 	}
 	else
 		error_message("Usage : ./cub3D < .cub map file >");
