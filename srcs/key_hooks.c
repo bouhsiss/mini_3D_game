@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   movePlayer.c                                       :+:      :+:    :+:   */
+/*   key_hooks.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbouhsis <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: omeslall <omeslall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 11:01:19 by hbouhsis          #+#    #+#             */
-/*   Updated: 2022/10/19 11:01:21 by hbouhsis         ###   ########.fr       */
+/*   Updated: 2022/11/16 23:21:14 by omeslall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ int	button_release(int button_code, int x, int y, t_data **data)
 		(*data)->player->turn_direction = 0;
 	return (1);
 }
-
 
 int	keyrelease(int keycode, t_data **data)
 {

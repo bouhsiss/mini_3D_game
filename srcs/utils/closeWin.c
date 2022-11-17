@@ -16,5 +16,6 @@ int	close_win(t_data *Data)
 {
 	mlx_destroy_window(Data->mlx_ptr, Data->win->mlx_win);
 	free_array((*Data).mapdisplay->map);
+	ft_putstr_fd("Exit\n", 1);
 	exit(0);
 }

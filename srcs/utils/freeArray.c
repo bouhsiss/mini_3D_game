@@ -1,16 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_array.c                                        :+:      :+:    :+:  */
+/*   freeArray.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbouhsis <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: omeslall <omeslall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 11:03:43 by hbouhsis          #+#    #+#             */
-/*   Updated: 2022/10/19 11:03:45 by hbouhsis         ###   ########.fr       */
+/*   Updated: 2022/11/17 01:00:22 by omeslall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
+
+int	size_2d_array(char **arr)
+{
+	int	i;
+
+	i = 0;
+	if (!arr)
+		return (0);
+	while (arr[i])
+		i++;
+	return (i);
+}
 
 void	free_array(char **arr)
 {

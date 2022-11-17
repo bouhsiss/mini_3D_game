@@ -6,7 +6,7 @@
 /*   By: omeslall <omeslall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 11:01:26 by hbouhsis          #+#    #+#             */
-/*   Updated: 2022/11/16 11:46:42 by omeslall         ###   ########.fr       */
+/*   Updated: 2022/11/17 01:09:09 by omeslall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,10 @@ static int	parse_map(char *line, t_data **Data, int fd)
 	free(line);
 	(*Data)->mapdisplay->map = ft_split(one_line_map, ',');
 	free(one_line_map);
-	check_map_is_valid(Data);
+	check_map_is_valid(Data, (*Data)->mapdisplay->map[0], \
+	(*Data)->mapdisplay->map[0]);
 	return (0);
 }
-
-
 
 static int	parse_line(char *line, t_data **Data, t_map **Map, int fd)
 {
@@ -49,19 +48,22 @@ static int	parse_line(char *line, t_data **Data, t_map **Map, int fd)
 	i = 0;
 	while (ft_isspace(line[i]))
 		i++;
-	if(!ft_strncmp(&line[i], "NO ", 3)||!ft_strncmp(&line[i], "SO ", 3)\
-		||!ft_strncmp(&line[i], "WE ", 3)||!ft_strncmp(&line[i], "EA ", 3))
-		parse_textures(line,Data,Map);
+	if (!ft_strncmp(&line[i], "NO ", 3) || !ft_strncmp(&line[i], "SO ", 3) \
+		||!ft_strncmp(&line[i], "WE ", 3) || !ft_strncmp(&line[i], "EA ", 3))
+		parse_textures(line, Data, Map);
 	else if (!ft_strncmp(&line[i], "C ", 2))
-		parse_colors(&line[i + 1],&(*Map)->ceiling_color);
+		parse_colors(&line[i + 1], &(*Map)->ceiling_color);
 	else if (!ft_strncmp(&line[i], "F ", 2))
 		parse_colors(&line[i + 1], &(*Map)->floor_color);
 	else if (line[i])
 	{
+		if (((*Map)->floor_color->flag == false) || \
+		((*Map)->ceiling_color->flag == false))
+			error_message("One or two colors are missing.");
 		if (line[i] == '1')
 			return (parse_map(line, Data, fd));
 		else
-			error_message("Invalid map 4");
+			error_message("Invalid map");
 	}
 	return (1);
 }
@@ -80,7 +82,7 @@ void	parser(char *MapPath, t_data **Data)
 		free(tmp);
 		tmp = get_next_line(fd);
 	}
-	if(!tmp && (*Data)->mapdisplay->rows_nbr == 0)
-		error_message("Invalid map 5");
+	if (!tmp && (*Data)->mapdisplay->rows_nbr == 0)
+		error_message("Invalid map");
 	close(fd);
 }

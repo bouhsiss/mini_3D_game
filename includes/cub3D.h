@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbouhsis <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: omeslall <omeslall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 18:15:49 by hbouhsis          #+#    #+#             */
-/*   Updated: 2022/11/16 18:15:51 by hbouhsis         ###   ########.fr       */
+/*   Updated: 2022/11/17 01:00:36 by omeslall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,10 +106,10 @@ typedef struct s_win {
 }t_win;
 
 typedef struct s_colors{
-	int	r;
-	int	g;
-	int	b;
-	bool flag;
+	int		r;
+	int		g;
+	int		b;
+	bool	flag;
 }t_colors;
 
 typedef struct s_text_path{
@@ -172,7 +172,7 @@ int				ft_strncmp(const char *s1, const char *s2, size_t n);
 char			*ft_strdup(char *s1);
 int				ft_atoi(const char *str);
 int				ft_strisdigit(char *str);
-int				check_map_is_valid(t_data **data);
+int				check_map_is_valid(t_data **data, char *curr_l, char *prev_l);
 int				skip_space(char *str);
 void			draw_map(t_data **Data);
 int				close_win(t_data *Data);
@@ -207,5 +207,13 @@ void			render_wall(t_data *data, int x, t_ray *ray, int dtpp);
 bool			ft_isspace(char c);
 int				button_release(int button_code, int x, int y, t_data **data);
 int				button_press(int button_code, int x, int y, t_data **data);
+bool			has_wall_at(float x, float y, t_data *data);
+t_horz			*init_t_horz(void);
+void			calculate_horz_step(t_horz *horz, t_data *data, t_ray *ray);
+void			h_wall_hit(t_horz *horz, t_data *data, t_ray *ray);
+t_distance		*horz_distance(t_ray *ray, t_data *data, t_distance *distance);
+t_vert			*init_t_vert(void);
+void			calculate_ver_step(t_vert *vert, t_data *data, t_ray *ray);
+int				size_2d_array(char **arr);
 
 #endif
