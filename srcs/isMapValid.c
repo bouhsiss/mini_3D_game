@@ -79,9 +79,9 @@ int	check_line(t_data **data, char *curr_line, char *prev_line, int curr)
 
 int	check_map_is_valid(t_data **data, char *curr_line, char *prev_line)
 {
-	int		curr;
-	int		prev;
-	int		flag;
+	int				curr;
+	int				prev;
+	static int		flag;
 
 	flag = 0;
 	curr = 0;
@@ -96,7 +96,7 @@ int	check_map_is_valid(t_data **data, char *curr_line, char *prev_line)
 		prev = curr;
 		curr++;
 	}
-	if (check_first_and_last_line(curr_line, 1) || flag == 0)
+	if (check_first_and_last_line(curr_line, 1) || flag != 1)
 		error_message("Invalid map");
 	return (0);
 }

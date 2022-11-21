@@ -27,8 +27,12 @@ int	open_map_file(char *path)
 int	check_file(char *MapPath)
 {
 	char	*ext;
+	int		i;
 
-	ext = ft_strchr(MapPath, '.');
+	i = 0;
+	if (MapPath[0] == '.' && MapPath[1] == '/')
+		i += 2;
+	ext = ft_strchr(&MapPath[i], '.');
 	if (!ext || ft_strncmp(ext, ".cub", 4))
 		error_message("map should have .cub extension");
 	return (open_map_file(MapPath));
