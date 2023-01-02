@@ -41,3 +41,5 @@ element can be set in any order in the file.
 by one or more space(s).
   - The map must be parsed as it looks in the file. Spaces are a valid part of the
 map as long as they're not surrounded by a player or a '0'
+## Game screencast
+![Screen record of the game](https://github.com/bouhsiss/mini_3D_game/blob/master/screencast/ScreenRecord...mov)
