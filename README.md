@@ -42,4 +42,8 @@ by one or more space(s).
   - The map must be parsed as it looks in the file. Spaces are a valid part of the
 map as long as they're not surrounded by a player or a '0'
 ## Game screencast
-![Screen record of the game](https://github.com/bouhsiss/mini_3D_game/blob/master/screencast/ScreenRecord...mov)
+
+
+
+https://user-images.githubusercontent.com/85262731/210238174-37f9c19c-347a-4732-a019-f0951d80fa57.mov
+
